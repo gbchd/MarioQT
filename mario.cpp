@@ -1,0 +1,187 @@
+#include "mario.h"
+#include <QDebug>
+
+Mario::Mario()
+{
+    //LoadTexture
+    texture_walk[0][0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_walk[0][1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_walk[0][2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-2.png").scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk[1][0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-0.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_walk[1][1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-1.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_walk[1][2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-2.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[0]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-stand.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[1]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_jump[0]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-jump.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_jump[1]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_dead	   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-fall.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_small_to_big[0] = texture_stand[0];
+    texture_small_to_big[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_small_to_big[2] = texture_stand[1];
+    texture_small_to_big[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+
+    currentTexture = texture_stand[1];
+
+
+    //States
+    setBig();
+    running = false;
+    sliding = false;
+
+    //Engine Value
+    speed = 4;
+    speedLimit = BLOCSIZE/2;
+    gravity = defaultGravity;
+
+    //Graphical value
+    zValue = 5;
+}
+
+Mario::~Mario(){
+    // delete les attributs alloués dynamiquement
+}
+
+
+
+void Mario::advance(){
+    //Check if we are still touching the ground object
+    groundHandler();
+
+    if(phantom && timerPhantom.elapsed() >= durationOfPhantom){
+        stopPhantom();
+    }
+
+    // Mettre en place la taille du niveau
+    if(dead && position.y() > 25 * BLOCSIZE){
+        deletable = true;
+    }
+
+    if(jumping && velocity.y() > 0){
+        jumping = false;
+    }
+    if(!jumping){
+        gravity = defaultGravity;
+    }
+    // ON MET A JOUR LES VECTEURS DE DEPLACEMENT
+    if(!grounded){
+        velocity.setY(velocity.y() + gravity);
+    }
+    else{
+        velocity.setX(0);
+    }
+
+    updateVelocity();
+    applyVelocityLimit();
+
+    updatePosition();
+}
+
+void Mario::animate(){
+    if(dead){
+        setCurrentTexture(texture_dead);
+    }
+    else if(moving && grounded){
+        if(running){
+            setCurrentTexture(texture_walk[big][(walkCounter++/(4))%3]);
+        }
+        else {
+            setCurrentTexture(texture_walk[big][(walkCounter++/(6))%3]);
+        }
+    }
+    else if(!grounded){
+        setCurrentTexture(texture_jump[big]);
+    }
+    else{
+        setCurrentTexture(texture_stand[big]);
+    }
+
+    if(movingDirection == LEFT)
+        setCurrentTexture(currentTexture.transformed(QTransform().scale(-1,1)));
+}
+
+
+
+void Mario::jump(){
+    if(grounded){
+        jumping = true;
+        gravity = jumpGravity;
+        velocity.setY(jumpInitialSpeed);
+    }
+
+}
+void Mario::releaseJump(){
+    if(jumping && velocity.y() < 0){
+        jumping = false;
+        gravity = jumpReleaseGravity;
+    }
+}
+
+void Mario::hurt(){
+    if(big){
+        startPhantom();
+        setSmall();
+        //TODO : Function to play the animation of mario changing size
+    }
+    else{
+        die();
+    }
+}
+
+void Mario::die(){
+    collidable = false;
+    dead = true;
+    moving = false;
+    gravity = deathJumpGravity;
+    velocity.setY(deathJumpSpeed);
+}
+
+void Mario::setBig(){
+    big = true;
+    moveTo(position.x(), position.y() - BLOCSIZE);
+    hitbox.moveTo(position.x() + BLOCSIZE/4, position.y() + BLOCSIZE/10);
+    setHitboxWidth(BLOCSIZE/2);
+    setHitboxHeight(2*BLOCSIZE - BLOCSIZE/10);
+}
+
+void Mario::setSmall(){
+    big = false;
+    moveTo(position.x(), position.y() + BLOCSIZE);
+    hitbox.moveTo(position.x() + BLOCSIZE/4, position.y());
+    setHitboxWidth(BLOCSIZE/2);
+    setHitboxHeight(BLOCSIZE);
+}
+
+void Mario::collisionOnLeftHandler(ObjectModel *o){
+    if(velocity.x() < 0){velocity.setX(0);}
+    Enemy * enemy = dynamic_cast<Enemy *>(o);
+    if(enemy != nullptr){
+        hurt();
+        //TODO : Implements hit(this); dans ennemy
+    }
+}
+
+void Mario::collisionOnRightHandler(ObjectModel *o){
+    if(velocity.x() > 0){velocity.setX(0);}
+    Enemy * enemy = dynamic_cast<Enemy *>(o);
+    if(enemy != nullptr){
+        hurt();
+    }
+}
+
+void Mario::collisionOnTopHandler(ObjectModel *o){
+    if(velocity.y()<0){velocity.setY(0);}
+    Enemy * enemy = dynamic_cast<Enemy *>(o);
+    if(enemy != nullptr){
+        hurt();
+    }
+}
+
+void Mario::collisionOnBottomHandler(ObjectModel *o){
+    Entity::collisionOnBottomHandler(o);
+    Enemy * enemy = dynamic_cast<Enemy *>(o);
+    if(enemy != nullptr){
+        enemy->hurt();
+        bounce();
+    }
+}
+

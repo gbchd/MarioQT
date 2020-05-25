@@ -1,0 +1,16 @@
+{
+    "creator" : "Alexandre Turpin",
+    "date" : "2020-05-14  17:47:04",
+    "size" : {"width": 50, "height": 16},
+    "player"  : {"x":2, "y":15},
+    "inerts": {
+        "block1" : {"type":"wall", "x":0, "y":21, "width":50, "height":2},
+        "block2" : {"type":"wall", "x":15, "y":20, "width":1, "height":1},
+        "block3" : {"type":"wall", "x":25, "y":20, "width":1, "height":1},
+        "block4" : {"type":"wall", "x":6, "y":17, "width":7, "height":1}
+    },
+    "entities" : {
+        "goomba1" : {"type":"goomba", "x":19 ,"y":18},
+        "turtle1" : {"type":"turtle", "x":23 ,"y":21}
+    }
+}
