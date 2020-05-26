@@ -22,10 +22,15 @@ Goomba::Goomba(Direction spawnDirection)
     velocity.setX(0);
     velocity.setY(0);
 
-    setHitboxWidth(2*BLOCSIZE/3);
-    setHitboxHeight(2*BLOCSIZE/3);
+    setHitboxWidth(BLOCSIZE);
+    setHitboxHeight(BLOCSIZE);
 
-    hitbox.moveTo(position.x()+BLOCSIZE/2 - hitbox.width()/2 , position.y() + BLOCSIZE - hitbox.height());
+    hitbox.moveTo(position);
+
+    setHitboxEntityWidth(2*BLOCSIZE/3);
+    setHitboxEntityHeight(2*BLOCSIZE/3);
+
+    hitboxEntity.moveTo(position.x()+BLOCSIZE/2 - hitboxEntity.width()/2 , position.y() + BLOCSIZE - hitboxEntity.height());
 }
 
 void Goomba::advance(){

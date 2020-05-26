@@ -140,17 +140,27 @@ void Mario::die(){
 void Mario::setBig(){
     big = true;
     moveTo(position.x(), position.y() - BLOCSIZE);
-    hitbox.moveTo(position.x() + BLOCSIZE/4, position.y() + BLOCSIZE/10);
-    setHitboxWidth(BLOCSIZE/2);
-    setHitboxHeight(2*BLOCSIZE - BLOCSIZE/10);
+
+    hitbox.moveTo(position);
+    setHitboxWidth(BLOCSIZE);
+    setHitboxHeight(2*BLOCSIZE);
+
+    hitboxEntity.moveTo(position.x() + BLOCSIZE/4, position.y() + BLOCSIZE/10);
+    setHitboxEntityWidth(BLOCSIZE/2);
+    setHitboxEntityHeight(2*BLOCSIZE - BLOCSIZE/10);
 }
 
 void Mario::setSmall(){
     big = false;
     moveTo(position.x(), position.y() + BLOCSIZE);
-    hitbox.moveTo(position.x() + BLOCSIZE/4, position.y());
-    setHitboxWidth(BLOCSIZE/2);
+
+    hitbox.moveTo(position);
+    setHitboxWidth(BLOCSIZE);
     setHitboxHeight(BLOCSIZE);
+
+    hitboxEntity.moveTo(position.x() + BLOCSIZE/4, position.y());
+    setHitboxEntityWidth(BLOCSIZE/2);
+    setHitboxEntityHeight(BLOCSIZE);
 }
 
 void Mario::collisionOnLeftHandler(ObjectModel *o){

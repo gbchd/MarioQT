@@ -3,6 +3,7 @@
 
 #include "objectmodel.h"
 #include "direction.h"
+#include "inert.h"
 #include <QElapsedTimer>
 
 class Entity : public ObjectModel
@@ -27,6 +28,8 @@ protected:
     int speed = 1;
     int speedLimit = 5;
     Direction movingDirection;
+
+    QRectF hitboxEntity;
     // ==============
 
 
@@ -42,7 +45,12 @@ protected:
     void groundHandler();
     virtual void reactionNoMoreOnGround();
 
+    void setHitboxEntityWidth(float w){ hitboxEntity.setWidth(w); }
+    void setHitboxEntityHeight(float h){ hitboxEntity.setHeight(h); }
+
     virtual void solveCollision(ObjectModel * o);
+
+
     virtual void collisionOnLeftHandler(ObjectModel * o);
     virtual void collisionOnRightHandler(ObjectModel * o);
     virtual void collisionOnTopHandler(ObjectModel * o);
@@ -60,9 +68,17 @@ public:
 
     void setCurrentTexture(QPixmap texture) override;
 
+
+    void moveTo(QPointF newPosition) override;
+    void moveTo(float x, float y) override;
+
+
+    QRectF getHitboxEntity(){ return hitboxEntity; }
+
     bool isDeletable(){return deletable;}
     bool isDead(){return dead;}
     bool isCollidableWithOtherEntities(){return collidableWithOtherEntities;}
+
     bool isColliding(ObjectModel * o);
     void collisionHandler(ObjectModel * o);
 

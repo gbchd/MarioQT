@@ -94,20 +94,61 @@ void Entity::stopPhantom(){
     timerPhantom.invalidate();
 }
 
+void Entity::moveTo(QPointF newPosition){
+    QPointF distanceBetweenPosAndHitbox;
+    distanceBetweenPosAndHitbox.setX(hitboxEntity.x() - position.x());
+    distanceBetweenPosAndHitbox.setY(hitboxEntity.y() - position.y());
+    ObjectModel::moveTo(newPosition);
+
+    hitboxEntity.moveTo(position+distanceBetweenPosAndHitbox);
+}
+
+void Entity::moveTo(float x, float y){
+    hitboxEntity.moveTo(x + hitboxEntity.x() - position.x(), y + hitboxEntity.y() - position.y());
+    ObjectModel::moveTo(x,y);
+}
+
+
+
 
 bool Entity::isColliding(ObjectModel *o){
-    QRectF oHitbox = o->getHitbox();
+    QRectF hitbox;
+    QRectF oHitbox;
+    Entity * e = dynamic_cast<Entity *>(o);
+    if(e){
+        if(!isCollidableWithOtherEntities() || !e->isCollidableWithOtherEntities()){
+            return false;
+        }
+        hitbox = getHitboxEntity();
+        oHitbox = e->getHitboxEntity();
+    }
+    else{
+        hitbox = getHitbox();
+        oHitbox = o->getHitbox();
+    }
     return(hitbox.right() > oHitbox.left() &&
            hitbox.left() < oHitbox.right() &&
            hitbox.bottom() > oHitbox.top() &&
            hitbox.top() < oHitbox.bottom());
 }
 
-//Pousse l'entité pour ne plus être en collision
 void Entity::solveCollision(ObjectModel *o){
-
-    QRectF oHitbox = o->getHitbox();
+    QRectF hitbox;
+    QRectF oHitbox;
+    Entity * e = dynamic_cast<Entity *>(o);
+    if(e){
+        if(!isCollidableWithOtherEntities() || !e->isCollidableWithOtherEntities()){
+            return;
+        }
+        hitbox = getHitboxEntity();
+        oHitbox = e->getHitboxEntity();
+    }
+    else{
+        hitbox = getHitbox();
+        oHitbox = o->getHitbox();
+    }
     QRectF intersection = hitbox.intersected(oHitbox);
+
     if(intersection.width() < intersection.height()){
         //Collision on x axis
         if(hitbox.x() < oHitbox.x()){
@@ -138,16 +179,25 @@ void Entity::collisionHandler(ObjectModel *o){
         return;
     }
 
-    Entity * entity = dynamic_cast<Entity *>(o);
-    if(dynamic_cast<Entity *>(o) && (!isCollidableWithOtherEntities() || !entity->isCollidableWithOtherEntities())){
-        return;
-    }
-
     // On corrige la position de l'entité
     solveCollision(o);
 
     // On agit en fonction de la direction de la collision
-    QRectF oHitbox = o->getHitbox();
+    QRectF hitbox;
+    QRectF oHitbox;
+    Entity * e = dynamic_cast<Entity *>(o);
+    if(e){
+        if(!isCollidableWithOtherEntities() || !e->isCollidableWithOtherEntities()){
+            return;
+        }
+        hitbox = getHitboxEntity();
+        oHitbox = e->getHitboxEntity();
+    }
+    else{
+        hitbox = getHitbox();
+        oHitbox = o->getHitbox();
+    }
+
     if(hitbox.left() == oHitbox.right()){
         collisionOnLeftHandler(o);
     }
@@ -161,6 +211,7 @@ void Entity::collisionHandler(ObjectModel *o){
         collisionOnBottomHandler(o);
     }
 }
+
 
 void Entity::collisionOnLeftHandler(ObjectModel *o){
     //qDebug() << "Colliding LEFT";

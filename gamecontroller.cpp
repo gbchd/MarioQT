@@ -24,30 +24,18 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
-    //Check Mario first
-    if(mario != nullptr){
-        if(mario->isDeletable()){
-            removePlayer(); //Will use clean() later
-            return;
-        }
-        mario->advance();
-        for(ObjectModel * object : objects){
-            if(dynamic_cast<Mario*>(object) != mario && mario->isColliding(object)){
-                mario->collisionHandler(object);
-            }
-        }
-        mario->animate();
-    }
+
     for(Entity * entity : entities){
         if(entity->isDeletable()){
             removeEntity(entity);
         }
         else{
             entity->advance();
-            for(ObjectModel * o : objects)
+            for(ObjectModel * o : objects){
                 if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
                     entity->collisionHandler(o);
                 }
+            }
             entity->animate();
         }
     }
@@ -139,12 +127,12 @@ void GameController::updateDirection(){
 
 
 // Gestion des objets dans le controller (peut être le role du modèle?)
-
 void GameController::setPlayer(Mario * m){
     if(mario != nullptr){
         removePlayer();
     }
     mario = m;
+    entities.append(mario);
     objects.append(mario);
 }
 void GameController::addInert(Inert * i){
@@ -157,9 +145,12 @@ void GameController::addEntity(Entity * e){
 }
 
 void GameController::removePlayer(){
-    objects.removeOne(mario);
-    delete mario;
-    mario = nullptr;
+    if(mario != nullptr){
+        objects.removeOne(mario);
+        entities.removeOne(mario);
+        delete mario;
+        mario = nullptr;
+    }
 }
 void GameController::removeInert(Inert *i){
     objects.removeOne(i);
@@ -181,7 +172,6 @@ void GameController::clean(){
     for(Inert * inert : inerts){
         removeInert(inert);
     }
-
     qDebug() << "After :" << "Objects :" << objects.size() << " Inerts :" << inerts.size() << "Entities :" << entities.size();
 }
 

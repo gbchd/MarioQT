@@ -47,8 +47,8 @@ public:
     void setHitboxX(float x){ hitbox.setX(x); } //Prefer the moveTo method instead of this one
     void setHitboxY(float y){ hitbox.setY(y); } //Prefer the moveTo method instead of this one
 
-    void moveTo(QPointF newPosition); // Move the position and the hitbox
-    void moveTo(float x, float y);
+    virtual void moveTo(QPointF newPosition); // Move the position and the hitbox
+    virtual void moveTo(float x, float y);
 
     QPixmap getCurrentTexture(){ return currentTexture; }
     virtual void setCurrentTexture(QPixmap texture){ currentTexture = texture; }
