@@ -41,6 +41,9 @@ public:
     void changeCentralWidget(QWidget *newWidget) { setCentralWidget(newWidget); }
 
     void displayPauseMenu();
+
+    void goBackToMainMenu();
+
 };
 
 #endif // MAINWINDOW_H

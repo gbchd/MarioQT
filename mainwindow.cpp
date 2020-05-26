@@ -9,6 +9,7 @@ MainWindow::MainWindow() : QMainWindow()
     mainMenuController.setMainWindowPointer(this);
     mainMenuWidget.setMainMenuController(&mainMenuController);
 
+
     // We initialize the game's widget and controller
     gamecontroller.setGameView(&gameview);
     gamecontroller.setMainWindowPointer(this);
@@ -31,7 +32,8 @@ MainWindow::MainWindow() : QMainWindow()
     stackedWidget.addWidget(&levelEditorWidget);
     stackedWidget.addWidget(&pauseMenuWidget);
 
-    stackedWidget.setCurrentIndex(0);
+    //Display the menu to the application start
+    goBackToMainMenu();
 
     setCentralWidget(&stackedWidget);
 }
@@ -49,3 +51,11 @@ void MainWindow::displayPauseMenu()
 {
     stackedWidget.setCurrentIndex(3);
 }
+
+void MainWindow::goBackToMainMenu()
+{
+    stackedWidget.setCurrentIndex(0);
+    this->resize(500,500);
+}
+
+

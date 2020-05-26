@@ -19,6 +19,7 @@ private:
     QListWidget listWidget;
     QPushButton playButton;
     QPushButton optionsButton;
+    QPushButton levelEditorButton;
 
     void applyStyleSheet();
 
@@ -30,6 +31,7 @@ public:
 private slots:
     void handlePlayButton();
     void handleOptionsButton();
+    void handleLevelEditorButton();
 };
 
 #endif // MAINMENUWIDGET_H

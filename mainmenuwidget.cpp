@@ -9,6 +9,7 @@ MainMenuWidget::MainMenuWidget()
     QHBoxLayout * hlayout = new QHBoxLayout();
     optionsButton.setText("OPTIONS");
     playButton.setText("PLAY");
+    levelEditorButton.setText("MAP EDITOR");
     QLabel * label = new QLabel;
     label->setPixmap(QPixmap(":/resources/graphics/welcome.png").scaled(500, 400, Qt::KeepAspectRatio));
 
@@ -18,8 +19,9 @@ MainMenuWidget::MainMenuWidget()
     //Add element in layout
     layout->addWidget(label);
     layout->addWidget(&listWidget);
+    layout->addWidget(&playButton);
     layout->addLayout(hlayout);
-    hlayout->addWidget(&playButton);
+    hlayout->addWidget(&levelEditorButton);
     hlayout->addWidget(&optionsButton);
 
     //Connect the buttons to their slots
@@ -43,6 +45,11 @@ void MainMenuWidget::applyStyleSheet()
                                "color: white;"
                                "font-size: 20px;"
                                "font-weight : bold;");
+
+     levelEditorButton.setStyleSheet("background-color: #BE2801;"
+                               "color: white;"
+                               "font-size: 20px;"
+                               "font-weight : bold;");
 }
 
 void MainMenuWidget::addItemToWidgetList(QString text, QString address)
@@ -62,6 +69,11 @@ void MainMenuWidget::handlePlayButton()
 }
 
 void MainMenuWidget::handleOptionsButton()
+{
+
+}
+
+void MainMenuWidget::handleLevelEditorButton()
 {
 
 }
