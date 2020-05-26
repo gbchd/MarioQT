@@ -31,7 +31,6 @@ protected:
 
 
     // === Animations ===
-    int walkCounter;
     int durationOfPhantom = 2000; // in ms
     QElapsedTimer timerPhantom;
     // ==================
@@ -59,6 +58,8 @@ public:
     // Used to compute the next location
     virtual void advance() = 0;
 
+    void setCurrentTexture(QPixmap texture) override;
+
     bool isDeletable(){return deletable;}
     bool isDead(){return dead;}
     bool isCollidableWithOtherEntities(){return collidableWithOtherEntities;}
@@ -72,7 +73,8 @@ public:
     void moveOnYBy(float y){ moveTo(position.x(),position.y()+y); }
 
     void setMoving(bool state){ moving = state; }
-    void setDirection(Direction direction){ movingDirection = direction; }
+    Direction getDirection(){ return movingDirection; }
+    void setDirection(Direction direction){ movingDirection = direction; currentTexture = currentTexture.transformed(QTransform().scale(-1,1));}
 };
 
 #endif // ENTITY_H

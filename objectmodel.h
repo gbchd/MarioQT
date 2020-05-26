@@ -6,6 +6,7 @@
 #include <QBitmap>
 #include <QColor>
 #include <string>
+#include <QElapsedTimer>
 #include "visitor.h"
 
 //class Visitor;
@@ -50,10 +51,12 @@ public:
     void moveTo(float x, float y);
 
     QPixmap getCurrentTexture(){ return currentTexture; }
-    void setCurrentTexture(QPixmap texture){ currentTexture = texture; }
+    virtual void setCurrentTexture(QPixmap texture){ currentTexture = texture; }
 
     // Used to compute the next texture
     virtual void animate() = 0;
+
+    void doSimpleAnimation(QList<QPixmap> & textures, QElapsedTimer & timer, int delay, int & counter);
 
     static bool strends (std::string const &str, std::string const &end);
     static QPixmap loadTextureTransparent(const std::string & file, QColor mask_color = Qt::magenta);

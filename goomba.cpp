@@ -4,13 +4,9 @@
 Goomba::Goomba(Direction spawnDirection)
 {
     // set textures
-    texture_walk[0] = QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-0.png"));
-    texture_walk[1] = QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-1.png"));
-    texture_dead = QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-dead.png"));
-
-    texture_walk[0] = texture_walk[0].scaled(texture_walk[0].width()*2,texture_walk[0].height()*2,Qt::IgnoreAspectRatio);
-    texture_walk[1] = texture_walk[1].scaled(texture_walk[1].width()*2,texture_walk[1].height()*2,Qt::IgnoreAspectRatio);
-    texture_dead = texture_dead.scaled(texture_dead.width()*2,texture_dead.height()*2,Qt::IgnoreAspectRatio);;
+    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_dead = QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-dead.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
 
     movingDirection = spawnDirection;
 
@@ -20,6 +16,9 @@ Goomba::Goomba(Direction spawnDirection)
     moving = true;
     speed = 1;
     speedLimit = BLOCSIZE/2;
+
+    timerWalk.start();
+
     velocity.setX(0);
     velocity.setY(0);
 
@@ -52,8 +51,9 @@ void Goomba::animate()
     {
         setCurrentTexture(texture_dead);
     }
-    else if(moving)
-        setCurrentTexture(texture_walk[(walkCounter++/walk_div)%2]); // Correct this
+    else if(moving){
+        doSimpleAnimation(texture_walk, timerWalk, durationWalkTexture, currentWalkTexture);
+    }
 }
 
 void Goomba::reactionNoMoreOnGround(){

@@ -26,6 +26,12 @@ void Entity::groundHandler(){
     }
 }
 
+void Entity::setCurrentTexture(QPixmap texture){
+    if(movingDirection == LEFT){
+        texture = texture.transformed(QTransform().scale(-1,1));
+    }
+    ObjectModel::setCurrentTexture(texture);
+}
 
 
 void Entity::updateVelocity(){
@@ -104,7 +110,7 @@ void Entity::solveCollision(ObjectModel *o){
     QRectF intersection = hitbox.intersected(oHitbox);
     if(intersection.width() < intersection.height()){
         //Collision on x axis
-        if(hitbox.x() - velocity.x() < oHitbox.x()){
+        if(hitbox.x() < oHitbox.x()){
             //Collision à droite
             moveTo(position.x() - intersection.width(), position.y());
         }
@@ -115,7 +121,7 @@ void Entity::solveCollision(ObjectModel *o){
     }
     else{
         //Collision on y axis
-        if(hitbox.y() - velocity.y() < oHitbox.y()){
+        if(hitbox.y() < oHitbox.y()){
             //Collision en bas
             moveTo(position.x(), position.y() - intersection.height());
         }
@@ -136,7 +142,6 @@ void Entity::collisionHandler(ObjectModel *o){
     if(dynamic_cast<Entity *>(o) && (!isCollidableWithOtherEntities() || !entity->isCollidableWithOtherEntities())){
         return;
     }
-
 
     // On corrige la position de l'entité
     solveCollision(o);

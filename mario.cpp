@@ -4,12 +4,13 @@
 Mario::Mario()
 {
     //LoadTexture
-    texture_walk[0][0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_walk[0][1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_walk[0][2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-2.png").scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
-    texture_walk[1][0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-0.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_walk[1][1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-1.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_walk[1][2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-2.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_walk[0].append(QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk[0].append(QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk[0].append(QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-walk-2.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk[1].append(QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-0.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk[1].append(QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-1.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk[1].append(QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-walk-2.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio));
+
     texture_stand[0]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-stand.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_stand[1]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_jump[0]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-jump.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
@@ -21,7 +22,6 @@ Mario::Mario()
     texture_small_to_big[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
 
     currentTexture = texture_stand[1];
-
 
     //States
     setBig();
@@ -35,6 +35,7 @@ Mario::Mario()
 
     //Graphical value
     zValue = 5;
+    timerWalk.start();
 }
 
 Mario::~Mario(){
@@ -82,10 +83,10 @@ void Mario::animate(){
     }
     else if(moving && grounded){
         if(running){
-            setCurrentTexture(texture_walk[big][(walkCounter++/(4))%3]);
+            doSimpleAnimation(texture_walk[big], timerWalk, durationRunningTexture, currentWalkTexture);
         }
-        else {
-            setCurrentTexture(texture_walk[big][(walkCounter++/(6))%3]);
+        else{
+            doSimpleAnimation(texture_walk[big], timerWalk, durationWalkTexture, currentWalkTexture);
         }
     }
     else if(!grounded){
@@ -95,8 +96,9 @@ void Mario::animate(){
         setCurrentTexture(texture_stand[big]);
     }
 
-    if(movingDirection == LEFT)
+    if(movingDirection == LEFT){
         setCurrentTexture(currentTexture.transformed(QTransform().scale(-1,1)));
+    }
 }
 
 
@@ -120,7 +122,7 @@ void Mario::hurt(){
     if(big){
         startPhantom();
         setSmall();
-        //TODO : Function to play the animation of mario changing size
+        //TODO : Function to play the ani mation of mario changing size
     }
     else{
         die();

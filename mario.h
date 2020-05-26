@@ -3,18 +3,26 @@
 
 #include "entity.h"
 #include "enemy.h"
+#include <QArrayData>
 
 class Mario : public Entity
 {
 private:
-    // === Sprites ===
-    QPixmap texture_walk[2][3]; // small/big walking animation (3 textures)
+    // === Sprites ===   
+    QList<QPixmap> texture_walk[2]; // small/big walking animation (3 textures)
     QPixmap texture_stand[2]; // small/big stand texture
     QPixmap texture_jump[2]; // small/big jump texture
     QPixmap texture_dead; // Mario dies
     QPixmap texture_small_to_big[4]; // Mario small to big transformation
     // ================
 
+    // === Animations ===
+    bool changedDirection = false; // Detect when we change direction
+    int durationWalkTexture = 150; // in ms
+    int durationRunningTexture = 100; // in ms
+    QElapsedTimer timerWalk;
+    int currentWalkTexture = 0;
+    // ==================
 
     // === States ===
     bool big;
@@ -72,12 +80,12 @@ public:
     virtual void advance() override;
     virtual void animate() override;
 
-
     void setRunning(bool r){ running = r; }
     void jump();
     void releaseJump();
     void hurt();
     void die() override;
+
 };
 
 #endif // MARIO_H

@@ -8,8 +8,11 @@ class Goomba : public Enemy
 {
 protected:
     // textures
-    QPixmap texture_walk[2];					// walking animation (2 textures)
-    static const int walk_div = 10;
+    QList<QPixmap> texture_walk;                        // walking animation (2 textures)
+
+    int durationWalkTexture = 1000; // in ms
+    QElapsedTimer timerWalk;
+    int currentWalkTexture = 0;
 
     void reactionNoMoreOnGround() override;
 

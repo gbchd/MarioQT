@@ -23,7 +23,19 @@ void ObjectModel::moveTo(float x, float y){
     hitbox.moveTo(x + hitbox.x() - position.x(), y + hitbox.y() - position.y());
     position.setX(x);
     position.setY(y);
+}
 
+#include <QDebug>
+
+void ObjectModel::doSimpleAnimation(QList<QPixmap> &textures, QElapsedTimer & timer, int delay, int & counter){
+    if(timer.elapsed() > delay){
+        counter ++;
+        if(counter > textures.length()-1){
+            counter = 0;
+        }
+        setCurrentTexture(textures.at(counter));
+        timer.restart();
+    }
 }
 
 

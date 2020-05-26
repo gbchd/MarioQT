@@ -125,10 +125,14 @@ void GameController::updateDirection(){
             return;
         }
         if(keyQueue.last() == Qt::Key_Q){
-            mario->setDirection(LEFT);
+            if(mario->getDirection() != LEFT){
+               mario->setDirection(LEFT);
+            }
         }
         if(keyQueue.last() == Qt::Key_D){
-            mario->setDirection(RIGHT);
+            if(mario->getDirection() != RIGHT){
+               mario->setDirection(RIGHT);
+            }
         }
     }
 }
