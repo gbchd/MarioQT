@@ -3,6 +3,7 @@
 #include "gamecontroller.h"
 #include "gameview.h"
 
+#include "mainwindow.h"
 
 #include "objectmodel.h"
 #include "inert.h"
@@ -11,12 +12,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    GameController gamecontroller;
+    /*GameController gamecontroller;
     GameView gameview;
 
     gamecontroller.setGameView(&gameview);
     gameview.setGameController(&gamecontroller);
-    gamecontroller.setTickrate(60);
 
     int OS;
     #ifdef _WIN32 || _WIN64
@@ -39,7 +39,10 @@ int main(int argc, char *argv[])
     }
 
     gamecontroller.start();
-    gameview.show();
+    gameview.show();*/
+
+    MainWindow *mw = new MainWindow();
+    mw->show();
 
     return a.exec();
 }

@@ -26,6 +26,9 @@ SOURCES += \
     hitboxgraphicvisitor.cpp \
     inert.cpp \
     main.cpp \
+    mainmenucontroller.cpp \
+    mainmenuwidget.cpp \
+    mainwindow.cpp \
     map.cpp \
     mario.cpp \
     objectmodel.cpp \
@@ -42,6 +45,9 @@ HEADERS += \
     graphicvisitor.h \
     hitboxgraphicvisitor.h \
     inert.h \
+    mainmenucontroller.h \
+    mainmenuwidget.h \
+    mainwindow.h \
     map.h \
     mario.h \
     objectmodel.h \
