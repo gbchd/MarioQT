@@ -6,7 +6,7 @@ MainMenuController::MainMenuController()
 {
 }
 
-QString MainMenuController::getMap(QString filename)
+QString MainMenuController::getMapName(QString filename)
 {
     QFile file_obj(filename);
     if(!file_obj.exists()){
@@ -41,7 +41,7 @@ void MainMenuController::readMapsDirectory(QString directoryPath)
     maps = dir.entryList(QStringList(),QDir::Files);
     foreach(QString jsonFileName, maps)
     {
-        mainMenuWidget->addItemToWidgetList(directoryPath+jsonFileName);
+        mainMenuWidget->addItemToWidgetList(getMapName(directoryPath+jsonFileName), directoryPath+jsonFileName);
     }
 }
 

@@ -30,7 +30,7 @@ public:
      * @param filename
      * @return
      */
-    QString getMap(QString filename);
+    QString getMapName(QString filename);
 
     /**
      * @brief readMapsDirectory : Fills the string list of maps

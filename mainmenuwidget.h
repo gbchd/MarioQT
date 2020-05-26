@@ -26,7 +26,7 @@ private:
 
 public:
     MainMenuWidget();
-    void addItemToWidgetList(QString item);
+    void addItemToWidgetList(QString text, QString address);
     void setMainMenuController(MainMenuController * mmc){ mainMenuController = mmc; }
 
 private slots:

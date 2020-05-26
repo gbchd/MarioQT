@@ -46,10 +46,12 @@ void MainMenuWidget::applyStyleSheet()
                                "font-weight : bold;");
 }
 
-void MainMenuWidget::addItemToWidgetList(QString item)
+void MainMenuWidget::addItemToWidgetList(QString text, QString address)
 {
-    QListWidgetItem *azer = new QListWidgetItem(item);
-    listWidget->addItem(azer);
+    QListWidgetItem * qListWidgetItem = new QListWidgetItem();
+    qListWidgetItem->setData(Qt::UserRole, address);
+    qListWidgetItem->setText(text);
+    listWidget->addItem(qListWidgetItem);
 
     //Keep the first row of the list selected
     listWidget->setCurrentRow(0);
@@ -57,7 +59,7 @@ void MainMenuWidget::addItemToWidgetList(QString item)
 
 void MainMenuWidget::handlePlayButton()
 {
-    mainMenuController->launchGameOnMainWindow(listWidget->currentItem()->text());
+    mainMenuController->launchGameOnMainWindow(listWidget->currentItem()->data(Qt::UserRole).toString());
 }
 
 void MainMenuWidget::handleOptionsButton()
