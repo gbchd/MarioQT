@@ -17,10 +17,9 @@ class MainMenuWidget : public QWidget
 private:
     MainMenuController * mainMenuController;
 
-    QListWidget * listWidget;
-    QPushButton * playButton;
-    QPushButton * optionsButton;
-    QVBoxLayout * layout;
+    QListWidget listWidget;
+    QPushButton playButton;
+    QPushButton optionsButton;
 
     void applyStyleSheet();
 

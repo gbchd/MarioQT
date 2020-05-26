@@ -5,11 +5,10 @@
 MainMenuWidget::MainMenuWidget()
 {
     setFixedSize(500, 500);
-    layout = new QVBoxLayout(this);
+    QVBoxLayout * layout = new QVBoxLayout(this);
     QHBoxLayout * hlayout = new QHBoxLayout();
-    optionsButton = new QPushButton("OPTIONS");
-    playButton = new QPushButton("PLAY");
-    listWidget = new QListWidget();
+    optionsButton.setText("OPTIONS");
+    playButton.setText("PLAY");
     QLabel * label = new QLabel;
     label->setPixmap(QPixmap(":/resources/graphics/welcome.png").scaled(500, 400, Qt::KeepAspectRatio));
 
@@ -18,29 +17,29 @@ MainMenuWidget::MainMenuWidget()
 
     //Add element in layout
     layout->addWidget(label);
-    layout->addWidget(listWidget);
+    layout->addWidget(&listWidget);
     layout->addLayout(hlayout);
-    hlayout->addWidget(playButton);
-    hlayout->addWidget(optionsButton);
+    hlayout->addWidget(&playButton);
+    hlayout->addWidget(&optionsButton);
 
     //Connect the buttons to their slots
-    connect(playButton, SIGNAL (clicked()), this, SLOT (handlePlayButton()));
-    connect(optionsButton, SIGNAL (clicked()), this, SLOT (handleOptionsButton()));
+    connect(&playButton, SIGNAL (clicked()), this, SLOT (handlePlayButton()));
+    connect(&optionsButton, SIGNAL (clicked()), this, SLOT (handleOptionsButton()));
 }
 
 void MainMenuWidget::applyStyleSheet()
 {
-    listWidget->setStyleSheet("background-color: black;"
+    listWidget.setStyleSheet("background-color: black;"
                               "color: white;"
                               "font-size: 20px;"
                               "font-weight : bold;");
 
-     playButton->setStyleSheet("background-color: #BE2801;"
+     playButton.setStyleSheet("background-color: #BE2801;"
                                "color: white;"
                                "font-size: 20px;"
                                "font-weight : bold;");
 
-     optionsButton->setStyleSheet("background-color: #BE2801;"
+     optionsButton.setStyleSheet("background-color: #BE2801;"
                                "color: white;"
                                "font-size: 20px;"
                                "font-weight : bold;");
@@ -51,15 +50,15 @@ void MainMenuWidget::addItemToWidgetList(QString text, QString address)
     QListWidgetItem * qListWidgetItem = new QListWidgetItem();
     qListWidgetItem->setData(Qt::UserRole, address);
     qListWidgetItem->setText(text);
-    listWidget->addItem(qListWidgetItem);
+    listWidget.addItem(qListWidgetItem);
 
     //Keep the first row of the list selected
-    listWidget->setCurrentRow(0);
+    listWidget.setCurrentRow(0);
 }
 
 void MainMenuWidget::handlePlayButton()
 {
-    mainMenuController->launchGameOnMainWindow(listWidget->currentItem()->data(Qt::UserRole).toString());
+    mainMenuController->launchGameOnMainWindow(listWidget.currentItem()->data(Qt::UserRole).toString());
 }
 
 void MainMenuWidget::handleOptionsButton()
