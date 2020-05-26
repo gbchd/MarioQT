@@ -8,7 +8,6 @@
 #include <QLabel>
 
 class MainMenuController;
-class MainWindow;
 
 class MainMenuWidget : public QWidget
 {
