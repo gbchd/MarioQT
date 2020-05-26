@@ -14,8 +14,6 @@ GameView::GameView()
     setPalette(palette);
 }
 
-
-
 void GameView::paintEvent(QPaintEvent *event){ 
     GraphicVisitor graphicVisitor(this); // possède un QPainter
     gameController->update(graphicVisitor);
@@ -41,4 +39,7 @@ void GameView::keyReleaseEvent(QKeyEvent * e)
     gameController->keyReleaseEventHandler(e);
 }
 
+void GameView::wheelEvent(QWheelEvent * e)
+{
 
+}

@@ -9,8 +9,6 @@
 #include <QElapsedTimer>
 #include "visitor.h"
 
-//class Visitor;
-
 class ObjectModel
 {
 protected:

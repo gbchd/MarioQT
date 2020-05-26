@@ -17,21 +17,28 @@ private:
     // ================
 
     // === Animations ===
+
     bool changedDirection = false; // Detect when we change direction
     int durationWalkTexture = 150; // in ms
     int durationRunningTexture = 100; // in ms
     QElapsedTimer timerWalk;
     int currentWalkTexture = 0;
+    int durationOfTransformation = 150; // in ms
+    QElapsedTimer timerTransformation;
+    int currentTransformingTexture;
+    int transformationType;
     // ==================
 
     // === States ===
     bool big;
     int runningSpeed;
     bool onFire;
+    bool transforming;
     // ==============
 
     void setBig();
     void setSmall();
+    void stopTransforming();
     void collisionOnBottomHandler(ObjectModel *o) override;
     void collisionOnLeftHandler(ObjectModel * o) override;
     void collisionOnRightHandler(ObjectModel * o) override;
@@ -85,7 +92,7 @@ public:
     void releaseJump();
     void hurt();
     void die() override;
-
+    void startTransforming();
 };
 
 #endif // MARIO_H

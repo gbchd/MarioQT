@@ -26,7 +26,11 @@ GameController::GameController(GameView * gv)
 void GameController::advance() {
 
     for(Entity * entity : entities){
-        if(entity->isDeletable()){
+        Mario * mario = dynamic_cast<Mario*>(entity);
+        if(mario && mario->isDeletable()){
+            removePlayer();
+        }
+        else if(entity->isDeletable()){
             removeEntity(entity);
         }
         else{
@@ -81,6 +85,9 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
     }
     if(e->key() == Qt::Key_R){
         reset();
+    }
+    if(e->key() == Qt::Key_C){
+        mario->startTransforming();
     }
 }
 

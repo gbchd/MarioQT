@@ -17,16 +17,20 @@ Mario::Mario()
     texture_jump[1]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_dead	   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-fall.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_small_to_big[0] = texture_stand[0];
-    texture_small_to_big[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_small_to_big[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_small_to_big[2] = texture_stand[1];
-    texture_small_to_big[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_small_to_big[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
 
     currentTexture = texture_stand[1];
 
+    currentTransformingTexture = 0;
+
     //States
-    setBig();
+    setSmall();
+    transformationType = 0;
     running = false;
     sliding = false;
+    transforming = false;
 
     //Engine Value
     speed = 4;
@@ -78,7 +82,39 @@ void Mario::advance(){
 }
 
 void Mario::animate(){
-    if(dead){
+
+    if(transforming){
+        if(timerTransformation.elapsed() >= durationOfTransformation){
+            if(!transformationType){
+                currentTransformingTexture++;
+            }
+            else{
+                currentTransformingTexture--;
+            }
+
+            timerTransformation.restart();
+            qDebug() << currentTransformingTexture;
+            if(currentTransformingTexture == 3 || currentTransformingTexture == -1) {
+                stopTransforming();
+            }
+            else{
+                setCurrentTexture(texture_small_to_big[currentTransformingTexture]);
+
+                if(currentTransformingTexture == 0)
+                    setSmall();
+                else if(currentTransformingTexture == 2)
+                        setBig();
+                else{
+                    if(!transformationType){
+                        moveTo(position.x(), position.y() - BLOCSIZE);
+                        hitbox.moveTo(position.x(), position.y() + BLOCSIZE);
+                    }
+                }
+            }
+
+        }
+    }
+    else if(dead){
         setCurrentTexture(texture_dead);
     }
     else if(moving && grounded){
@@ -121,8 +157,7 @@ void Mario::releaseJump(){
 void Mario::hurt(){
     if(big){
         startPhantom();
-        setSmall();
-        //TODO : Function to play the ani mation of mario changing size
+        startTransforming();
     }
     else{
         die();
@@ -163,12 +198,30 @@ void Mario::setSmall(){
     setHitboxEntityHeight(BLOCSIZE);
 }
 
+void Mario::startTransforming(){
+    transforming=true;
+    if(big == true){
+        transformationType = 1;
+        currentTransformingTexture = 2;
+    }
+    else{
+        transformationType = 0;
+        currentTransformingTexture = 0;
+    }
+
+    timerTransformation.start();
+}
+
+void Mario::stopTransforming(){
+    transforming = false;
+    timerTransformation.invalidate();
+}
+
 void Mario::collisionOnLeftHandler(ObjectModel *o){
     if(velocity.x() < 0){velocity.setX(0);}
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         hurt();
-        //TODO : Implements hit(this); dans ennemy
     }
 }
 

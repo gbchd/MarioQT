@@ -1,4 +1,5 @@
 {
+    "name" : "Test world",
     "creator" : "moi",
     "date" : "2020-07-16  17:47:04",
     "size" : {"width": 50, "height": 16},
