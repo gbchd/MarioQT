@@ -58,3 +58,8 @@ void MainMenuController::launchGameOnMainWindow(QString filePath)
 {
     mainWindow->startGameOnMap(filePath);
 }
+
+void MainMenuController::launchLevelEditorOnMainWindow()
+{
+    mainWindow->launchLevelEditor();
+}

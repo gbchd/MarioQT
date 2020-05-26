@@ -41,6 +41,7 @@ public:
     void setMainMenuWidget(MainMenuWidget * mmw);
 
     void launchGameOnMainWindow(QString filePath);
+    void launchLevelEditorOnMainWindow();
 };
 
 #endif // MAINMENUCONTROLLER_H

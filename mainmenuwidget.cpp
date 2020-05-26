@@ -27,6 +27,7 @@ MainMenuWidget::MainMenuWidget()
     //Connect the buttons to their slots
     connect(&playButton, SIGNAL (clicked()), this, SLOT (handlePlayButton()));
     connect(&optionsButton, SIGNAL (clicked()), this, SLOT (handleOptionsButton()));
+    connect(&levelEditorButton, SIGNAL (clicked()), this, SLOT (handleLevelEditorButton()));
 }
 
 void MainMenuWidget::applyStyleSheet()
@@ -75,5 +76,5 @@ void MainMenuWidget::handleOptionsButton()
 
 void MainMenuWidget::handleLevelEditorButton()
 {
-
+    mainMenuController->launchLevelEditorOnMainWindow();
 }

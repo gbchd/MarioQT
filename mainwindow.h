@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
+#include <QDesktopWidget>
 
 #include "mainmenucontroller.h"
 #include "mainmenuwidget.h"
@@ -41,9 +42,10 @@ public:
     void changeCentralWidget(QWidget *newWidget) { setCentralWidget(newWidget); }
 
     void displayPauseMenu();
-
     void goBackToMainMenu();
+    void launchLevelEditor();
 
+    void centerOnScreen();
 };
 
 #endif // MAINWINDOW_H

@@ -19,6 +19,7 @@ MainWindow::MainWindow() : QMainWindow()
 
     // We initialize the levelEditor's widget and controller
     levelEditorController.setLevelEditorWidget(&levelEditorWidget);
+    levelEditorController.setMainWindowPointer(this);
     levelEditorWidget.setLevelEditorController(&levelEditorController);
 
     // We initialize the pauseMenu's widget and controller
@@ -44,7 +45,8 @@ void MainWindow::startGameOnMap(QString filePath)
     gamecontroller.setMapFilepath(filePath);
     gamecontroller.start();
 
-    this->resize(1280, 720);
+    resize(1280, 720);
+    centerOnScreen();
 }
 
 void MainWindow::displayPauseMenu()
@@ -55,7 +57,25 @@ void MainWindow::displayPauseMenu()
 void MainWindow::goBackToMainMenu()
 {
     stackedWidget.setCurrentIndex(0);
-    this->resize(500,500);
+    resize(500,500);
+    centerOnScreen();
 }
 
+void MainWindow::launchLevelEditor()
+{
+    stackedWidget.setCurrentIndex(2);
+    levelEditorWidget.initializeNewLevelEditor();
+    resize(1920, 1080);
+    centerOnScreen();
+}
 
+void MainWindow::centerOnScreen()
+{
+    QDesktopWidget wid;
+    int width = frameGeometry().width();
+    int height = frameGeometry().height();
+    int screenWidth = wid.screen()->width();
+    int screenHeight = wid.screen()->height();
+
+    move((screenWidth/2)-(width/2),(screenHeight/2)-(height/2));
+}
