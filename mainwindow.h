@@ -4,10 +4,17 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
-#include "mainmenuwidget.h"
 #include "mainmenucontroller.h"
-#include "gameview.h"
+#include "mainmenuwidget.h"
+
 #include "gamecontroller.h"
+#include "gameview.h"
+
+#include "leveleditorcontroller.h"
+#include "leveleditorwidget.h"
+
+#include "pausemenucontroller.h"
+#include "pausemenuwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,12 +27,20 @@ private:
     GameController gamecontroller;
     GameView gameview;
 
+    LevelEditorController levelEditorController;
+    LevelEditorWidget levelEditorWidget;
+
+    PauseMenuController pauseMenuController;
+    PauseMenuWidget pauseMenuWidget;
+
 public:
     MainWindow();
 
     void startGameOnMap(QString filePath);
 
     void changeCentralWidget(QWidget *newWidget) { setCentralWidget(newWidget); }
+
+    void displayPauseMenu();
 };
 
 #endif // MAINWINDOW_H

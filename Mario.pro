@@ -25,6 +25,8 @@ SOURCES += \
     graphicvisitor.cpp \
     hitboxgraphicvisitor.cpp \
     inert.cpp \
+    leveleditorcontroller.cpp \
+    leveleditorwidget.cpp \
     main.cpp \
     mainmenucontroller.cpp \
     mainmenuwidget.cpp \
@@ -32,6 +34,8 @@ SOURCES += \
     map.cpp \
     mario.cpp \
     objectmodel.cpp \
+    pausemenucontroller.cpp \
+    pausemenuwidget.cpp \
     visitor.cpp
 
 HEADERS += \
@@ -45,12 +49,16 @@ HEADERS += \
     graphicvisitor.h \
     hitboxgraphicvisitor.h \
     inert.h \
+    leveleditorcontroller.h \
+    leveleditorwidget.h \
     mainmenucontroller.h \
     mainmenuwidget.h \
     mainwindow.h \
     map.h \
     mario.h \
     objectmodel.h \
+    pausemenucontroller.h \
+    pausemenuwidget.h \
     visitor.h
 
 FORMS +=

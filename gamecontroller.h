@@ -10,6 +10,8 @@
 #include "map.h"
 #include "cameravisitor.h"
 
+class MainWindow;
+
 class GameController : public QObject
 {
     Q_OBJECT
@@ -40,6 +42,9 @@ private:
     //Testing purpose
     void setUpTest();
 
+    MainWindow * mainWindow;
+
+
 
 public:
     GameController();
@@ -63,6 +68,8 @@ public:
     void removePlayer();
     void removeInert(Inert * i);
     void removeEntity(Entity * e);
+
+    void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; };
 
 public slots:
     // This slot is called by the timer to advance the game to the next frame
