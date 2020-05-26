@@ -94,6 +94,9 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
     if(e->key() == Qt::Key_R){
         reset();
     }
+    if(e->key() == Qt::Key_C){
+        mario->startTransforming();
+    }
 }
 
 void GameController::keyReleaseEventHandler(QKeyEvent *e){

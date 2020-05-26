@@ -15,15 +15,23 @@ private:
     QPixmap texture_small_to_big[4]; // Mario small to big transformation
     // ================
 
+    // === Animations ===
+    int durationOfTransformation = 150; // in ms
+    QElapsedTimer timerTransformation;
+    int currentTransformingTexture;
+    int transformationType;
+    // ==================
 
     // === States ===
     bool big;
     int runningSpeed;
     bool onFire;
+    bool transforming;
     // ==============
 
     void setBig();
     void setSmall();
+    void Mario::stopTransforming();
     void collisionOnBottomHandler(ObjectModel *o) override;
     void collisionOnLeftHandler(ObjectModel * o) override;
     void collisionOnRightHandler(ObjectModel * o) override;
@@ -78,6 +86,7 @@ public:
     void releaseJump();
     void hurt();
     void die() override;
+    void Mario::startTransforming();
 };
 
 #endif // MARIO_H
