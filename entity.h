@@ -31,7 +31,7 @@ protected:
 
 
     // === Animations ===
-    int walkCounter;
+    int walkCounter = 0;
     int durationOfPhantom = 2000; // in ms
     QElapsedTimer timerPhantom;
     // ==================

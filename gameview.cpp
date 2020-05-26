@@ -41,4 +41,7 @@ void GameView::keyReleaseEvent(QKeyEvent * e)
     gameController->keyReleaseEventHandler(e);
 }
 
+void GameView::wheelEvent(QWheelEvent * e)
+{
 
+}
