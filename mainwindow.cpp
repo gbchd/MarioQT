@@ -11,7 +11,10 @@ MainWindow::MainWindow() : QMainWindow()
 
     // We initialize the game's widget and controller
     gamecontroller.setGameView(&gameview);
+    gamecontroller.setMainWindowPointer(this);
     gameview.setGameController(&gamecontroller);
+
+
 
     // We initialize the levelEditor's widget and controller
     levelEditorController.setLevelEditorWidget(&levelEditorWidget);
@@ -40,4 +43,9 @@ void MainWindow::startGameOnMap(QString filePath)
     gamecontroller.start();
 
     this->resize(1280, 720);
+}
+
+void MainWindow::displayPauseMenu()
+{
+    stackedWidget.setCurrentIndex(3);
 }

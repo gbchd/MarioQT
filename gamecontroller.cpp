@@ -1,4 +1,5 @@
 #include "gamecontroller.h"
+#include "mainwindow.h"
 #include "QDebug"
 
 GameController::GameController(){
@@ -96,6 +97,9 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
     }
     if(e->key() == Qt::Key_C){
         mario->startTransforming();
+    }
+    if(e->key() == Qt::Key_Escape){
+        mainWindow->displayPauseMenu();
     }
 }
 
@@ -206,7 +210,6 @@ void GameController::generateMap(){
     }
 
 }
-
 
 
 // Here to test will be deleted later

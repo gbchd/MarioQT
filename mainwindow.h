@@ -39,6 +39,8 @@ public:
     void startGameOnMap(QString filePath);
 
     void changeCentralWidget(QWidget *newWidget) { setCentralWidget(newWidget); }
+
+    void displayPauseMenu();
 };
 
 #endif // MAINWINDOW_H
