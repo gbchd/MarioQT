@@ -143,6 +143,7 @@ void Koopa::hitOnTop(ObjectModel *o){
 void Koopa::hurt(){
     if(!shell){
         shell = true;
-        speed = 2;
+        moving=false;
+        speed = 3;
     }
 }

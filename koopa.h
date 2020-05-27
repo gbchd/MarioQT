@@ -30,6 +30,9 @@ protected:
 public:
     Koopa(Direction spawnDirection = RIGHT);
 
+    bool isInShell(){return shell;};
+    bool isMoving(){return moving;};
+
     // pure virtual methods that must be implemented
     std::string name(){ return "Goomba";};
     void advance() override;

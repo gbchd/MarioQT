@@ -221,7 +221,10 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
     if(velocity.x() < 0){velocity.setX(0);}
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        hurt();
+        Koopa * koopa = dynamic_cast<Koopa *>(o);
+        if(!koopa || !koopa->isInShell() || (koopa->isInShell() && koopa->isMoving())){
+            hurt();
+        }
     }
 }
 
@@ -229,7 +232,10 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
     if(velocity.x() > 0){velocity.setX(0);}
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        hurt();
+        Koopa * koopa = dynamic_cast<Koopa *>(o);
+        if(!koopa || !koopa->isInShell() || (koopa->isInShell() && koopa->isMoving())){
+            hurt();
+        }
     }
 }
 
