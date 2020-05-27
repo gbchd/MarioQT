@@ -4,8 +4,8 @@
 Koopa::Koopa(Direction spawnDirection)
 {
     // set textures
-    texture_walk[0] = QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_walk[1] = QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
     texture_shell = QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-turtleback-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
 
     movingDirection = spawnDirection;
@@ -61,12 +61,18 @@ void Koopa::animate()
         setCurrentTexture(texture_dead);
     }
     else if(moving){
-        //setCurrentTexture(texture_walk[(walkCounter++/walk_div)%2]);
+        doSimpleAnimation(texture_walk, timerWalk, durationWalkTexture, currentWalkTexture);
     }
 
-    if(movingDirection == RIGHT)
-            setCurrentTexture(currentTexture.transformed(QTransform().scale(-1,1)));
 }
+
+void Koopa::setCurrentTexture(QPixmap texture){
+    if(movingDirection == RIGHT){
+        texture = texture.transformed(QTransform().scale(-1,1));
+    }
+    ObjectModel::setCurrentTexture(texture);
+}
+
 
 void Koopa::reactionNoMoreOnGround(){
     if(!shell){
@@ -88,6 +94,11 @@ void Koopa::collisionOnLeftHandler(ObjectModel *o){
         if(mario!=nullptr){
             mario->hurt();
         }
+
+        Enemy * enemy = dynamic_cast<Enemy*>(o);
+        if(enemy!=nullptr && shell){
+            enemy->hurt();
+        }
     }
 }
 
@@ -99,11 +110,21 @@ void Koopa::collisionOnRightHandler(ObjectModel *o){
         if(mario!=nullptr){
             mario->hurt();
         }
+
+        Enemy * enemy = dynamic_cast<Enemy*>(o);
+        if(enemy!=nullptr && shell){
+            enemy->hurt();
+        }
     }
 }
 
 void Koopa::collisionOnTopHandler(ObjectModel *o){
-    qDebug() << "test1";
+    if(dynamic_cast<Mario*>(o) && !shell){
+        hurt();
+    }
+}
+
+void Koopa::hitOnTop(ObjectModel *o){
     Mario *mario = dynamic_cast<Mario*>(o);
     if(!shell){
         if(mario){
@@ -111,13 +132,11 @@ void Koopa::collisionOnTopHandler(ObjectModel *o){
         }
     }
     else if(moving == true){
-        qDebug() << "test";
         moving = false;
     }
     else{
-        setDirection(inverse(mario->getDirection()));
+        setDirection(mario->getDirection());
         moving = true;
-        speed = 2;
     }
 }
 

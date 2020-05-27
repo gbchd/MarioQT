@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include "enemy.h"
+#include "Koopa.h"
 #include <QArrayData>
 
 class Mario : public Entity

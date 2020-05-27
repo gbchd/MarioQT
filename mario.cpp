@@ -104,9 +104,6 @@ void Mario::animate(){
         setCurrentTexture(texture_stand[big]);
     }
 
-    if(movingDirection == LEFT){
-        setCurrentTexture(currentTexture.transformed(QTransform().scale(-1,1)));
-    }
 }
 
 
@@ -248,7 +245,13 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     Entity::collisionOnBottomHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        enemy->hurt();
+        Koopa * koopa = dynamic_cast<Koopa *>(o);
+        if(koopa){
+            koopa->hitOnTop(this);
+        }
+        else{
+            enemy->hurt();
+        }
         bounce();
     }
 }

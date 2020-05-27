@@ -12,15 +12,20 @@ protected:
     bool shell;
 
     // textures
-    QPixmap texture_walk[2];            // walking animation (2 textures)
+    // textures
+    QList<QPixmap> texture_walk;                        // walking animation (2 textures)
     QPixmap texture_shell;
-    static const int walk_div = 10;
+    int durationWalkTexture = 100; // in ms
+    QElapsedTimer timerWalk;
+    int currentWalkTexture = 0;           // walking animation (2 textures)
 
     void reactionNoMoreOnGround() override;
 
     void collisionOnLeftHandler(ObjectModel *o) override;
     void collisionOnRightHandler(ObjectModel *o) override;
     void collisionOnTopHandler(ObjectModel *o) override;
+
+    void setCurrentTexture(QPixmap texture) override;
 
 public:
     Koopa(Direction spawnDirection = RIGHT);
@@ -30,6 +35,8 @@ public:
     void advance() override;
     void animate() override;
     void hurt() override;
+
+    void hitOnTop(ObjectModel *o);
 };
 
 #endif // KOOPA_H
