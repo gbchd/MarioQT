@@ -32,7 +32,6 @@ public:
     LevelEditorWidget();
 
     void setLevelEditorController(LevelEditorController * lec) { levelEditorController = lec; }
-    void initializeNewLevelEditor();
 
 private slots:
     void handleButtonSave();

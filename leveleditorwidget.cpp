@@ -7,10 +7,6 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonSave, SIGNAL (clicked()), this, SLOT (handleButtonSave()));
     connect(&buttonMenu, SIGNAL (clicked()), this, SLOT (handleButtonMenu()));
     connect(&buttonQuit, SIGNAL (clicked()), this, SLOT (handleButtonQuit()));
-}
-
-void LevelEditorWidget::initializeNewLevelEditor()
-{
     QVBoxLayout * mainVerticalLayout = new QVBoxLayout();
     this->setLayout(mainVerticalLayout);
 
@@ -86,7 +82,7 @@ void LevelEditorWidget::initializeNewLevelEditor()
     objectButtonsHorizontalLayout->addWidget(&buttonMario);
 
     QWidget * gameDisplayContainerWidget = new QWidget();
-    gameDisplayContainerWidget->resize(1920, 960);
+    gameDisplayContainerWidget->resize(1280, 720);
     mainVerticalLayout->addWidget(gameDisplayContainerWidget);
 
     QSlider * slider = new QSlider(Qt::Horizontal);

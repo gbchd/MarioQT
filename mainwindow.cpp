@@ -64,8 +64,7 @@ void MainWindow::goBackToMainMenu()
 void MainWindow::launchLevelEditor()
 {
     stackedWidget.setCurrentIndex(2);
-    levelEditorWidget.initializeNewLevelEditor();
-    resize(1920, 1080);
+    resize(1280, 790);
     centerOnScreen();
 }
 
