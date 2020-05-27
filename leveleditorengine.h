@@ -28,6 +28,7 @@ private:
 
 public:
     LevelEditorEngine();
+    void setLevelEditorView(LevelEditorView * lev) { levelEditorView = lev; }
     void update(CameraVisitor & visitor);
     void advance();
     void start();

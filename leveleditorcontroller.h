@@ -4,6 +4,8 @@
 #include "leveleditorwidget.h"
 
 class MainWindow;
+class LevelEditorView;
+class LevelEditorEngine;
 
 class LevelEditorController
 {

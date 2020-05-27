@@ -13,6 +13,8 @@
 
 #include "leveleditorcontroller.h"
 #include "leveleditorwidget.h"
+#include "leveleditorview.h"
+#include "leveleditorengine.h"
 
 #include "pausemenucontroller.h"
 #include "pausemenuwidget.h"
@@ -30,6 +32,8 @@ private:
 
     LevelEditorController levelEditorController;
     LevelEditorWidget levelEditorWidget;
+    LevelEditorView levelEditorView;
+    LevelEditorEngine levelEditorEngine;
 
     PauseMenuController pauseMenuController;
     PauseMenuWidget pauseMenuWidget;

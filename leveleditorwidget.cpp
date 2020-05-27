@@ -8,29 +8,25 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonSave, SIGNAL (clicked()), this, SLOT (handleButtonSave()));
     connect(&buttonMenu, SIGNAL (clicked()), this, SLOT (handleButtonMenu()));
     connect(&buttonQuit, SIGNAL (clicked()), this, SLOT (handleButtonQuit()));
-    QVBoxLayout * mainVerticalLayout = new QVBoxLayout();
-    this->setLayout(mainVerticalLayout);
 
-    QHBoxLayout * firstHorizontalLayout = new QHBoxLayout();
-    firstHorizontalLayout->setAlignment(Qt::AlignLeft);
-    mainVerticalLayout->addLayout(firstHorizontalLayout);
+    this->setLayout(&mainGridLayout);
 
-    QWidget * menuWidget = new QWidget();
-    QVBoxLayout * menuVerticalLayout = new QVBoxLayout(menuWidget);
-    menuWidget->setFixedSize(90, 70);
-    firstHorizontalLayout->addWidget(menuWidget);
+    firstHorizontalLayout.setAlignment(Qt::AlignLeft);
+    mainGridLayout.addLayout(&firstHorizontalLayout, 0, 0, Qt::AlignLeft);
+
+    firstHorizontalLayout.addLayout(&menuVerticalLayout);
+    menuVerticalLayout.setSpacing(0);
     buttonSave.setText("Save");
     buttonSave.setFixedSize(80, 20);
-    menuVerticalLayout->addWidget(&buttonSave);
+    menuVerticalLayout.addWidget(&buttonSave);
     buttonMenu.setText("Menu");
     buttonMenu.setFixedSize(80, 20);
-    menuVerticalLayout->addWidget(&buttonMenu);
+    menuVerticalLayout.addWidget(&buttonMenu);
     buttonQuit.setText("Quit");
     buttonQuit.setFixedSize(80, 20);
-    menuVerticalLayout->addWidget(&buttonQuit);
+    menuVerticalLayout.addWidget(&buttonQuit);
 
-    QHBoxLayout * objectButtonsHorizontalLayout = new QHBoxLayout();
-    firstHorizontalLayout->addLayout(objectButtonsHorizontalLayout);
+    firstHorizontalLayout.addLayout(&objectButtonsHorizontalLayout);
 
     QPixmap brickIcon(":/resources/graphics/blocs/brick.bmp");
     QIcon brickButtonIcon(brickIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
@@ -74,21 +70,24 @@ LevelEditorWidget::LevelEditorWidget()
     buttonMario.setIconSize(QSize(buttonSize, buttonSize));
     buttonMario.setFixedSize(buttonSize,buttonSize);
 
-    objectButtonsHorizontalLayout->addWidget(&buttonBrick);
-    objectButtonsHorizontalLayout->addWidget(&buttonBlock);
-    objectButtonsHorizontalLayout->addWidget(&buttonWall);
-    objectButtonsHorizontalLayout->addWidget(&buttonSecretBox);
-    objectButtonsHorizontalLayout->addWidget(&buttonGoomba);
-    objectButtonsHorizontalLayout->addWidget(&buttonTurtle);
-    objectButtonsHorizontalLayout->addWidget(&buttonMario);
+    objectButtonsHorizontalLayout.addWidget(&buttonBrick);
+    objectButtonsHorizontalLayout.addWidget(&buttonBlock);
+    objectButtonsHorizontalLayout.addWidget(&buttonWall);
+    objectButtonsHorizontalLayout.addWidget(&buttonSecretBox);
+    objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
+    objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
+    objectButtonsHorizontalLayout.addWidget(&buttonMario);
 
-    QWidget * gameDisplayContainerWidget = new QWidget();
-    gameDisplayContainerWidget->resize(1280, 720);
-    levelEditorView = new LevelEditorView();
-    mainVerticalLayout->addWidget(levelEditorView);
+    gameDisplayContainerWidget.resize(1280, 720);
+
 
     QSlider * slider = new QSlider(Qt::Horizontal);
-    mainVerticalLayout->addWidget(slider);
+    mainGridLayout.addWidget(slider, 2, 0);
+}
+
+void LevelEditorWidget::setLevelEditorView(LevelEditorView *lev){
+    levelEditorView = lev;
+    mainGridLayout.addWidget(levelEditorView, 1, 0);
 }
 
 void LevelEditorWidget::handleButtonSave()

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QGridLayout>
 #include <QSlider>
 
 class LevelEditorController;
@@ -31,10 +32,18 @@ private:
     QPushButton buttonTurtle;
     QPushButton buttonMario;
 
+    QGridLayout mainGridLayout;
+    QHBoxLayout firstHorizontalLayout;
+    QVBoxLayout menuVerticalLayout;
+    //QWidget menuWidget;
+    QHBoxLayout objectButtonsHorizontalLayout;
+    QWidget gameDisplayContainerWidget;
+
 public:
     LevelEditorWidget();
 
     void setLevelEditorController(LevelEditorController * lec) { levelEditorController = lec; }
+    void setLevelEditorView(LevelEditorView * lev);
 
 private slots:
     void handleButtonSave();
