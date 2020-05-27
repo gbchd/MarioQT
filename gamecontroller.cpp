@@ -250,11 +250,19 @@ void GameController::start(){
     //We setup the game engine : A timer that calls advance every 10ms
     QObject::connect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
 
+    qDebug() << "Tickrate" << tickrate;
     engine.setTimerType(Qt::PreciseTimer);
     engine.setInterval(tickrate); // possible de le passer en dynamique
 
     generateMap();
     engine.start();
+}
+
+
+void GameController::stop(){
+    clean();
+    engine.stop();
+    QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
 }
 
 void GameController::reset(){

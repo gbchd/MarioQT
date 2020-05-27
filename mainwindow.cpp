@@ -16,7 +16,6 @@ MainWindow::MainWindow() : QMainWindow()
     gameview.setGameController(&gamecontroller);
 
 
-
     // We initialize the levelEditor's widget and controller
     levelEditorController.setLevelEditorWidget(&levelEditorWidget);
     levelEditorController.setMainWindowPointer(this);
@@ -56,6 +55,7 @@ void MainWindow::displayPauseMenu()
 
 void MainWindow::goBackToMainMenu()
 {
+    gamecontroller.stop();
     stackedWidget.setCurrentIndex(0);
     resize(500,500);
     centerOnScreen();
