@@ -12,6 +12,6 @@
     },
     "entities" : {
         "goomba1" : {"type":"goomba", "x":19 ,"y":18},
-        "turtle1" : {"type":"turtle", "x":23 ,"y":21}
+        "koopa1" : {"type":"koopa", "x":23 ,"y":21}
     }
 }

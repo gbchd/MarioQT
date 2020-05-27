@@ -39,6 +39,10 @@ private:
     void setBig();
     void setSmall();
     void stopTransforming();
+<<<<<<< Updated upstream
+=======
+    void doTransforming();
+>>>>>>> Stashed changes
     void collisionOnBottomHandler(ObjectModel *o) override;
     void collisionOnLeftHandler(ObjectModel * o) override;
     void collisionOnRightHandler(ObjectModel * o) override;
@@ -93,6 +97,10 @@ public:
     void hurt();
     void die() override;
     void startTransforming();
+<<<<<<< Updated upstream
+=======
+    Direction getDirection(){return movingDirection;};
+>>>>>>> Stashed changes
 };
 
 #endif // MARIO_H

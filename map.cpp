@@ -109,16 +109,15 @@ void Map::addEntity(QJsonObject entityObject){
 
         entities.append(goomba);
     }
-    else if(type.compare("turtle") == 0){
-        /*
-        Turtle * turtle = new Turtle();
+    else if(type.compare("koopa") == 0){
+
+        Koopa * koopa = new Koopa();
         int x = entityObject["x"].toInt();
         int y = entityObject["y"].toInt();
-        turtle->setX(x*block_size);
-        turtle->setY(y*block_size-turtle->getCurrentTexture().height());
+        koopa->moveTo(x*block_size, y*block_size-koopa->getCurrentTexture().height());
 
-        entities.append(turtle);
-        */
+        entities.append(koopa);
+
     }
     else{
         //erreur

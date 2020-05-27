@@ -14,6 +14,7 @@
 #include "entity.h"
 #include "mario.h"
 #include "goomba.h"
+#include "koopa.h"
 
 
 class Map

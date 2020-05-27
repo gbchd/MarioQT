@@ -84,35 +84,7 @@ void Mario::advance(){
 void Mario::animate(){
 
     if(transforming){
-        if(timerTransformation.elapsed() >= durationOfTransformation){
-            if(!transformationType){
-                currentTransformingTexture++;
-            }
-            else{
-                currentTransformingTexture--;
-            }
-
-            timerTransformation.restart();
-            qDebug() << currentTransformingTexture;
-            if(currentTransformingTexture == 3 || currentTransformingTexture == -1) {
-                stopTransforming();
-            }
-            else{
-                setCurrentTexture(texture_small_to_big[currentTransformingTexture]);
-
-                if(currentTransformingTexture == 0)
-                    setSmall();
-                else if(currentTransformingTexture == 2)
-                        setBig();
-                else{
-                    if(!transformationType){
-                        moveTo(position.x(), position.y() - BLOCSIZE);
-                        hitbox.moveTo(position.x(), position.y() + BLOCSIZE);
-                    }
-                }
-            }
-
-        }
+        doTransforming();
     }
     else if(dead){
         setCurrentTexture(texture_dead);
@@ -196,6 +168,37 @@ void Mario::setSmall(){
     hitboxEntity.moveTo(position.x() + BLOCSIZE/4, position.y());
     setHitboxEntityWidth(BLOCSIZE/2);
     setHitboxEntityHeight(BLOCSIZE);
+}
+
+void Mario::doTransforming(){
+    if(timerTransformation.elapsed() >= durationOfTransformation){
+        if(!transformationType){
+            currentTransformingTexture++;
+        }
+        else{
+            currentTransformingTexture--;
+        }
+
+        timerTransformation.restart();
+        if(currentTransformingTexture == 3 || currentTransformingTexture == -1) {
+            stopTransforming();
+        }
+        else{
+            setCurrentTexture(texture_small_to_big[currentTransformingTexture]);
+
+            if(currentTransformingTexture == 0)
+                setSmall();
+            else if(currentTransformingTexture == 2)
+                    setBig();
+            else{
+                if(!transformationType){
+                    moveTo(position.x(), position.y() - BLOCSIZE);
+                    hitbox.moveTo(position.x(), position.y() + BLOCSIZE);
+                }
+            }
+        }
+
+    }
 }
 
 void Mario::startTransforming(){

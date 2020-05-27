@@ -18,7 +18,7 @@ public:
     Enemy();
 
     // getters
-    bool isHurtable(){return hurtable;}
+    bool isHurtable(){return hurtable;};
     virtual void die() override;
     virtual void hurt();
 };

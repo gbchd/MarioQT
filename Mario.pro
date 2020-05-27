@@ -27,6 +27,7 @@ SOURCES += \
     inert.cpp \
     leveleditorcontroller.cpp \
     leveleditorwidget.cpp \
+    koopa.cpp \
     main.cpp \
     mainmenucontroller.cpp \
     mainmenuwidget.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     inert.h \
     leveleditorcontroller.h \
     leveleditorwidget.h \
+    koopa.h \
     mainmenucontroller.h \
     mainmenuwidget.h \
     mainwindow.h \
