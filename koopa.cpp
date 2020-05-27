@@ -20,10 +20,16 @@ Koopa::Koopa(Direction spawnDirection)
     velocity.setX(0);
     velocity.setY(0);
 
-    setHitboxWidth(2*BLOCSIZE/3);
-    setHitboxHeight(2*BLOCSIZE/3);
+    setHitboxWidth(BLOCSIZE);
+    setHitboxHeight(BLOCSIZE);
 
-    hitbox.moveTo(position.x()+BLOCSIZE/2 - hitbox.width()/2 , position.y() + BLOCSIZE - hitbox.height());
+    hitbox.moveTo(position.x(), position.y());
+
+
+    setHitboxEntityWidth(2*BLOCSIZE/3);
+    setHitboxEntityHeight(2*BLOCSIZE/3);
+
+    hitboxEntity.moveTo(position.x()+BLOCSIZE/2 - hitboxEntity.width()/2 , position.y() + BLOCSIZE - hitboxEntity.height());
 
 }
 
@@ -55,7 +61,7 @@ void Koopa::animate()
         setCurrentTexture(texture_dead);
     }
     else if(moving){
-        setCurrentTexture(texture_walk[(walkCounter++/walk_div)%2]);
+        //setCurrentTexture(texture_walk[(walkCounter++/walk_div)%2]);
     }
 
     if(movingDirection == RIGHT)

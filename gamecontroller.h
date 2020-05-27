@@ -84,6 +84,8 @@ public slots:
     // Start new game
     void start();
 
+    void stop();
+
     // Game over
     void gameover(){}
 };
