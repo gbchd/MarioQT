@@ -1,9 +1,10 @@
 #include "graphicvisitor.h"
 
-#include "gameview.h"
-#include "mario.h"
 #include <QDebug>
 
+#include "leveleditorview.h"
+#include "gameview.h"
+#include "mario.h"
 
 GraphicVisitor::GraphicVisitor(GameView * gv):painter(gv)
 {
@@ -12,6 +13,12 @@ GraphicVisitor::GraphicVisitor(GameView * gv):painter(gv)
     levelWidth = gv->getlevelSize().width();
 }
 
+GraphicVisitor::GraphicVisitor(LevelEditorView * lev)
+{
+    position = lev->getCameraPosition();
+    halfWindowWidth = lev->getWindowSize().width()/2;
+    levelWidth = lev->getlevelSize().width();
+}
 
 void GraphicVisitor::paint(){
     for(int zValue = 0; zValue < objects.length(); zValue++){
@@ -21,6 +28,3 @@ void GraphicVisitor::paint(){
         }
     }
 }
-
-
-

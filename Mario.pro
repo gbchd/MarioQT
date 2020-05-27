@@ -26,6 +26,8 @@ SOURCES += \
     hitboxgraphicvisitor.cpp \
     inert.cpp \
     leveleditorcontroller.cpp \
+    leveleditorengine.cpp \
+    leveleditorview.cpp \
     leveleditorwidget.cpp \
     koopa.cpp \
     main.cpp \
@@ -51,6 +53,8 @@ HEADERS += \
     hitboxgraphicvisitor.h \
     inert.h \
     leveleditorcontroller.h \
+    leveleditorengine.h \
+    leveleditorview.h \
     leveleditorwidget.h \
     koopa.h \
     mainmenucontroller.h \

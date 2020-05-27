@@ -7,6 +7,8 @@
 #include <QSlider>
 
 class LevelEditorController;
+class LevelEditorView;
+class LevelEditorEngine;
 
 class LevelEditorWidget : public QWidget
 {
@@ -14,6 +16,7 @@ class LevelEditorWidget : public QWidget
 
 private:
     LevelEditorController * levelEditorController;
+    LevelEditorView * levelEditorView;
 
     QPushButton buttonSave;
     QPushButton buttonMenu;

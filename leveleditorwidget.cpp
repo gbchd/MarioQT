@@ -1,6 +1,7 @@
 #include "leveleditorwidget.h"
 
 #include "leveleditorcontroller.h"
+#include "leveleditorview.h"
 
 LevelEditorWidget::LevelEditorWidget()
 {
@@ -83,7 +84,8 @@ LevelEditorWidget::LevelEditorWidget()
 
     QWidget * gameDisplayContainerWidget = new QWidget();
     gameDisplayContainerWidget->resize(1280, 720);
-    mainVerticalLayout->addWidget(gameDisplayContainerWidget);
+    levelEditorView = new LevelEditorView();
+    mainVerticalLayout->addWidget(levelEditorView);
 
     QSlider * slider = new QSlider(Qt::Horizontal);
     mainVerticalLayout->addWidget(slider);

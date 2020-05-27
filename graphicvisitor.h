@@ -9,6 +9,7 @@
 #include "objectmodel.h"
 
 class GameView;
+class LevelEditorView;
 
 class GraphicVisitor : public CameraVisitor
 {
@@ -17,6 +18,7 @@ private:
 
 public:
     GraphicVisitor(GameView * gv);
+    GraphicVisitor(LevelEditorView * lev);
     void paint();
 };
 
