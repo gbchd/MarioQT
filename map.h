@@ -15,6 +15,10 @@
 #include "mario.h"
 #include "goomba.h"
 #include "koopa.h"
+#include "wall.h"
+#include "block.h"
+#include "box.h"
+#include "brick.h"
 
 
 class Map

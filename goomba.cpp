@@ -6,7 +6,7 @@ Goomba::Goomba(Direction spawnDirection)
     // set textures
     texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
     texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
-    texture_dead = QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-dead.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_dead = QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-dead.png")).scaled(BLOCSIZE,7,Qt::IgnoreAspectRatio);
 
     movingDirection = spawnDirection;
 

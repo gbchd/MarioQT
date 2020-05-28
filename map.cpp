@@ -57,13 +57,13 @@ Map::Map(QString filename){
  */
 void Map::addInert(QJsonObject inertObject){
     QString type = inertObject["type"].toString();
-    if(!type.compare("wall")){
-        Inert * block = new Inert();
+    if(type.compare("wall") == 0){
+        Wall * wall = new Wall();
 
         int x = inertObject["x"].toInt();
         int y = inertObject["y"].toInt();
 
-        block->moveTo(x*block_size,y*block_size);
+        wall->moveTo(x*block_size,y*block_size);
 
 
         //====================================
@@ -74,15 +74,72 @@ void Map::addInert(QJsonObject inertObject){
         int w = inertObject["width"].toInt();
         int h = inertObject["height"].toInt();
 
+        wall->setHitboxWidth(w*block_size);
+        wall->setHitboxHeight(h*block_size);
+
+        QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/wall.png");
+        wall->setCurrentTexture(newTexture);
+
+        inerts.append(wall);
+    }
+    else if(type.compare("block") == 0){
+        Block * block = new Block();
+
+        int x = inertObject["x"].toInt();
+        int y = inertObject["y"].toInt();
+
+        block->moveTo(x*block_size,y*block_size);
+
+        int w = inertObject["width"].toInt();
+        int h = inertObject["height"].toInt();
+
         block->setHitboxWidth(w*block_size);
         block->setHitboxHeight(h*block_size);
 
-        QPixmap newTexture = paintSurface(w, h , ":/resources/graphics/blocs/wall.png");
+        QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/block.png");
         block->setCurrentTexture(newTexture);
 
         inerts.append(block);
     }
-    else if(type.compare("anotherBlock")){
+    else if(type.compare("box") == 0){
+        Box * box = new Box();
+
+        int x = inertObject["x"].toInt();
+        int y = inertObject["y"].toInt();
+
+        box->moveTo(x*block_size,y*block_size);
+
+        int w = inertObject["width"].toInt();
+        int h = inertObject["height"].toInt();
+
+        box->setHitboxWidth(w*block_size);
+        box->setHitboxHeight(h*block_size);
+
+        QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/box-0.bmp");
+        box->setCurrentTexture(newTexture);
+
+        inerts.append(box);
+    }
+    else if(type.compare("brick") == 0){
+        Brick * brick = new Brick();
+
+        int x = inertObject["x"].toInt();
+        int y = inertObject["y"].toInt();
+
+        brick->moveTo(x*block_size,y*block_size);
+
+        int w = inertObject["width"].toInt();
+        int h = inertObject["height"].toInt();
+
+        brick->setHitboxWidth(w*block_size);
+        brick->setHitboxHeight(h*block_size);
+
+        QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/brick.bmp");
+        brick->setCurrentTexture(newTexture);
+
+        inerts.append(brick);
+    }
+    else if(type.compare("anotherBlock") == 0){
         //add another block
     }
     else{
