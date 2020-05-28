@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QLabel>
 
 class PauseMenuController;
 

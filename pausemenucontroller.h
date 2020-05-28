@@ -2,6 +2,7 @@
 #define PAUSEMENUCONTROLLER_H
 
 #include "pausemenuwidget.h"
+#include <QCoreApplication>
 
 class MainMenuController;
 class MainWindow;
@@ -17,6 +18,7 @@ public:
     void setPauseMenuWidget(PauseMenuWidget * pmw){ pauseMenuWidget = pmw; }
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; }
     void launchMainMenu();
+    void quitApplication();
 };
 
 #endif // PAUSEMENUCONTROLLER_H
