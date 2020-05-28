@@ -31,8 +31,8 @@ private:
     GameView gameview;
 
     LevelEditorController levelEditorController;
-    LevelEditorWidget levelEditorWidget;
     LevelEditorView levelEditorView;
+    LevelEditorWidget levelEditorWidget;
     LevelEditorEngine levelEditorEngine;
 
     PauseMenuController pauseMenuController;

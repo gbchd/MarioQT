@@ -8,6 +8,17 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonSave, SIGNAL (clicked()), this, SLOT (handleButtonSave()));
     connect(&buttonMenu, SIGNAL (clicked()), this, SLOT (handleButtonMenu()));
     connect(&buttonQuit, SIGNAL (clicked()), this, SLOT (handleButtonQuit()));
+    connect(&gridRadioButton, SIGNAL (toggled(bool)), this, SLOT (handleGridRadioButton()));
+
+    connect(&buttonBrick, SIGNAL (clicked()), this, SLOT (handleButtonBrick()));
+    connect(&buttonBlock, SIGNAL (clicked()), this, SLOT (handleButtonBlock()));
+    connect(&buttonWall, SIGNAL (clicked()), this, SLOT (handleButtonWall()));
+    connect(&buttonSecretBox, SIGNAL (clicked()), this, SLOT (handleButtonSecretBox()));
+    connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
+    connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
+    connect(&buttonMario, SIGNAL (clicked()), this, SLOT (handleButtonMario()));
+
+    mouseState = UNKNOWN;
 
     this->setLayout(&mainGridLayout);
 
@@ -78,8 +89,10 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
     objectButtonsHorizontalLayout.addWidget(&buttonMario);
 
-    gameDisplayContainerWidget.resize(1280, 720);
+    gridRadioButton.setText("Grid");
+    firstHorizontalLayout.addWidget(&gridRadioButton);
 
+    gameDisplayContainerWidget.resize(1280, 720);
 
     QSlider * slider = new QSlider(Qt::Horizontal);
     mainGridLayout.addWidget(slider, 2, 0);
@@ -90,17 +103,10 @@ void LevelEditorWidget::setLevelEditorView(LevelEditorView *lev){
     mainGridLayout.addWidget(levelEditorView, 1, 0);
 }
 
-void LevelEditorWidget::handleButtonSave()
-{
-    levelEditorController->saveLevel();
-}
+void LevelEditorWidget::handleButtonSave() { levelEditorController->saveLevel(); }
 
-void LevelEditorWidget::handleButtonMenu()
-{
-    levelEditorController->goBackToMainMenu();
-}
+void LevelEditorWidget::handleButtonMenu() { levelEditorController->goBackToMainMenu(); }
 
-void LevelEditorWidget::handleButtonQuit()
-{
-    levelEditorController->quit();
-}
+void LevelEditorWidget::handleButtonQuit() { levelEditorController->quit(); }
+
+void LevelEditorWidget::handleGridRadioButton() { levelEditorView->setShowLevelGrid(gridRadioButton.isChecked()); }

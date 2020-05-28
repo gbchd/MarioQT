@@ -30,6 +30,7 @@ SOURCES += \
     leveleditorview.cpp \
     leveleditorwidget.cpp \
     koopa.cpp \
+    levelgridvisitor.cpp \
     main.cpp \
     mainmenucontroller.cpp \
     mainmenuwidget.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
     leveleditorview.h \
     leveleditorwidget.h \
     koopa.h \
+    levelgridvisitor.h \
     mainmenucontroller.h \
     mainmenuwidget.h \
     mainwindow.h \

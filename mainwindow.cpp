@@ -19,10 +19,10 @@ MainWindow::MainWindow() : QMainWindow()
     // We initialize the levelEditor's widget and controller
     levelEditorController.setLevelEditorWidget(&levelEditorWidget);
     levelEditorController.setMainWindowPointer(this);
+    levelEditorWidget.setLevelEditorView(&levelEditorView);
     levelEditorWidget.setLevelEditorController(&levelEditorController);
     levelEditorView.setLevelEditorEngine(&levelEditorEngine);
     levelEditorEngine.setLevelEditorView(&levelEditorView);
-    levelEditorWidget.setLevelEditorView(&levelEditorView);
 
     // We initialize the pauseMenu's widget and controller
     pauseMenuController.setPauseMenuWidget(&pauseMenuWidget);
@@ -67,6 +67,7 @@ void MainWindow::goBackToMainMenu()
 void MainWindow::launchLevelEditor()
 {
     stackedWidget.setCurrentIndex(2);
+    levelEditorEngine.start();
     resize(1280, 790);
     centerOnScreen();
 }

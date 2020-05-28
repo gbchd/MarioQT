@@ -30,10 +30,12 @@ public:
     LevelEditorEngine();
     void setLevelEditorView(LevelEditorView * lev) { levelEditorView = lev; }
     void update(CameraVisitor & visitor);
-    void advance();
     void start();
     void addInert(Inert * i);
     void addEntity(Entity * e);
+
+public slots:
+    void advance();
 };
 
 #endif // LEVELEDITORENGINE_H

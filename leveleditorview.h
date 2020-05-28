@@ -5,6 +5,7 @@
 #include <QPainter>
 
 #include "graphicvisitor.h"
+#include "levelgridvisitor.h"
 
 class LevelEditorEngine;
 
@@ -20,12 +21,16 @@ private:
     QSize levelSize;
     QSize windowSize;
 
+    bool showLevelGrid;
+
 public:
     LevelEditorView();
 
     void setBackground(QColor color){ backgroundColor = color; }
     void paintEvent(QPaintEvent *event) override;
     void setLevelEditorEngine(LevelEditorEngine * lee){ levelEditorEngine = lee; }
+
+    void setShowLevelGrid(bool b){ showLevelGrid = b; }
 
     QPointF getCameraPosition(){ return cameraPosition; }
     QSize getWindowSize(){return windowSize;}
