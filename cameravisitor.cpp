@@ -15,9 +15,6 @@ void CameraVisitor::setup(QPointF pos, int windowWidth, int levelWidth){
 }
 
 void CameraVisitor::visit(ObjectModel *o){
-    if(dynamic_cast<Mario*>(o)){
-        setPosition(o->getPosition());
-    }
     int zValue = o->getZValue();
     if(zValue < 0){zValue=0;}
     if(zValue > maxZValue){zValue = maxZValue;}
