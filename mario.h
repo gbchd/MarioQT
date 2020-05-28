@@ -11,10 +11,10 @@ class Mario : public Entity
 private:
     // === Sprites ===   
     QList<QPixmap> texture_walk[2]; // small/big walking animation (3 textures)
-    QPixmap texture_stand[2]; // small/big stand texture
+    QPixmap texture_stand[3]; // small/big stand texture
     QPixmap texture_jump[2]; // small/big jump texture
     QPixmap texture_dead; // Mario dies
-    QPixmap texture_small_to_big[4]; // Mario small to big transformation
+    QPixmap texture_small_to_big[8]; // Mario small to big transformation
     // ================
 
     // === Animations ===
@@ -24,7 +24,7 @@ private:
     int durationRunningTexture = 100; // in ms
     QElapsedTimer timerWalk;
     int currentWalkTexture = 0;
-    int durationOfTransformation = 150; // in ms
+    int durationOfTransformation = 100; // in ms
     QElapsedTimer timerTransformation;
     int currentTransformingTexture;
     int transformationType;

@@ -13,13 +13,19 @@ Mario::Mario()
 
     texture_stand[0]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-stand.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_stand[1]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_jump[0]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-jump.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_jump[1]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_dead	   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-fall.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+
     texture_small_to_big[0] = texture_stand[0];
-    texture_small_to_big[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_small_to_big[2] = texture_stand[1];
-    texture_small_to_big[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_small_to_big[1] = texture_stand[2];
+    texture_small_to_big[2] = texture_stand[0];
+    texture_small_to_big[3] = texture_stand[2];
+    texture_small_to_big[4] = texture_stand[1];
+    texture_small_to_big[5] = texture_stand[0];
+    texture_small_to_big[6] = texture_stand[2];
+    texture_small_to_big[7] = texture_stand[1];
 
     currentTexture = texture_stand[1];
 
@@ -177,21 +183,52 @@ void Mario::doTransforming(){
         }
 
         timerTransformation.restart();
-        if(currentTransformingTexture == 3 || currentTransformingTexture == -1) {
+        if(currentTransformingTexture == 8 || currentTransformingTexture == -1) {
             stopTransforming();
         }
         else{
             setCurrentTexture(texture_small_to_big[currentTransformingTexture]);
 
-            if(currentTransformingTexture == 0)
-                setSmall();
-            else if(currentTransformingTexture == 2)
-                    setBig();
-            else{
-                if(!transformationType){
-                    moveTo(position.x(), position.y() - BLOCSIZE);
-                    hitbox.moveTo(position.x(), position.y() + BLOCSIZE);
+            if(currentTransformingTexture == 0 || currentTransformingTexture == 2 || currentTransformingTexture == 5){
+                setHitboxWidth(BLOCSIZE);
+                setHitboxHeight(BLOCSIZE);
+                setHitboxEntityWidth(BLOCSIZE/2);
+                setHitboxEntityHeight(BLOCSIZE);
+
+                if(currentTransformingTexture == 5 && !transformationType){
+                    moveTo(position.x(), position.y() + BLOCSIZE);
                 }
+                else{
+                    moveTo(position.x(), position.y() + BLOCSIZE/2);
+                }
+                big=false;
+            }
+            else if(currentTransformingTexture == 1 || currentTransformingTexture == 3 || currentTransformingTexture == 6){
+                if(!transformationType){
+                    moveTo(position.x(), position.y() - BLOCSIZE/2);
+                }
+                else{
+                    moveTo(position.x(), position.y() + BLOCSIZE/2);
+                }
+
+                setHitboxWidth(BLOCSIZE);
+                setHitboxHeight((1.5)*BLOCSIZE);
+                setHitboxEntityWidth(BLOCSIZE/2);
+                setHitboxEntityHeight((1.5)*BLOCSIZE - BLOCSIZE/10);
+            }
+            else if(currentTransformingTexture == 4 || currentTransformingTexture == 7){
+                setHitboxWidth(BLOCSIZE);
+                setHitboxHeight(2*BLOCSIZE);
+                setHitboxEntityWidth(BLOCSIZE/2);
+                setHitboxEntityHeight(2*BLOCSIZE - BLOCSIZE/10);
+
+                if(currentTransformingTexture == 4 && transformationType){
+                    moveTo(position.x(), position.y() - BLOCSIZE);
+                }
+                else{
+                    moveTo(position.x(), position.y() - BLOCSIZE/2);
+                }
+                big=true;
             }
         }
 
@@ -202,7 +239,7 @@ void Mario::startTransforming(){
     transforming=true;
     if(big == true){
         transformationType = 1;
-        currentTransformingTexture = 2;
+        currentTransformingTexture = 7;
     }
     else{
         transformationType = 0;
