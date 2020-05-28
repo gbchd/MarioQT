@@ -18,7 +18,7 @@ private:
     GameController * gameController;
     QColor backgroundColor;
 
-    QPointF cameraPosition;
+    int cameraPosition;
     QSize levelSize;
     QSize windowSize;
 
@@ -35,7 +35,7 @@ public:
     void paintEvent(QPaintEvent *event) override;
     void setGameController(GameController * gc){gameController = gc;}
 
-    QPointF getCameraPosition(){return cameraPosition;}
+    int getCameraPosition(){return cameraPosition;}
 
     QSize getWindowSize(){return windowSize;}
     void setWindowSize(QSize size){windowSize = size;}

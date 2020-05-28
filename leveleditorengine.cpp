@@ -6,15 +6,17 @@ LevelEditorEngine::LevelEditorEngine()
     mouseState = NOTPRESSED;
     selectedButton = NOBUTTON;
     objectToPaintOnMouse = nullptr;
-    cameraMario = nullptr;
     fakeMario = nullptr;
     levelEditorView = nullptr;
-    tickrate = 1000/60;
+    levelEditorWidget = nullptr;
+    tickrate = 1000/240;
 }
 
 void LevelEditorEngine::update(CameraVisitor & visitor){
     int X = getColumnFromMousePosition()*block_size;
     int Y = getLineFromMousePosition()*block_size;
+
+    visitor.setPosition(levelEditorView->getCameraPosition());
 
     if(mouseState == LEFTCLICKPRESSED){
         addObjectOnMousePosition();
@@ -36,6 +38,13 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
         objectToPaintOnMouse->moveTo(X, Y);
         objectToPaintOnMouse->accept(visitor);
     }
+}
+
+void LevelEditorEngine::changeCameraPosition(int value)
+{
+     if(levelEditorView != nullptr){
+         levelEditorView->setCameraPosition(value);
+     }
 }
 
 void LevelEditorEngine::addObjectOnMousePosition()
@@ -219,7 +228,7 @@ int LevelEditorEngine::getLineFromMousePosition()
 
 int LevelEditorEngine::getColumnFromMousePosition()
 {
-     return floor(levelEditorView->mapFromGlobal(QCursor::pos()).x()/block_size);
+     return floor( (levelEditorView->mapFromGlobal(QCursor::pos()).x() + levelEditorView->getCameraPosition() - levelEditorView->getWindowSize().width()/2) / block_size);
 }
 
 void LevelEditorEngine::saveLevel()
@@ -238,6 +247,11 @@ void LevelEditorEngine::clearMap()
         objects.removeOne(inert);
         inerts.removeOne(inert);
         delete inert;
+    }
+    if(fakeMario != nullptr){
+        objects.removeOne(fakeMario);
+        delete fakeMario;
+        fakeMario = nullptr;
     }
 }
 

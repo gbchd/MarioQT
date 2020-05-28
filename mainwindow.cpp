@@ -17,8 +17,8 @@ MainWindow::MainWindow() : QMainWindow()
 
 
     // We initialize the levelEditor's widget and controller
-    levelEditorWidget.setLevelEditorView(&levelEditorView);
     levelEditorWidget.setLevelEditorEngine(&levelEditorEngine);
+    levelEditorWidget.setLevelEditorView(&levelEditorView);
     levelEditorView.setLevelEditorEngine(&levelEditorEngine);
     levelEditorEngine.setLevelEditorWidget(&levelEditorWidget);
     levelEditorEngine.setLevelEditorView(&levelEditorView);

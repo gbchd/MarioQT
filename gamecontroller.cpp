@@ -48,7 +48,7 @@ void GameController::advance() {
 }
 
 void GameController::update(CameraVisitor & visitor){
-    visitor.setPosition(mario->getPosition());
+    visitor.setPosition(mario->getPosition().x());
     for(ObjectModel * object : objects){
         object->accept(visitor);
     }

@@ -3,8 +3,13 @@
 #include "leveleditorview.h"
 #include "leveleditorengine.h"
 
+#include <QDebug>
+
 LevelEditorWidget::LevelEditorWidget()
 {
+    levelEditorView = nullptr;
+    levelEditorEngine = nullptr;
+
     connect(&buttonSave, SIGNAL (clicked()), this, SLOT (handleButtonSave()));
     connect(&buttonMenu, SIGNAL (clicked()), this, SLOT (handleButtonMenu()));
     connect(&buttonClear, SIGNAL (clicked()), this, SLOT (handleButtonClear()));
@@ -17,6 +22,8 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
     connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
     connect(&buttonMario, SIGNAL (clicked()), this, SLOT (handleButtonMario()));
+
+    connect(&slider, SIGNAL (valueChanged(int)), this, SLOT (handleSliderValueChange(int)));
 
     this->setLayout(&mainGridLayout);
 
@@ -134,12 +141,14 @@ LevelEditorWidget::LevelEditorWidget()
 
     gameDisplayContainerWidget.resize(1280, 720);
 
-    QSlider * slider = new QSlider(Qt::Horizontal);
-    mainGridLayout.addWidget(slider, 2, 0);
+    slider.setOrientation(Qt::Horizontal);
+    mainGridLayout.addWidget(&slider, 2, 0);
 }
 
 void LevelEditorWidget::setLevelEditorView(LevelEditorView *lev){
     levelEditorView = lev;
+    slider.setMaximum(levelEditorView->getlevelSize().width() - levelEditorView->getWindowSize().width()/2);
+    slider.setMinimum(0 + levelEditorView->getWindowSize().width()/2);
     mainGridLayout.addWidget(levelEditorView, 1, 0);
 }
 
@@ -176,3 +185,9 @@ void LevelEditorWidget::handleButtonTurtle() { levelEditorEngine->setSelectedBut
 void LevelEditorWidget::handleButtonTurtleFlying() { levelEditorEngine->setSelectedButton(FLYINGTURTLE); }
 
 void LevelEditorWidget::handleButtonMario() { levelEditorEngine->setSelectedButton(MARIO); }
+
+void LevelEditorWidget::handleSliderValueChange(int value) {
+    if(levelEditorEngine != nullptr){
+        levelEditorEngine->changeCameraPosition(value);
+    }
+}

@@ -18,7 +18,7 @@ private:
     QColor backgroundColor;
     QPalette palette; //Used to paint the background
 
-    QPointF cameraPosition;
+    int cameraPosition;
     QSize levelSize;
     QSize windowSize;
 
@@ -37,7 +37,8 @@ public:
 
     void setShowLevelGrid(bool b){ showLevelGrid = b; }
 
-    QPointF getCameraPosition(){ return cameraPosition; }
+    int getCameraPosition(){ return cameraPosition; }
+    void setCameraPosition(int position){ cameraPosition = position; }
     QSize getWindowSize(){return windowSize;}
     QSize getlevelSize(){return levelSize;}
 };

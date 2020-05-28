@@ -37,7 +37,6 @@ private:
     MainWindow * mainWindow;
 
     // Possède des objets de type Inert et Entity
-    Mario * cameraMario;
     Mario * fakeMario;
     QList<Inert*> inerts;
     QList<Entity*> entities;
@@ -53,6 +52,7 @@ public:
     void addObjectOnMousePosition();
     void deleteObjectAtPosition(int x, int y);
     void update(CameraVisitor & visitor);
+    void changeCameraPosition(int value);
     void start();
 
     int getLineFromMousePosition();

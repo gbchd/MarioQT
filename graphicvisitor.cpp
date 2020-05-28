@@ -24,7 +24,7 @@ void GraphicVisitor::paint(){
     for(int zValue = 0; zValue < objects.length(); zValue++){
         for(ObjectModel * o : objects[zValue]){
             painter.setOpacity(o->getOpacity());
-            painter.drawPixmap(o->getPosition() - position, o->getCurrentTexture());
+            painter.drawPixmap(o->getPosition().x() - position, o->getPosition().y(), o->getCurrentTexture());
         }
     }
 }

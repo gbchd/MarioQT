@@ -49,6 +49,8 @@ private:
     QHBoxLayout objectButtonsHorizontalLayout;
     QWidget gameDisplayContainerWidget;
 
+    QSlider slider;
+
 public:
     LevelEditorWidget();
 
@@ -74,6 +76,8 @@ private slots:
     void handleButtonTurtle();
     void handleButtonTurtleFlying();
     void handleButtonMario();
+
+    void handleSliderValueChange(int value);
 };
 
 #endif // LEVELEDITORWIDGET_H

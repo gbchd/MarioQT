@@ -14,7 +14,7 @@ protected:
     QList<QList<ObjectModel *>> objects;
     int maxZValue = 5;
 
-    QPointF position;
+    int position;
     int halfWindowWidth;
     int levelWidth;
 
@@ -24,9 +24,9 @@ public:
     void visit(ObjectModel *o) override;
     virtual void paint()=0;
 
-    void setup(QPointF pos, int windowWidth, int levelWidth);
-    QPointF getPosition(){ return position; }
-    void setPosition(QPointF pos);
+    void setup(int pos, int windowWidth, int levelWidth);
+    int getPosition(){ return position; }
+    void setPosition(int pos);
     void setWindowWidth(int windowWidth){ halfWindowWidth = windowWidth/2; }
     void setLevelWidth(int lvlWidth){ levelWidth = lvlWidth; }
 };

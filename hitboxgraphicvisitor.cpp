@@ -18,18 +18,18 @@ void HitboxGraphicVisitor::paint(){
             if(entity){
                 QRectF hitboxEntity = entity->getHitboxEntity();
                 painter.setPen(QColor(0,255,0));
-                hitboxEntity.moveTo(hitboxEntity.x() - position.x(), hitboxEntity.y());
+                hitboxEntity.moveTo(hitboxEntity.x() - position, hitboxEntity.y());
                 painter.drawRect(hitboxEntity);
             }
 
 
             QRectF hitbox = o->getHitbox();
             painter.setPen(QColor(255,0,0));
-            hitbox.moveTo(hitbox.x() - position.x(), hitbox.y());
+            hitbox.moveTo(hitbox.x() - position, hitbox.y());
             painter.drawRect(hitbox);
 
             QRectF pos = QRectF(o->getPosition()-QPointF(3,3),o->getPosition()+QPointF(3,3));
-            pos.moveTo(pos.x() - position.x(), pos.y());
+            pos.moveTo(pos.x() - position, pos.y());
             painter.fillRect(pos,QColor(0,255,0));
         }
     }

@@ -8,7 +8,7 @@ CameraVisitor::CameraVisitor(){
 }
 
 
-void CameraVisitor::setup(QPointF pos, int windowWidth, int levelWidth){
+void CameraVisitor::setup(int pos, int windowWidth, int levelWidth){
     setWindowWidth(windowWidth);
     setLevelWidth(levelWidth);
     setPosition(pos);
@@ -21,14 +21,14 @@ void CameraVisitor::visit(ObjectModel *o){
     objects[zValue].append(o);
 }
 
-void CameraVisitor::setPosition(QPointF pos){
-    if(pos.x() < halfWindowWidth){
-        position.setX(0);
+void CameraVisitor::setPosition(int pos){
+    if(pos < halfWindowWidth){
+        position = 0;
     }
-    else if(pos.x() > levelWidth - halfWindowWidth){
-        position.setX(levelWidth - halfWindowWidth);
+    else if(pos > levelWidth - halfWindowWidth){
+        position = levelWidth - halfWindowWidth;
     }
     else {
-        position.setX(pos.x() - halfWindowWidth);
+        position = pos - halfWindowWidth;
     }
 }

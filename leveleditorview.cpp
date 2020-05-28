@@ -1,12 +1,13 @@
 #include "leveleditorview.h"
 
 #include "leveleditorengine.h"
+#include <QDebug>
 
 LevelEditorView::LevelEditorView()
 {
     windowSize = QSize(1280,720);
     levelSize = QSize(10000, windowSize.height());
-    levelSize = QSize(2*windowSize.width(),windowSize.height());
+    cameraPosition = windowSize.width()/2;
     resize(windowSize);
     backgroundColor = QColor(100,175,255);
     palette.setColor(QPalette::Background, backgroundColor);
@@ -40,18 +41,16 @@ void LevelEditorView::paintEvent(QPaintEvent *event)
 
         int block_size = 32;
 
-        for(int i=0; i < windowSize.width(); i += block_size){
-            painter.drawLine(i,0,i,windowSize.height());
+        for(int i=block_size-(cameraPosition-windowSize.width()/2)%block_size; i < windowSize.width(); i += block_size){
+            painter.drawLine(i, 0, i, windowSize.height());
         }
 
         for(int i=0; i < windowSize.height (); i += block_size){
-            painter.drawLine(0,i,windowSize.width(),i);
+            painter.drawLine(0, i, windowSize.width(), i);
         }
     }
 
     GraphicVisitor graphicVisitor(this); // possède un QPainter
     levelEditorEngine->update(graphicVisitor);
     graphicVisitor.paint();
-
-    cameraPosition = graphicVisitor.getPosition();
 }
