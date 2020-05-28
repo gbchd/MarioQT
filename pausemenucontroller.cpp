@@ -12,3 +12,8 @@ void PauseMenuController::launchMainMenu()
 {
     mainWindow->goBackToMainMenu();
 }
+
+void PauseMenuController::quitApplication()
+{
+    QCoreApplication::quit();
+}
