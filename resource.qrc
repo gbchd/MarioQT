@@ -73,5 +73,7 @@
         <file>resources/graphics/flagpole.png</file>
         <file>resources/graphics/bill-blaster.png</file>
         <file>resources/graphics/bullet-bill.png</file>
+        <file>resources/graphics/flag.png</file>
+        <file>resources/graphics/pole.png</file>
     </qresource>
 </RCC>

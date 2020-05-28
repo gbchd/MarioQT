@@ -87,6 +87,46 @@ void LevelEditorEngine::addObjectOnMousePosition()
             objects.append(newBrick);
             break;
         }
+        case SMALLPIPE: {
+            Inert * newBrick = new Inert();
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size, block_size));
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
+        case MEDPIPE: {
+            Inert * newBrick = new Inert();
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-med.png").scaled(block_size, block_size));
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
+        case BIGPIPE: {
+            Inert * newBrick = new Inert();
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size, block_size));
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
+        case FLAGPOLE: {
+            Inert * newBrick = new Inert();
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pole.png").scaled(block_size, 336));
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
+        case CASTLE: {
+            Inert * newBrick = new Inert();
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/castle.png").scaled(block_size, block_size));
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
         case GOOMBA: {
             Goomba * goomba = new Goomba();
             goomba->moveTo(X, Y);
@@ -99,6 +139,10 @@ void LevelEditorEngine::addObjectOnMousePosition()
             koopa->moveTo(X, Y);
             entities.append(koopa);
             objects.append(koopa);
+            break;
+        }
+        case FLYINGTURTLE: {
+            //TODO
             break;
         }
         case MARIO: {
@@ -182,6 +226,37 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
             objectToPaintOnMouse->setOpacity(0.5);
             break;
+        }
+        case SMALLPIPE: {
+                objectToPaintOnMouse = new Inert();
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setOpacity(0.5);
+                break;
+        }
+        case MEDPIPE: {
+                objectToPaintOnMouse = new Inert();
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-med.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setOpacity(0.5);
+                break;
+        }
+        case BIGPIPE: {
+                objectToPaintOnMouse = new Inert();
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setOpacity(0.5);
+                break;
+        }
+
+        case FLAGPOLE: {
+                objectToPaintOnMouse = new Inert();
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pole.png").scaled(block_size, 336)));
+                objectToPaintOnMouse->setOpacity(0.5);
+                break;
+        }
+        case CASTLE: {
+                objectToPaintOnMouse = new Inert();
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setOpacity(0.5);
+                break;
         }
         case GOOMBA: {
             objectToPaintOnMouse = new Goomba();

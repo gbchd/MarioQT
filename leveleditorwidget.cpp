@@ -19,8 +19,14 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonBlock, SIGNAL (clicked()), this, SLOT (handleButtonBlock()));
     connect(&buttonWall, SIGNAL (clicked()), this, SLOT (handleButtonWall()));
     connect(&buttonSecretBox, SIGNAL (clicked()), this, SLOT (handleButtonSecretBox()));
+    connect(&buttonSmallPipe, SIGNAL (clicked()), this, SLOT (handleButtonSmallPipe()));
+    connect(&buttonMedPipe, SIGNAL (clicked()), this, SLOT (handleButtonMedPipe()));
+    connect(&buttonBigPipe, SIGNAL (clicked()), this, SLOT (handleButtonBigPipe()));
+    connect(&buttonFlagpole, SIGNAL (clicked()), this, SLOT (handleButtonFlagpole()));
+    connect(&buttonCastle, SIGNAL (clicked()), this, SLOT (handleButtonCastle()));
     connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
     connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
+    connect(&buttonFlyingTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtleFlying()));
     connect(&buttonMario, SIGNAL (clicked()), this, SLOT (handleButtonMario()));
 
     connect(&slider, SIGNAL (valueChanged(int)), this, SLOT (handleSliderValueChange(int)));
