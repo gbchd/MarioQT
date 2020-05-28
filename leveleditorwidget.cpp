@@ -1,7 +1,7 @@
 #include "leveleditorwidget.h"
 
-#include "leveleditorcontroller.h"
 #include "leveleditorview.h"
+#include "leveleditorengine.h"
 
 LevelEditorWidget::LevelEditorWidget()
 {
@@ -17,8 +17,6 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
     connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
     connect(&buttonMario, SIGNAL (clicked()), this, SLOT (handleButtonMario()));
-
-    mouseState = UNKNOWN;
 
     this->setLayout(&mainGridLayout);
 
@@ -103,10 +101,24 @@ void LevelEditorWidget::setLevelEditorView(LevelEditorView *lev){
     mainGridLayout.addWidget(levelEditorView, 1, 0);
 }
 
-void LevelEditorWidget::handleButtonSave() { levelEditorController->saveLevel(); }
+void LevelEditorWidget::handleButtonSave() { levelEditorEngine->saveLevel(); }
 
-void LevelEditorWidget::handleButtonMenu() { levelEditorController->goBackToMainMenu(); }
+void LevelEditorWidget::handleButtonMenu() { levelEditorEngine->goBackToMainMenu(); }
 
-void LevelEditorWidget::handleButtonQuit() { levelEditorController->quit(); }
+void LevelEditorWidget::handleButtonQuit() { levelEditorEngine->quit(); }
 
 void LevelEditorWidget::handleGridRadioButton() { levelEditorView->setShowLevelGrid(gridRadioButton.isChecked()); }
+
+void LevelEditorWidget::handleButtonBrick() { levelEditorEngine->setMouseState(BRICK); }
+
+void LevelEditorWidget::handleButtonBlock() { levelEditorEngine->setMouseState(BLOCK); }
+
+void LevelEditorWidget::handleButtonWall() { levelEditorEngine->setMouseState(WALL); }
+
+void LevelEditorWidget::handleButtonSecretBox() { levelEditorEngine->setMouseState(SECRETBOX); }
+
+void LevelEditorWidget::handleButtonGoomba() { levelEditorEngine->setMouseState(GOOMBA); }
+
+void LevelEditorWidget::handleButtonTurtle() { levelEditorEngine->setMouseState(TURTLE); }
+
+void LevelEditorWidget::handleButtonMario() { levelEditorEngine->setMouseState(MARIO); }

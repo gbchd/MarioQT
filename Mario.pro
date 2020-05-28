@@ -25,7 +25,6 @@ SOURCES += \
     graphicvisitor.cpp \
     hitboxgraphicvisitor.cpp \
     inert.cpp \
-    leveleditorcontroller.cpp \
     leveleditorengine.cpp \
     leveleditorview.cpp \
     leveleditorwidget.cpp \
@@ -53,7 +52,6 @@ HEADERS += \
     graphicvisitor.h \
     hitboxgraphicvisitor.h \
     inert.h \
-    leveleditorcontroller.h \
     leveleditorengine.h \
     leveleditorview.h \
     leveleditorwidget.h \

@@ -14,13 +14,5 @@ LevelGridVisitor::LevelGridVisitor(LevelEditorView * lev):painter(lev)
 
 void LevelGridVisitor::paint()
 {
-    painter.setPen(QColor(0,0,0));
 
-    for(int i=0; i < levelWidth; i += block_size){
-        painter.drawLine(i,0,i,levelHeight);
-    }
-
-    for(int i=0; i < levelHeight; i += block_size){
-        painter.drawLine(0,i,levelWidth,i);
-    }
 }

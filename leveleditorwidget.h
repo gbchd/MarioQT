@@ -8,26 +8,22 @@
 #include <QSlider>
 #include <QRadioButton>
 
-class LevelEditorController;
 class LevelEditorView;
 class LevelEditorEngine;
+
+enum MouseState {NOSTATE, BRICK, BLOCK, WALL, SECRETBOX, GOOMBA, TURTLE, MARIO};
 
 class LevelEditorWidget : public QWidget
 {
     Q_OBJECT
 
-public:
-    enum MouseState {UNKNOWN, BRICK, BLOCK, WALL, SECRETBOX, GOOMBA, TURTLE, MARIO};
-
 private:
-    LevelEditorController * levelEditorController;
+    LevelEditorEngine * levelEditorEngine;
     LevelEditorView * levelEditorView;
 
     QPushButton buttonSave;
     QPushButton buttonMenu;
     QPushButton buttonQuit;
-
-    MouseState mouseState;
 
     static const int buttonSize = 48;
     QPushButton buttonBrick;
@@ -49,9 +45,8 @@ private:
 public:
     LevelEditorWidget();
 
-    void setLevelEditorController(LevelEditorController * lec) { levelEditorController = lec; }
+    void setLevelEditorEngine(LevelEditorEngine * lee) { levelEditorEngine = lee; }
     void setLevelEditorView(LevelEditorView * lev);
-    MouseState inline getMouseState() { return mouseState; }
 
 private slots:
     void handleButtonSave();
@@ -59,13 +54,13 @@ private slots:
     void handleButtonQuit();
     void handleGridRadioButton();
 
-    void handleButtonBrick() { mouseState = BRICK; }
-    void handleButtonBlock() { mouseState = BLOCK; }
-    void handleButtonWall() { mouseState = WALL; }
-    void handleButtonSecretBox() { mouseState = SECRETBOX; }
-    void handleButtonGoomba() { mouseState = GOOMBA; }
-    void handleButtonTurtle() { mouseState = TURTLE; }
-    void handleButtonMario() { mouseState = MARIO; }
+    void handleButtonBrick();
+    void handleButtonBlock();
+    void handleButtonWall();
+    void handleButtonSecretBox();
+    void handleButtonGoomba();
+    void handleButtonTurtle();
+    void handleButtonMario();
 };
 
 #endif // LEVELEDITORWIDGET_H

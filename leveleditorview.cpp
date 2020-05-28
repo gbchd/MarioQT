@@ -21,9 +21,18 @@ void LevelEditorView::paintEvent(QPaintEvent *event)
     graphicVisitor.paint();
 
     if(showLevelGrid){
-        LevelGridVisitor levelGridVisitor(this);
-        levelEditorEngine->update(levelGridVisitor);
-        levelGridVisitor.paint();
+        QPainter painter(this);
+        painter.setPen(QColor(0,0,0));
+
+        int block_size = 32;
+
+        for(int i=0; i < windowSize.width(); i += block_size){
+            painter.drawLine(i,0,i,windowSize.height());
+        }
+
+        for(int i=0; i < windowSize.height (); i += block_size){
+            painter.drawLine(0,i,windowSize.width(),i);
+        }
     }
 
     cameraPosition = graphicVisitor.getPosition();

@@ -11,7 +11,6 @@
 #include "gamecontroller.h"
 #include "gameview.h"
 
-#include "leveleditorcontroller.h"
 #include "leveleditorwidget.h"
 #include "leveleditorview.h"
 #include "leveleditorengine.h"
@@ -30,7 +29,6 @@ private:
     GameController gamecontroller;
     GameView gameview;
 
-    LevelEditorController levelEditorController;
     LevelEditorView levelEditorView;
     LevelEditorWidget levelEditorWidget;
     LevelEditorEngine levelEditorEngine;
