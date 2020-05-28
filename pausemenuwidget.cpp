@@ -5,12 +5,14 @@
 
 PauseMenuWidget::PauseMenuWidget()
 {
-    setFixedSize(300, 300);
+
     QVBoxLayout * layout = new QVBoxLayout(this);
     continueButton.setText("CONTINUE");
     menuButton.setText("GO BACK TO MENU");
     optionsButton.setText("OPTIONS");
     quitButton.setText("QUIT");
+
+    layout->setAlignment(Qt::AlignHCenter);
 
     //listWidget style
     applyStyleSheet();
@@ -30,7 +32,10 @@ PauseMenuWidget::PauseMenuWidget()
 
 void PauseMenuWidget::applyStyleSheet()
 {
-
+    this->setStyleSheet("color: white;"
+                        "background-color: black;"
+                        "font-size: 20px;"
+                        "font-weight : bold;");
 }
 
 void PauseMenuWidget::handleContinueButton()
@@ -50,5 +55,5 @@ void PauseMenuWidget::handleOptionsButton()
 
 void PauseMenuWidget::handleQuitButton()
 {
-
+    pauseMenuController->quitApplication();
 }

@@ -39,7 +39,8 @@ public:
     void animate() override;
     void hurt() override;
 
-    void hitOnTop(ObjectModel *o);
+    void hitShellTop(ObjectModel *o);
+    void hitShellSide(ObjectModel *o);
 };
 
 #endif // KOOPA_H

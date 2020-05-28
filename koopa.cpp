@@ -124,7 +124,7 @@ void Koopa::collisionOnTopHandler(ObjectModel *o){
     }
 }
 
-void Koopa::hitOnTop(ObjectModel *o){
+void Koopa::hitShellTop(ObjectModel *o){
     Mario *mario = dynamic_cast<Mario*>(o);
     if(!shell){
         if(mario){
@@ -133,6 +133,19 @@ void Koopa::hitOnTop(ObjectModel *o){
     }
     else if(moving == true){
         moving = false;
+    }
+    else{
+        setDirection(mario->getDirection());
+        moving = true;
+    }
+}
+
+void Koopa::hitShellSide(ObjectModel *o){
+    Mario *mario = dynamic_cast<Mario*>(o);
+    if(!shell || moving){
+        if(mario){
+            hurt();
+        }
     }
     else{
         setDirection(mario->getDirection());
