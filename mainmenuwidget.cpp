@@ -4,14 +4,15 @@
 
 MainMenuWidget::MainMenuWidget()
 {
-    setFixedSize(500, 500);
+    this->resize(500, 500);
     QVBoxLayout * layout = new QVBoxLayout(this);
     QHBoxLayout * hlayout = new QHBoxLayout();
+
     optionsButton.setText("OPTIONS");
     playButton.setText("PLAY");
     levelEditorButton.setText("MAP EDITOR");
     QLabel * label = new QLabel;
-    label->setPixmap(QPixmap(":/resources/graphics/welcome.png").scaled(500, 400, Qt::KeepAspectRatio));
+    label->setPixmap(QPixmap(":/resources/graphics/welcome.png").scaled(520, 200));
 
     //listWidget style
     applyStyleSheet();

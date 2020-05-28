@@ -5,7 +5,7 @@
 
 PauseMenuWidget::PauseMenuWidget()
 {
-    setFixedSize(300, 300);
+    this->resize(300, 300);
     QVBoxLayout * layout = new QVBoxLayout(this);
     continueButton.setText("CONTINUE");
     menuButton.setText("GO BACK TO MENU");
