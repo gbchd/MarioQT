@@ -222,8 +222,11 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         Koopa * koopa = dynamic_cast<Koopa *>(o);
-        if(!koopa || !koopa->isInShell() || (koopa->isInShell() && koopa->isMoving())){
-            hurt();
+        if(koopa){
+            koopa->hitShellSide(this);
+        }
+        else{
+            enemy->hurt();
         }
     }
 }
@@ -233,8 +236,11 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         Koopa * koopa = dynamic_cast<Koopa *>(o);
-        if(!koopa || !koopa->isInShell() || (koopa->isInShell() && koopa->isMoving())){
-            hurt();
+        if(koopa){
+            koopa->hitShellSide(this);
+        }
+        else{
+            enemy->hurt();
         }
     }
 }
@@ -253,7 +259,7 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     if(enemy != nullptr){
         Koopa * koopa = dynamic_cast<Koopa *>(o);
         if(koopa){
-            koopa->hitOnTop(this);
+            koopa->hitShellTop(this);
         }
         else{
             enemy->hurt();
