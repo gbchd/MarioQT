@@ -6,7 +6,8 @@ LevelEditorEngine::LevelEditorEngine()
     mouseState = NOTPRESSED;
     selectedButton = NOBUTTON;
     objectToPaintOnMouse = nullptr;
-    mario = nullptr;
+    cameraMario = nullptr;
+    fakeMario = nullptr;
     levelEditorView = nullptr;
     tickrate = 1000/60;
 }
@@ -25,6 +26,10 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
 
     for(ObjectModel * object : objects){
         object->accept(visitor);
+    }
+
+    if(fakeMario != nullptr){
+        fakeMario->accept(visitor);
     }
 
     if(objectToPaintOnMouse != nullptr){
@@ -88,8 +93,8 @@ void LevelEditorEngine::addObjectOnMousePosition()
             break;
         }
         case MARIO: {
-            mario = new Mario();
-            mario->moveTo(X, Y);
+            fakeMario = new Mario();
+            fakeMario->moveTo(X, Y);
             break;
         }
         default: {
@@ -207,16 +212,6 @@ void LevelEditorEngine::start(){
     engine.start();
 }
 
-void LevelEditorEngine::addInert(Inert * i){
-    inerts.append(i);
-    objects.append(i);
-}
-
-void LevelEditorEngine::addEntity(Entity * e){
-    entities.append(e);
-    objects.append(e);
-}
-
 int LevelEditorEngine::getLineFromMousePosition()
 {
      return floor(levelEditorView->mapFromGlobal(QCursor::pos()).y()/block_size);
@@ -232,9 +227,18 @@ void LevelEditorEngine::saveLevel()
 
 }
 
-void LevelEditorEngine::quit()
+void LevelEditorEngine::clearMap()
 {
-
+    for(Entity * entity : entities){
+        objects.removeOne(entity);
+        entities.removeOne(entity);
+        delete entity;
+    }
+    for(Inert * inert : inerts){
+        objects.removeOne(inert);
+        inerts.removeOne(inert);
+        delete inert;
+    }
 }
 
 void LevelEditorEngine::goBackToMainMenu()

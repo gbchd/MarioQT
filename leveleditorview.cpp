@@ -2,6 +2,19 @@
 
 #include "leveleditorengine.h"
 
+LevelEditorView::LevelEditorView()
+{
+    windowSize = QSize(1280,720);
+    levelSize = QSize(10000, windowSize.height());
+    levelSize = QSize(2*windowSize.width(),windowSize.height());
+    resize(windowSize);
+    backgroundColor = QColor(100,175,255);
+    palette.setColor(QPalette::Background, backgroundColor);
+    setAutoFillBackground(true);
+    setPalette(palette);
+    showLevelGrid = false;
+}
+
 void LevelEditorView::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
@@ -17,18 +30,6 @@ void LevelEditorView::mouseReleaseEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
         levelEditorEngine->setMouseState(NOTPRESSED);
     }
-}
-
-LevelEditorView::LevelEditorView()
-{
-    showLevelGrid = false;
-    windowSize = QSize(1280,720);
-    levelSize = QSize(2*windowSize.width(),windowSize.height());
-    resize(windowSize);
-    backgroundColor = QColor(100,175,255);
-    palette.setColor(QPalette::Background, backgroundColor);
-    setAutoFillBackground(true);
-    setPalette(palette);
 }
 
 void LevelEditorView::paintEvent(QPaintEvent *event)
