@@ -2,6 +2,23 @@
 
 #include "leveleditorengine.h"
 
+void LevelEditorView::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        levelEditorEngine->setMouseState(LEFTCLICKPRESSED);
+    }
+    if (event->button() == Qt::RightButton) {
+        levelEditorEngine->setMouseState(RIGHTCLICKPRESSED);
+    }
+}
+
+void LevelEditorView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
+        levelEditorEngine->setMouseState(NOTPRESSED);
+    }
+}
+
 LevelEditorView::LevelEditorView()
 {
     showLevelGrid = false;
@@ -16,10 +33,6 @@ LevelEditorView::LevelEditorView()
 
 void LevelEditorView::paintEvent(QPaintEvent *event)
 {
-    GraphicVisitor graphicVisitor(this); // possède un QPainter
-    levelEditorEngine->update(graphicVisitor);
-    graphicVisitor.paint();
-
     if(showLevelGrid){
         QPainter painter(this);
         painter.setPen(QColor(0,0,0));
@@ -34,6 +47,10 @@ void LevelEditorView::paintEvent(QPaintEvent *event)
             painter.drawLine(0,i,windowSize.width(),i);
         }
     }
+
+    GraphicVisitor graphicVisitor(this); // possède un QPainter
+    levelEditorEngine->update(graphicVisitor);
+    graphicVisitor.paint();
 
     cameraPosition = graphicVisitor.getPosition();
 }

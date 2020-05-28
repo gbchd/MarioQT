@@ -11,7 +11,8 @@
 class LevelEditorView;
 class LevelEditorEngine;
 
-enum MouseState {NOSTATE, BRICK, BLOCK, WALL, SECRETBOX, GOOMBA, TURTLE, MARIO};
+enum SelectedButton {NOBUTTON, BRICK, BLOCK, WALL, SECRETBOX, GOOMBA, TURTLE, MARIO};
+enum MouseState {NOTPRESSED, LEFTCLICKPRESSED, RIGHTCLICKPRESSED};
 
 class LevelEditorWidget : public QWidget
 {

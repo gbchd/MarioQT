@@ -13,7 +13,7 @@ GraphicVisitor::GraphicVisitor(GameView * gv):painter(gv)
     levelWidth = gv->getlevelSize().width();
 }
 
-GraphicVisitor::GraphicVisitor(LevelEditorView * lev)
+GraphicVisitor::GraphicVisitor(LevelEditorView * lev):painter(lev)
 {
     position = lev->getCameraPosition();
     halfWindowWidth = lev->getWindowSize().width()/2;

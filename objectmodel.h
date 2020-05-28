@@ -27,6 +27,7 @@ public:
     ObjectModel();
     virtual ~ObjectModel();
 
+    void setOpacity(float o) { opacity = o; }
     float getOpacity(){ return opacity; }
     void setZValue(int z){ zValue = z; }
     int getZValue(){ return zValue; }

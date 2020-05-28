@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QMouseEvent>
 
 #include "graphicvisitor.h"
 #include "levelgridvisitor.h"
@@ -22,6 +23,10 @@ private:
     QSize windowSize;
 
     bool showLevelGrid;
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 public:
     LevelEditorView();

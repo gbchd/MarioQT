@@ -50,7 +50,7 @@ LevelEditorWidget::LevelEditorWidget()
     buttonBlock.setFixedSize(buttonSize,buttonSize);
 
     QPixmap wallIcon(":/resources/graphics/blocs/wall.png");
-    QIcon wallButtonIcon(brickIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    QIcon wallButtonIcon(wallIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonWall.setIcon(wallButtonIcon);
     buttonWall.setIconSize(QSize(buttonSize, buttonSize));
     buttonWall.setFixedSize(buttonSize,buttonSize);
@@ -109,16 +109,16 @@ void LevelEditorWidget::handleButtonQuit() { levelEditorEngine->quit(); }
 
 void LevelEditorWidget::handleGridRadioButton() { levelEditorView->setShowLevelGrid(gridRadioButton.isChecked()); }
 
-void LevelEditorWidget::handleButtonBrick() { levelEditorEngine->setMouseState(BRICK); }
+void LevelEditorWidget::handleButtonBrick() { levelEditorEngine->setSelectedButton(BRICK); }
 
-void LevelEditorWidget::handleButtonBlock() { levelEditorEngine->setMouseState(BLOCK); }
+void LevelEditorWidget::handleButtonBlock() { levelEditorEngine->setSelectedButton(BLOCK); }
 
-void LevelEditorWidget::handleButtonWall() { levelEditorEngine->setMouseState(WALL); }
+void LevelEditorWidget::handleButtonWall() { levelEditorEngine->setSelectedButton(WALL); }
 
-void LevelEditorWidget::handleButtonSecretBox() { levelEditorEngine->setMouseState(SECRETBOX); }
+void LevelEditorWidget::handleButtonSecretBox() { levelEditorEngine->setSelectedButton(SECRETBOX); }
 
-void LevelEditorWidget::handleButtonGoomba() { levelEditorEngine->setMouseState(GOOMBA); }
+void LevelEditorWidget::handleButtonGoomba() { levelEditorEngine->setSelectedButton(GOOMBA); }
 
-void LevelEditorWidget::handleButtonTurtle() { levelEditorEngine->setMouseState(TURTLE); }
+void LevelEditorWidget::handleButtonTurtle() { levelEditorEngine->setSelectedButton(TURTLE); }
 
-void LevelEditorWidget::handleButtonMario() { levelEditorEngine->setMouseState(MARIO); }
+void LevelEditorWidget::handleButtonMario() { levelEditorEngine->setSelectedButton(MARIO); }

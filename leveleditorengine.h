@@ -27,6 +27,7 @@ private:
     // The game controlled by this controller
     LevelEditorView * levelEditorView;
 
+    SelectedButton selectedButton;
     MouseState mouseState;
     ObjectModel * objectToPaintOnMouse;
 
@@ -47,6 +48,9 @@ public:
     void setLevelEditorWidget(LevelEditorWidget * lew) { levelEditorWidget = lew; }
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; }
     void setMouseState(MouseState ms);
+    void setSelectedButton(SelectedButton sb);
+    void addObjectOnMousePosition();
+    void deleteObjectAtPosition(int x, int y);
     void update(CameraVisitor & visitor);
     void start();
     void addInert(Inert * i);
