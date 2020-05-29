@@ -6,11 +6,14 @@ MainMenuWidget::MainMenuWidget()
 {
     this->resize(500, 500);
     QVBoxLayout * layout = new QVBoxLayout(this);
-    QHBoxLayout * hlayout = new QHBoxLayout();
+    QHBoxLayout * hlayout1 = new QHBoxLayout();
+    QHBoxLayout * hlayout2 = new QHBoxLayout();
 
-    optionsButton.setText("OPTIONS");
     playButton.setText("PLAY");
+    optionsButton.setText("OPTIONS");
     levelEditorButton.setText("MAP EDITOR");
+    loadLevelButton.setText("LOAD LEVEL");
+
     QLabel * label = new QLabel;
     label->setPixmap(QPixmap(":/resources/graphics/welcome.png").scaled(520, 200));
 
@@ -20,15 +23,20 @@ MainMenuWidget::MainMenuWidget()
     //Add element in layout
     layout->addWidget(label);
     layout->addWidget(&listWidget);
-    layout->addWidget(&playButton);
-    layout->addLayout(hlayout);
-    hlayout->addWidget(&levelEditorButton);
-    hlayout->addWidget(&optionsButton);
+
+    layout->addLayout(hlayout1);
+    hlayout1->addWidget(&playButton);
+    hlayout1->addWidget(&optionsButton);
+
+    layout->addLayout(hlayout2);
+    hlayout2->addWidget(&levelEditorButton);
+    hlayout2->addWidget(&loadLevelButton);
 
     //Connect the buttons to their slots
     connect(&playButton, SIGNAL (clicked()), this, SLOT (handlePlayButton()));
     connect(&optionsButton, SIGNAL (clicked()), this, SLOT (handleOptionsButton()));
     connect(&levelEditorButton, SIGNAL (clicked()), this, SLOT (handleLevelEditorButton()));
+    connect(&loadLevelButton, SIGNAL (clicked()), this, SLOT (handleLoadLevelButton()));
 }
 
 void MainMenuWidget::applyStyleSheet()
@@ -49,6 +57,11 @@ void MainMenuWidget::applyStyleSheet()
                                "font-weight : bold;");
 
      levelEditorButton.setStyleSheet("background-color: #BE2801;"
+                               "color: white;"
+                               "font-size: 20px;"
+                               "font-weight : bold;");
+
+     loadLevelButton.setStyleSheet("background-color: #BE2801;"
                                "color: white;"
                                "font-size: 20px;"
                                "font-weight : bold;");
@@ -73,6 +86,11 @@ void MainMenuWidget::handlePlayButton()
 void MainMenuWidget::handleOptionsButton()
 {
 
+}
+
+void MainMenuWidget::handleLoadLevelButton()
+{
+    mainMenuController->addLevelToList(QFileDialog::getOpenFileName(this, tr("Select a CSV file."), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), tr("CSV files (*.csv)")));
 }
 
 void MainMenuWidget::handleLevelEditorButton()

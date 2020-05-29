@@ -40,6 +40,8 @@ public:
 
     void setMainMenuWidget(MainMenuWidget * mmw);
 
+    void addLevelToList(QString levelPath);
+
     void launchGameOnMainWindow(QString filePath);
     void launchLevelEditorOnMainWindow();
 };

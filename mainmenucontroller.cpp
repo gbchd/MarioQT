@@ -45,6 +45,13 @@ void MainMenuController::readMapsDirectory(QString directoryPath)
     }
 }
 
+void MainMenuController::addLevelToList(QString levelPath)
+{
+    if(QFileInfo::exists(levelPath)){
+        mainMenuWidget->addItemToWidgetList(getMapName(levelPath), levelPath);
+    }
+}
+
 void MainMenuController::setMainMenuWidget(MainMenuWidget *mmw)
 {
     mainMenuWidget = mmw;

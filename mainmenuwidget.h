@@ -5,6 +5,8 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QFileDialog>
+#include <QStandardPaths>
 #include <QLabel>
 
 class MainMenuController;
@@ -18,6 +20,7 @@ private:
 
     QListWidget listWidget;
     QPushButton playButton;
+    QPushButton loadLevelButton;
     QPushButton optionsButton;
     QPushButton levelEditorButton;
 
@@ -31,6 +34,7 @@ public:
 private slots:
     void handlePlayButton();
     void handleOptionsButton();
+    void handleLoadLevelButton();
     void handleLevelEditorButton();
 };
 
