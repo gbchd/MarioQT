@@ -6,12 +6,14 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QSlider>
+#include <QImage>
+#include <QPainter>
 #include <QRadioButton>
 
 class LevelEditorView;
 class LevelEditorEngine;
 
-enum SelectedButton {NOBUTTON, BRICK, BLOCK, WALL, SECRETBOX, SMALLPIPE, MEDPIPE, BIGPIPE, FLAGPOLE, CASTLE, GOOMBA, TURTLE, FLYINGTURTLE, MARIO};
+enum SelectedButton {NOBUTTON, BRICK, BLOCK, WALL, SECRETBOXMUSHROOM, SECRETBOXFLOWER, SMALLPIPE, MEDPIPE, BIGPIPE, FLAGPOLE, CASTLE, GOOMBA, TURTLE, FLYINGTURTLE, MARIO};
 enum MouseState {NOTPRESSED, LEFTCLICKPRESSED, RIGHTCLICKPRESSED};
 
 class LevelEditorWidget : public QWidget
@@ -30,7 +32,8 @@ private:
     QPushButton buttonBrick;
     QPushButton buttonBlock;
     QPushButton buttonWall;
-    QPushButton buttonSecretBox;
+    QPushButton buttonSecretBoxMushroom;
+    QPushButton buttonSecretBoxFlower;
     QPushButton buttonSmallPipe;
     QPushButton buttonMedPipe;
     QPushButton buttonBigPipe;
@@ -66,7 +69,8 @@ private slots:
     void handleButtonBrick();
     void handleButtonBlock();
     void handleButtonWall();
-    void handleButtonSecretBox();
+    void handleButtonSecretBoxMushroom();
+    void handleButtonSecretBoxFlower();
     void handleButtonSmallPipe();
     void handleButtonMedPipe();
     void handleButtonBigPipe();

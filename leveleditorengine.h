@@ -8,6 +8,7 @@
 #include "cameravisitor.h"
 #include "objectmodel.h"
 #include "inert.h"
+#include "box.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 

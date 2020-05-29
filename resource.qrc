@@ -70,10 +70,9 @@
         <file>resources/graphics/mobs/turtle/turtle-walk-1.png</file>
         <file>resources/graphics/mobs/turtle_fly/turtle-fly-0.png</file>
         <file>resources/graphics/mobs/turtle_fly/turtle-fly-1.png</file>
-        <file>resources/graphics/flagpole.png</file>
         <file>resources/graphics/bill-blaster.png</file>
         <file>resources/graphics/bullet-bill.png</file>
         <file>resources/graphics/flag.png</file>
-        <file>resources/graphics/pole.png</file>
+        <file>resources/graphics/flagpole.png</file>
     </qresource>
 </RCC>

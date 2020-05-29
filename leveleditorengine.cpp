@@ -56,35 +56,40 @@ void LevelEditorEngine::addObjectOnMousePosition()
 
     switch(selectedButton){
         case BRICK: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(block_size, block_size));
+            Brick * newBrick = new Brick();
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
             break;
         }
         case BLOCK: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/blocs/block.png").scaled(block_size, block_size));
-            newBrick->moveTo(X, Y);
-            inerts.append(newBrick);
-            objects.append(newBrick);
+            Block * newBlock = new Block();
+            newBlock->moveTo(X, Y);
+            inerts.append(newBlock);
+            objects.append(newBlock);
             break;
         }
         case WALL: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/blocs/wall.png").scaled(block_size, block_size));
-            newBrick->moveTo(X, Y);
-            inerts.append(newBrick);
-            objects.append(newBrick);
+            Wall * newWall = new Wall();
+            newWall->moveTo(X, Y);
+            inerts.append(newWall);
+            objects.append(newWall);
             break;
         }
-        case SECRETBOX: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size));
-            newBrick->moveTo(X, Y);
-            inerts.append(newBrick);
-            objects.append(newBrick);
+        case SECRETBOXFLOWER: {
+            Box * newBox = new Box();
+            newBox->setBoxContent(FLOWER);
+            newBox->moveTo(X, Y);
+            inerts.append(newBox);
+            objects.append(newBox);
+            break;
+        }
+        case SECRETBOXMUSHROOM: {
+            Box * newBox = new Box();
+            newBox->setBoxContent(MUSHROOM);
+            newBox->moveTo(X, Y);
+            inerts.append(newBox);
+            objects.append(newBox);
             break;
         }
         case SMALLPIPE: {
@@ -113,7 +118,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case FLAGPOLE: {
             Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pole.png").scaled(block_size, 336));
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/flagpole.png").scaled(block_size, block_size*11));
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -121,7 +126,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case CASTLE: {
             Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/castle.png").scaled(block_size, block_size));
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4));
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -204,24 +209,27 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
 
     switch(selectedButton){
         case BRICK: {
-            objectToPaintOnMouse = new Inert();
-            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(block_size, block_size)));
+            objectToPaintOnMouse = new Brick();
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case BLOCK: {
-            objectToPaintOnMouse = new Inert();
-            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/block.png").scaled(block_size, block_size)));
+            objectToPaintOnMouse = new Block();
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case WALL: {
-            objectToPaintOnMouse = new Inert();
-            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/wall.png").scaled(block_size, block_size)));
+            objectToPaintOnMouse = new Wall();
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
-        case SECRETBOX: {
+        case SECRETBOXMUSHROOM: {
+            objectToPaintOnMouse = new Inert();
+            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case SECRETBOXFLOWER: {
             objectToPaintOnMouse = new Inert();
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
             objectToPaintOnMouse->setOpacity(0.5);
@@ -248,13 +256,13 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
 
         case FLAGPOLE: {
                 objectToPaintOnMouse = new Inert();
-                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pole.png").scaled(block_size, 336)));
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/flagpole.png").scaled(block_size, block_size*11)));
                 objectToPaintOnMouse->setOpacity(0.5);
                 break;
         }
         case CASTLE: {
                 objectToPaintOnMouse = new Inert();
-                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4)));
                 objectToPaintOnMouse->setOpacity(0.5);
                 break;
         }

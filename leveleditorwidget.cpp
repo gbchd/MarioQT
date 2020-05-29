@@ -18,7 +18,8 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonBrick, SIGNAL (clicked()), this, SLOT (handleButtonBrick()));
     connect(&buttonBlock, SIGNAL (clicked()), this, SLOT (handleButtonBlock()));
     connect(&buttonWall, SIGNAL (clicked()), this, SLOT (handleButtonWall()));
-    connect(&buttonSecretBox, SIGNAL (clicked()), this, SLOT (handleButtonSecretBox()));
+    connect(&buttonSecretBoxMushroom, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxMushroom()));
+    connect(&buttonSecretBoxFlower, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxFlower()));
     connect(&buttonSmallPipe, SIGNAL (clicked()), this, SLOT (handleButtonSmallPipe()));
     connect(&buttonMedPipe, SIGNAL (clicked()), this, SLOT (handleButtonMedPipe()));
     connect(&buttonBigPipe, SIGNAL (clicked()), this, SLOT (handleButtonBigPipe()));
@@ -68,11 +69,33 @@ LevelEditorWidget::LevelEditorWidget()
     buttonWall.setIconSize(QSize(buttonSize, buttonSize));
     buttonWall.resize(buttonSize,buttonSize);
 
-    QPixmap secretBoxIcon(":/resources/graphics/blocs/secret-box.png");
-    QIcon secretBoxButtonIcon(secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonSecretBox.setIcon(secretBoxButtonIcon);
-    buttonSecretBox.setIconSize(QSize(buttonSize, buttonSize));
-    buttonSecretBox.resize(buttonSize,buttonSize);
+    QImage secretBoxIcon(":/resources/graphics/blocs/box-used.bmp");
+
+    QImage mushroomIcon(":/resources/graphics/mushroom-red.png");
+    QPixmap boxWithMushroom(secretBoxIcon.size());
+    QPainter p(&boxWithMushroom);
+    p.drawImage(QPoint(0, 0), secretBoxIcon);
+    p.setOpacity(0.9);
+    p.drawImage(QPoint(2, 2 ), mushroomIcon.scaled(secretBoxIcon.size()/1.5));
+    p.end();
+
+    QIcon secretBoxMushroomButtonIcon(boxWithMushroom.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonSecretBoxMushroom.setIcon(secretBoxMushroomButtonIcon);
+    buttonSecretBoxMushroom.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSecretBoxMushroom.resize(buttonSize,buttonSize);
+
+    QImage flowerIcon(":/resources/graphics/flower.png");
+    QPixmap boxWithFlower(buttonSize,buttonSize);
+    QPainter p2(&boxWithFlower);
+    p2.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    p2.setOpacity(0.9);
+    p2.drawImage(QPoint(6, 6), flowerIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p2.end();
+
+    QIcon secretBoxFlowerButtonIcon(boxWithFlower);
+    buttonSecretBoxFlower.setIcon(secretBoxFlowerButtonIcon);
+    buttonSecretBoxFlower.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSecretBoxFlower.resize(buttonSize,buttonSize);
 
     QPixmap smallPipeIcon(":/resources/graphics/pipe-small.png");
     QIcon smallPipeButtonIcon(smallPipeIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
@@ -131,7 +154,8 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonBrick);
     objectButtonsHorizontalLayout.addWidget(&buttonBlock);
     objectButtonsHorizontalLayout.addWidget(&buttonWall);
-    objectButtonsHorizontalLayout.addWidget(&buttonSecretBox);
+    objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxMushroom);
+    objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxFlower);
     objectButtonsHorizontalLayout.addWidget(&buttonSmallPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonMedPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonBigPipe);
@@ -172,7 +196,9 @@ void LevelEditorWidget::handleButtonBlock() { levelEditorEngine->setSelectedButt
 
 void LevelEditorWidget::handleButtonWall() { levelEditorEngine->setSelectedButton(WALL); }
 
-void LevelEditorWidget::handleButtonSecretBox() { levelEditorEngine->setSelectedButton(SECRETBOX); }
+void LevelEditorWidget::handleButtonSecretBoxMushroom() { levelEditorEngine->setSelectedButton(SECRETBOXMUSHROOM); }
+
+void LevelEditorWidget::handleButtonSecretBoxFlower() { levelEditorEngine->setSelectedButton(SECRETBOXFLOWER); }
 
 void LevelEditorWidget::handleButtonSmallPipe() { levelEditorEngine->setSelectedButton(SMALLPIPE); }
 
