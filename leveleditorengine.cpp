@@ -21,7 +21,7 @@ void LevelEditorEngine::exportMapToJSon()
         return;
     }
 
-    QString filePath = QFileDialog::getSaveFileName(levelEditorWidget, "Sélectionner fichier CSV", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), "Fichiers CSV (*.csv)");
+    QString filePath = QFileDialog::getSaveFileName(levelEditorWidget, "Sélectionner fichier JSON", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), "Fichiers JSON (*.json)");
     QFile myFile(filePath);
 
     if (myFile.open(QFile::ReadWrite)){

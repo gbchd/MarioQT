@@ -90,7 +90,7 @@ void MainMenuWidget::handleOptionsButton()
 
 void MainMenuWidget::handleLoadLevelButton()
 {
-    mainMenuController->addLevelToList(QFileDialog::getOpenFileName(this, tr("Select a CSV file."), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), tr("CSV files (*.csv)")));
+    mainMenuController->addLevelToList(QFileDialog::getOpenFileName(this, tr("Select a JSON file."), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), tr("JSON files (*.json)")));
 }
 
 void MainMenuWidget::handleLevelEditorButton()
