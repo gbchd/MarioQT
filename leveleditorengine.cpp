@@ -62,6 +62,14 @@ void LevelEditorEngine::addObjectOnMousePosition()
             objects.append(newBrick);
             break;
         }
+        case COINBRICK: {
+            Brick * newBrick = new Brick();
+            newBrick->setCoinBrick(true);
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
         case BLOCK: {
             Block * newBlock = new Block();
             newBlock->moveTo(X, Y);
@@ -92,6 +100,22 @@ void LevelEditorEngine::addObjectOnMousePosition()
             objects.append(newBox);
             break;
         }
+        case SECRETBOXSTAR: {
+            Box * newBox = new Box();
+            newBox->setBoxContent(STAR);
+            newBox->moveTo(X, Y);
+            inerts.append(newBox);
+            objects.append(newBox);
+            break;
+        }
+        case SECRETBOXCOIN: {
+            Box * newBox = new Box();
+            newBox->setBoxContent(COIN);
+            newBox->moveTo(X, Y);
+            inerts.append(newBox);
+            objects.append(newBox);
+            break;
+        }
         case SMALLPIPE: {
             Inert * newBrick = new Inert();
             newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size, block_size));
@@ -111,6 +135,14 @@ void LevelEditorEngine::addObjectOnMousePosition()
         case BIGPIPE: {
             Inert * newBrick = new Inert();
             newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size, block_size));
+            newBrick->moveTo(X, Y);
+            inerts.append(newBrick);
+            objects.append(newBrick);
+            break;
+        }
+        case BULLETBLASTER: {
+            Inert * newBrick = new Inert();
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/bill-blaster.png").scaled(block_size, block_size*2));
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -208,7 +240,8 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
     }
 
     switch(selectedButton){
-        case BRICK: {
+        case BRICK:
+        case COINBRICK: {
             objectToPaintOnMouse = new Brick();
             objectToPaintOnMouse->setOpacity(0.5);
             break;
@@ -223,13 +256,10 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
-        case SECRETBOXMUSHROOM: {
-            objectToPaintOnMouse = new Inert();
-            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
-            objectToPaintOnMouse->setOpacity(0.5);
-            break;
-        }
-        case SECRETBOXFLOWER: {
+        case SECRETBOXMUSHROOM:
+        case SECRETBOXFLOWER:
+        case SECRETBOXSTAR:
+        case SECRETBOXCOIN: {
             objectToPaintOnMouse = new Inert();
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
             objectToPaintOnMouse->setOpacity(0.5);
@@ -253,7 +283,12 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
                 objectToPaintOnMouse->setOpacity(0.5);
                 break;
         }
-
+        case BULLETBLASTER: {
+                objectToPaintOnMouse = new Inert();
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/bill-blaster.png").scaled(block_size, block_size*2)));
+                objectToPaintOnMouse->setOpacity(0.5);
+                break;
+        }
         case FLAGPOLE: {
                 objectToPaintOnMouse = new Inert();
                 objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/flagpole.png").scaled(block_size, block_size*11)));

@@ -16,13 +16,17 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&gridRadioButton, SIGNAL (toggled(bool)), this, SLOT (handleGridRadioButton()));
 
     connect(&buttonBrick, SIGNAL (clicked()), this, SLOT (handleButtonBrick()));
+    connect(&buttonCoinBrick, SIGNAL (clicked()), this, SLOT (handleButtonCoinBrick()));
     connect(&buttonBlock, SIGNAL (clicked()), this, SLOT (handleButtonBlock()));
     connect(&buttonWall, SIGNAL (clicked()), this, SLOT (handleButtonWall()));
     connect(&buttonSecretBoxMushroom, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxMushroom()));
     connect(&buttonSecretBoxFlower, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxFlower()));
+    connect(&buttonSecretBoxStar, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxStar()));
+    connect(&buttonSecretBoxCoin, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxCoin()));
     connect(&buttonSmallPipe, SIGNAL (clicked()), this, SLOT (handleButtonSmallPipe()));
     connect(&buttonMedPipe, SIGNAL (clicked()), this, SLOT (handleButtonMedPipe()));
     connect(&buttonBigPipe, SIGNAL (clicked()), this, SLOT (handleButtonBigPipe()));
+    connect(&buttonBulletBlaster, SIGNAL (clicked()), this, SLOT (handleButtonBulletBlaster()));
     connect(&buttonFlagpole, SIGNAL (clicked()), this, SLOT (handleButtonFlagpole()));
     connect(&buttonCastle, SIGNAL (clicked()), this, SLOT (handleButtonCastle()));
     connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
@@ -57,6 +61,19 @@ LevelEditorWidget::LevelEditorWidget()
     buttonBrick.setIconSize(QSize(buttonSize, buttonSize));
     buttonBrick.resize(buttonSize,buttonSize);
 
+    QImage coinIcon(":/resources/graphics/coin-1.png");
+    QImage brickImage(":/resources/graphics/blocs/brick.bmp");
+    QPixmap brickWithCoin(buttonSize,buttonSize);
+    QPainter p1(&brickWithCoin);
+    p1.drawImage(QPoint(0, 0), brickImage.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    p1.drawImage(QPoint(6, 6), coinIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p1.end();
+
+    QIcon brickWithCoinButtonIcon(brickWithCoin);
+    buttonCoinBrick.setIcon(brickWithCoinButtonIcon);
+    buttonCoinBrick.setIconSize(QSize(buttonSize, buttonSize));
+    buttonCoinBrick.resize(buttonSize,buttonSize);
+
     QPixmap blockIcon(":/resources/graphics/blocs/block.png");
     QIcon blockButtonIcon(blockIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonBlock.setIcon(blockButtonIcon);
@@ -73,11 +90,10 @@ LevelEditorWidget::LevelEditorWidget()
 
     QImage mushroomIcon(":/resources/graphics/mushroom-red.png");
     QPixmap boxWithMushroom(secretBoxIcon.size());
-    QPainter p(&boxWithMushroom);
-    p.drawImage(QPoint(0, 0), secretBoxIcon);
-    p.setOpacity(0.9);
-    p.drawImage(QPoint(2, 2 ), mushroomIcon.scaled(secretBoxIcon.size()/1.5));
-    p.end();
+    QPainter p2(&boxWithMushroom);
+    p2.drawImage(QPoint(0, 0), secretBoxIcon);
+    p2.drawImage(QPoint(2, 2 ), mushroomIcon.scaled(secretBoxIcon.size()/1.5));
+    p2.end();
 
     QIcon secretBoxMushroomButtonIcon(boxWithMushroom.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonSecretBoxMushroom.setIcon(secretBoxMushroomButtonIcon);
@@ -86,16 +102,38 @@ LevelEditorWidget::LevelEditorWidget()
 
     QImage flowerIcon(":/resources/graphics/flower.png");
     QPixmap boxWithFlower(buttonSize,buttonSize);
-    QPainter p2(&boxWithFlower);
-    p2.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    p2.setOpacity(0.9);
-    p2.drawImage(QPoint(6, 6), flowerIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
-    p2.end();
+    QPainter p3(&boxWithFlower);
+    p3.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    p3.drawImage(QPoint(6, 6), flowerIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p3.end();
 
     QIcon secretBoxFlowerButtonIcon(boxWithFlower);
     buttonSecretBoxFlower.setIcon(secretBoxFlowerButtonIcon);
     buttonSecretBoxFlower.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxFlower.resize(buttonSize,buttonSize);
+
+    QImage starIcon(":/resources/graphics/star.png");
+    QPixmap boxWithStar(buttonSize,buttonSize);
+    QPainter p4(&boxWithStar);
+    p4.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    p4.drawImage(QPoint(6, 6), starIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p4.end();
+
+    QIcon secretBoxStarButtonIcon(boxWithStar);
+    buttonSecretBoxStar.setIcon(secretBoxStarButtonIcon);
+    buttonSecretBoxStar.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSecretBoxStar.resize(buttonSize,buttonSize);
+
+    QPixmap boxWithCoin(buttonSize,buttonSize);
+    QPainter p5(&boxWithCoin);
+    p5.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    p5.drawImage(QPoint(6, 6), coinIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p5.end();
+
+    QIcon secretBoxCoinButtonIcon(boxWithCoin);
+    buttonSecretBoxCoin.setIcon(secretBoxCoinButtonIcon);
+    buttonSecretBoxCoin.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSecretBoxCoin.resize(buttonSize,buttonSize);
 
     QPixmap smallPipeIcon(":/resources/graphics/pipe-small.png");
     QIcon smallPipeButtonIcon(smallPipeIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
@@ -114,6 +152,12 @@ LevelEditorWidget::LevelEditorWidget()
     buttonBigPipe.setIcon(bigPipeButtonIcon);
     buttonBigPipe.setIconSize(QSize(buttonSize, buttonSize));
     buttonBigPipe.resize(buttonSize,buttonSize);
+
+    QPixmap bulletBlasterIcon(":/resources/graphics/bill-blaster.png");
+    QIcon bulletBlasterButtonIcon(bulletBlasterIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonBulletBlaster.setIcon(bulletBlasterButtonIcon);
+    buttonBulletBlaster.setIconSize(QSize(buttonSize, buttonSize));
+    buttonBulletBlaster.resize(buttonSize,buttonSize);
 
     QPixmap flagpoleIcon(":/resources/graphics/flagpole.png");
     QIcon flagpoleButtonIcon(flagpoleIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
@@ -152,13 +196,17 @@ LevelEditorWidget::LevelEditorWidget()
     buttonMario.resize(buttonSize,buttonSize);
 
     objectButtonsHorizontalLayout.addWidget(&buttonBrick);
+    objectButtonsHorizontalLayout.addWidget(&buttonCoinBrick);
     objectButtonsHorizontalLayout.addWidget(&buttonBlock);
     objectButtonsHorizontalLayout.addWidget(&buttonWall);
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxMushroom);
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxFlower);
+    objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxStar);
+    objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxCoin);
     objectButtonsHorizontalLayout.addWidget(&buttonSmallPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonMedPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonBigPipe);
+    objectButtonsHorizontalLayout.addWidget(&buttonBulletBlaster);
     objectButtonsHorizontalLayout.addWidget(&buttonFlagpole);
     objectButtonsHorizontalLayout.addWidget(&buttonCastle);
     objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
@@ -192,6 +240,8 @@ void LevelEditorWidget::handleGridRadioButton() { levelEditorView->setShowLevelG
 
 void LevelEditorWidget::handleButtonBrick() { levelEditorEngine->setSelectedButton(BRICK); }
 
+void LevelEditorWidget::handleButtonCoinBrick() { levelEditorEngine->setSelectedButton(COINBRICK); }
+
 void LevelEditorWidget::handleButtonBlock() { levelEditorEngine->setSelectedButton(BLOCK); }
 
 void LevelEditorWidget::handleButtonWall() { levelEditorEngine->setSelectedButton(WALL); }
@@ -200,11 +250,17 @@ void LevelEditorWidget::handleButtonSecretBoxMushroom() { levelEditorEngine->set
 
 void LevelEditorWidget::handleButtonSecretBoxFlower() { levelEditorEngine->setSelectedButton(SECRETBOXFLOWER); }
 
+void LevelEditorWidget::handleButtonSecretBoxStar() { levelEditorEngine->setSelectedButton(SECRETBOXSTAR); }
+
+void LevelEditorWidget::handleButtonSecretBoxCoin() { levelEditorEngine->setSelectedButton(SECRETBOXCOIN); }
+
 void LevelEditorWidget::handleButtonSmallPipe() { levelEditorEngine->setSelectedButton(SMALLPIPE); }
 
 void LevelEditorWidget::handleButtonMedPipe() { levelEditorEngine->setSelectedButton(MEDPIPE); }
 
 void LevelEditorWidget::handleButtonBigPipe() { levelEditorEngine->setSelectedButton(BIGPIPE); }
+
+void LevelEditorWidget::handleButtonBulletBlaster() { levelEditorEngine->setSelectedButton(BULLETBLASTER); }
 
 void LevelEditorWidget::handleButtonFlagpole() { levelEditorEngine->setSelectedButton(FLAGPOLE); }
 

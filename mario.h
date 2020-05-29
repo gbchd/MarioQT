@@ -2,8 +2,6 @@
 #define MARIO_H
 
 #include "entity.h"
-#include "enemy.h"
-#include "Koopa.h"
 #include <QArrayData>
 
 class Mario : public Entity

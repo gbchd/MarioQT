@@ -8,6 +8,8 @@
 #include "mario.h"
 #include "inert.h"
 #include "map.h"
+#include "bulletbill.h"
+#include "billblaster.h"
 #include "cameravisitor.h"
 
 class MainWindow;
@@ -31,6 +33,7 @@ private:
 
     QList<ObjectModel *> objects;
 
+    int BLOCSIZE = 32; //taille d'un bloc devrait le passer en constante globale
 
     // Key queue for smooth transitions for pro players
     QList<Qt::Key> keyQueue;

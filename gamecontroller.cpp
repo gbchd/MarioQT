@@ -25,6 +25,25 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
+    for(Inert * inert : inerts){
+        BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
+        if(billblaster && billblaster->isShooting()){
+            billblaster->setShooting(false);
+            BulletBill * newBulletBill = new BulletBill();
+
+            if(mario!=nullptr && mario->getPosition().x() > billblaster->getPosition().x()){
+                newBulletBill->setUpRightMovingBulletBill(billblaster->getPosition());
+            }
+            else{
+                newBulletBill->setUpLeftMovingBulletBill(billblaster->getPosition());
+            }
+
+            entities.append(newBulletBill);
+            objects.append(newBulletBill);
+        }
+
+        inert->animate();
+    }
 
     for(Entity * entity : entities){
         Mario * mario = dynamic_cast<Mario*>(entity);
@@ -48,7 +67,9 @@ void GameController::advance() {
 }
 
 void GameController::update(CameraVisitor & visitor){
-    visitor.setPosition(mario->getPosition().x());
+    if(mario!=nullptr){
+        visitor.setPosition(mario->getPosition().x());
+    }
     for(ObjectModel * object : objects){
         object->accept(visitor);
     }

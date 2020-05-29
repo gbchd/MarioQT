@@ -3,7 +3,7 @@
 
 #include "inert.h"
 
-enum BoxContent {NOTHING, MUSHROOM, FLOWER};
+enum BoxContent {NOTHING, MUSHROOM, FLOWER, COIN, STAR};
 
 class Box : public Inert
 {

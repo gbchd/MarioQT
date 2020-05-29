@@ -21,8 +21,8 @@ protected:
     QPixmap currentTexture;
     float opacity = 1;
     int zValue = 0;
-
     int BLOCSIZE = 32; //taille d'un bloc devrait le passer en constante globale
+
 public:
     ObjectModel();
     virtual ~ObjectModel();

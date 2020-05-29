@@ -139,6 +139,22 @@ void Map::addInert(QJsonObject inertObject){
 
         inerts.append(brick);
     }
+    else if(type.compare("billBlaster") == 0){
+        BillBlaster * billBlaster = new BillBlaster();
+
+        int x = inertObject["x"].toInt();
+        int y = inertObject["y"].toInt();
+
+        billBlaster->moveTo(x*block_size,y*block_size);
+
+        int w = inertObject["width"].toInt();
+        int h = inertObject["height"].toInt();
+
+        billBlaster->setHitboxWidth(w*block_size);
+        billBlaster->setHitboxHeight(h*block_size);
+
+        inerts.append(billBlaster);
+    }
     else if(type.compare("anotherBlock") == 0){
         //add another block
     }

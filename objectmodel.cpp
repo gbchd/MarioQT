@@ -25,8 +25,6 @@ void ObjectModel::moveTo(float x, float y){
     position.setY(y);
 }
 
-#include <QDebug>
-
 void ObjectModel::doSimpleAnimation(QList<QPixmap> &textures, QElapsedTimer & timer, int delay, int & counter){
     if(timer.elapsed() > delay){
         counter ++;

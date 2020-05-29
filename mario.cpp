@@ -1,5 +1,7 @@
 #include "mario.h"
 #include <QDebug>
+#include "enemy.h"
+#include "koopa.h"
 
 Mario::Mario()
 {

@@ -19,6 +19,7 @@
 #include "block.h"
 #include "box.h"
 #include "brick.h"
+#include "billblaster.h"
 
 
 class Map

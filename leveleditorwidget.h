@@ -13,7 +13,7 @@
 class LevelEditorView;
 class LevelEditorEngine;
 
-enum SelectedButton {NOBUTTON, BRICK, BLOCK, WALL, SECRETBOXMUSHROOM, SECRETBOXFLOWER, SMALLPIPE, MEDPIPE, BIGPIPE, FLAGPOLE, CASTLE, GOOMBA, TURTLE, FLYINGTURTLE, MARIO};
+enum SelectedButton {NOBUTTON, BRICK, COINBRICK, BLOCK, WALL, SECRETBOXMUSHROOM, SECRETBOXFLOWER, SECRETBOXSTAR,SECRETBOXCOIN, SMALLPIPE, MEDPIPE, BIGPIPE, BULLETBLASTER, FLAGPOLE, CASTLE, GOOMBA, TURTLE, FLYINGTURTLE, MARIO};
 enum MouseState {NOTPRESSED, LEFTCLICKPRESSED, RIGHTCLICKPRESSED};
 
 class LevelEditorWidget : public QWidget
@@ -30,13 +30,17 @@ private:
 
     static const int buttonSize = 48;
     QPushButton buttonBrick;
+    QPushButton buttonCoinBrick;
     QPushButton buttonBlock;
     QPushButton buttonWall;
     QPushButton buttonSecretBoxMushroom;
     QPushButton buttonSecretBoxFlower;
+    QPushButton buttonSecretBoxStar;
+    QPushButton buttonSecretBoxCoin;
     QPushButton buttonSmallPipe;
     QPushButton buttonMedPipe;
     QPushButton buttonBigPipe;
+    QPushButton buttonBulletBlaster;
     QPushButton buttonFlagpole;
     QPushButton buttonCastle;
     QPushButton buttonGoomba;
@@ -67,13 +71,17 @@ private slots:
     void handleGridRadioButton();
 
     void handleButtonBrick();
+    void handleButtonCoinBrick();
     void handleButtonBlock();
     void handleButtonWall();
     void handleButtonSecretBoxMushroom();
     void handleButtonSecretBoxFlower();
+    void handleButtonSecretBoxStar();
+    void handleButtonSecretBoxCoin();
     void handleButtonSmallPipe();
     void handleButtonMedPipe();
     void handleButtonBigPipe();
+    void handleButtonBulletBlaster();
     void handleButtonFlagpole();
     void handleButtonCastle();
     void handleButtonGoomba();
