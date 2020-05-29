@@ -12,6 +12,78 @@ LevelEditorEngine::LevelEditorEngine()
     tickrate = 1000/240;
 }
 
+void LevelEditorEngine::exportMapToJSon()
+{
+    if(fakeMario==nullptr){
+        QMessageBox msgBox;
+        msgBox.setText("You need to place mario to save a level.");
+        msgBox.exec();
+        return;
+    }
+
+    QString filePath = QFileDialog::getSaveFileName(levelEditorWidget, "Sélectionner fichier CSV", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), "Fichiers CSV (*.csv)");
+    QFile myFile(filePath);
+
+    if (myFile.open(QFile::ReadWrite)){
+
+        QTextStream stream(&myFile);
+
+        stream << "{\"name\":\""<<QFileInfo(myFile.fileName()).fileName()<<"\","
+                    "\"creator\":\"Map Editor\","
+                    "\"date\":\""<<QDateTime::currentDateTime().toString("yyyy-MM-dd  HH:mm:ss")<<"\","
+                    "\"size\":{\"width\":320, \"height\":30},"
+                    "\"player\":{\"x\":"<<fakeMario->getPosition().x()/32<<",\"y\":"<<fakeMario->getPosition().y()/32<<"},"
+                    "\"inerts\":{";
+        for(int indice=0; indice<inerts.length(); indice++){
+            if(indice>0){ stream<<","; }
+            stream<<"\"block"<<indice<<"\":{\"type\":\""<<getTypeFromInert(inerts[indice])<<"\",\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
+        }
+        stream<<"},\"entities\":{";
+        for(int indice=0; indice<entities.length(); indice++){
+            if(indice>0){ stream<<","; }
+            stream<<"\"entity"<<indice<<"\":{\"type\":\""<<getTypeFromEntity(entities[indice])<<"\",\"x\":"<<entities[indice]->getPosition().x()/32<<",\"y\":"<<entities[indice]->getPosition().y()/32<<"}";
+        }
+        stream<<"}}";
+        myFile.resize(myFile.pos());
+        myFile.close();
+    }
+}
+
+QString LevelEditorEngine::getTypeFromInert(Inert *inert)
+{
+    if(dynamic_cast<Wall *>(inert)){
+        return "wall";
+    }
+    else if(dynamic_cast<Block *>(inert)){
+        return "block";
+    }
+    else if(dynamic_cast<Brick *>(inert)){
+        return "brick";
+    }
+    else if(dynamic_cast<Box *>(inert)){
+        return "box";
+    }
+    else if(dynamic_cast<BillBlaster *>(inert)){
+        return "billBlaster";
+    }
+    else{
+        return "unknown";
+    }
+}
+QString LevelEditorEngine::getTypeFromEntity(Entity * entity)
+{
+    if(dynamic_cast<Goomba *>(entity)){
+        return "goomba";
+    }
+    if(dynamic_cast<Koopa *>(entity)){
+        return "koopa";
+    }
+    else{
+        return "unknown";
+    }
+}
+
+
 void LevelEditorEngine::update(CameraVisitor & visitor){
     int X = getColumnFromMousePosition()*block_size;
     int Y = getLineFromMousePosition()*block_size;
@@ -141,11 +213,10 @@ void LevelEditorEngine::addObjectOnMousePosition()
             break;
         }
         case BULLETBLASTER: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/bill-blaster.png").scaled(block_size, block_size*2));
-            newBrick->moveTo(X, Y);
-            inerts.append(newBrick);
-            objects.append(newBrick);
+            BillBlaster * newBillBlaster = new BillBlaster();
+            newBillBlaster->moveTo(X, Y);
+            inerts.append(newBillBlaster);
+            objects.append(newBillBlaster);
             break;
         }
         case FLAGPOLE: {
@@ -351,7 +422,7 @@ int LevelEditorEngine::getColumnFromMousePosition()
 
 void LevelEditorEngine::saveLevel()
 {
-
+exportMapToJSon();
 }
 
 void LevelEditorEngine::clearMap()

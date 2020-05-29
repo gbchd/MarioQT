@@ -47,7 +47,6 @@ Map::Map(QString filename){
     }
 }
 
-
 /**
  * @brief Map::addInert
  * @param inertObject
@@ -147,11 +146,8 @@ void Map::addInert(QJsonObject inertObject){
 
         billBlaster->moveTo(x*block_size,y*block_size);
 
-        int w = inertObject["width"].toInt();
-        int h = inertObject["height"].toInt();
-
-        billBlaster->setHitboxWidth(w*block_size);
-        billBlaster->setHitboxHeight(h*block_size);
+        billBlaster->setHitboxWidth(block_size);
+        billBlaster->setHitboxHeight(2*block_size);
 
         inerts.append(billBlaster);
     }

@@ -4,6 +4,9 @@
 #include <QTimer>
 #include <QtMath>
 #include <QPainter>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QMessageBox>
 
 #include "cameravisitor.h"
 #include "objectmodel.h"
@@ -45,6 +48,9 @@ private:
 
 public:
     LevelEditorEngine();
+    void exportMapToJSon();
+    QString getTypeFromInert(Inert * inert);
+    QString getTypeFromEntity(Entity * entity);
     void setLevelEditorView(LevelEditorView * lev) { levelEditorView = lev; }
     void setLevelEditorWidget(LevelEditorWidget * lew) { levelEditorWidget = lew; }
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; }
