@@ -30,8 +30,8 @@ public:
 
     QString getCreator(){return creator;}
     QDateTime getCreationDate(){return creationDate;}
-    int getWidth();
-    int getHeight();
+    int getWidth() { return width; }
+    int getHeight() { return height; }
 
     int getPlayerSpawnX(){return playerSpawnX;}
     int getPlayerSpawnY(){return playerSpawnY;}

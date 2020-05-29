@@ -101,17 +101,20 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         if(e->key() == Qt::Key_Shift){
             mario->setRunning(true);
         }
+
+        if(e->key() == Qt::Key_C){
+            mario->startTransforming();
+        }
     }
 
     if(e->key() == Qt::Key_T){
         gameview->switchHitboxes();
     }
+
     if(e->key() == Qt::Key_R){
         reset();
     }
-    if(e->key() == Qt::Key_C){
-        mario->startTransforming();
-    }
+
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
     }
@@ -211,6 +214,7 @@ void GameController::clean(){
 void GameController::generateMap(){
     //On crée les maps dans le controlleur
     Map * map = new Map(mapFilepath);
+    gameview->setLevelSize(map->getWidth(), map->getHeight());
     qDebug() << map->getCreator() << map->getCreationDate();
 
     Mario * mario = new Mario();

@@ -15,6 +15,7 @@ BulletBill::BulletBill()
     moving = true;
 
     speed = 2;
+    speedLimit=4;
     velocity.setX(0);
     velocity.setY(0);
 }
@@ -23,6 +24,12 @@ void BulletBill::advance(){
     if(dead && timeOfDeath.elapsed() >= delayBeforeDeletable){
         deletable = true;
     }
+    else if(dead){
+        velocity.setY(velocity.y()+gravity);
+    }
+
+    updateVelocity();
+    applyVelocityLimit();
     moveTo(position+velocity);
 }
 
@@ -32,6 +39,18 @@ void BulletBill::animate(){
 
 void BulletBill::hurt(){
     die();
+}
+
+void BulletBill::die(){
+    collidable = false;
+    moving = false;
+    dead = true;
+    timeOfDeath.start();
+
+    gravity=1;
+
+    velocity.setX(0);
+    velocity.setY(-5);
 }
 
 void BulletBill::setUpLeftMovingBulletBill(QPointF billBlasterPos)
@@ -60,6 +79,9 @@ void BulletBill::collisionOnLeftHandler(ObjectModel *o){
     if(mario!=nullptr){
         mario->hurt();
     }
+    else{
+        hurt();
+    }
 }
 
 void BulletBill::collisionOnRightHandler(ObjectModel *o){
@@ -67,10 +89,16 @@ void BulletBill::collisionOnRightHandler(ObjectModel *o){
     if(mario!=nullptr){
         mario->hurt();
     }
+    else{
+        die();
+    }
 }
 
 void BulletBill::collisionOnTopHandler(ObjectModel *o){
     if(dynamic_cast<Mario*>(o)){
+        hurt();
+    }
+    else{
         hurt();
     }
 }
@@ -79,5 +107,8 @@ void BulletBill::collisionOnBottomHandler(ObjectModel *o){
     Mario * mario = dynamic_cast<Mario*>(o);
     if(mario!=nullptr){
         mario->hurt();
+    }
+    else{
+        hurt();
     }
 }

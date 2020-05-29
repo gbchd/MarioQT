@@ -28,7 +28,7 @@ void LevelEditorEngine::exportMapToJSon()
 
         QTextStream stream(&myFile);
 
-        stream << "{\"name\":\""<<QFileInfo(myFile.fileName()).fileName()<<"\","
+        stream << "{\"name\":\""<<QFileInfo(myFile.fileName()).completeBaseName()<<"\","
                     "\"creator\":\"Map Editor\","
                     "\"date\":\""<<QDateTime::currentDateTime().toString("yyyy-MM-dd  HH:mm:ss")<<"\","
                     "\"size\":{\"width\":320, \"height\":30},"

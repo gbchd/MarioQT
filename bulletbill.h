@@ -19,6 +19,7 @@ public:
     void advance() override;
     void animate() override;
     void hurt() override;
+    void die() override;
 
     void setUpLeftMovingBulletBill(QPointF billBlasterPos);
     void setUpRightMovingBulletBill(QPointF billBlasterPos);
