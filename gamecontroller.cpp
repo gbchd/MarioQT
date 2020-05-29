@@ -27,20 +27,33 @@ GameController::GameController(GameView * gv)
 void GameController::advance() {
     for(Inert * inert : inerts){
         BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
-        if(billblaster && billblaster->isShooting()){
-            billblaster->setShooting(false);
-            BulletBill * newBulletBill = new BulletBill();
-
-            if(mario!=nullptr && mario->getPosition().x() > billblaster->getPosition().x()){
-                newBulletBill->setUpRightMovingBulletBill(billblaster->getPosition());
+        if(billblaster){
+            if(mario!=nullptr && qAbs(mario->getPosition().x()-billblaster->getPosition().x()) <= 3*BLOCSIZE && qAbs(mario->getPosition().y()-billblaster->getPosition().y()) <= 3*BLOCSIZE){
+                billblaster->setShooting(false);
+                billblaster->restartShootTimer();
+                qDebug() << "mario is close";
             }
             else{
-                newBulletBill->setUpLeftMovingBulletBill(billblaster->getPosition());
+
+                qDebug() << "mario isnt close";
             }
 
-            entities.append(newBulletBill);
-            objects.append(newBulletBill);
+            if(billblaster->isShooting()){
+                billblaster->setShooting(false);
+                BulletBill * newBulletBill = new BulletBill();
+
+                if(mario!=nullptr && mario->getPosition().x() > billblaster->getPosition().x()){
+                    newBulletBill->setUpRightMovingBulletBill(billblaster->getPosition());
+                }
+                else{
+                    newBulletBill->setUpLeftMovingBulletBill(billblaster->getPosition());
+                }
+
+                entities.append(newBulletBill);
+                objects.append(newBulletBill);
+            }
         }
+
 
         inert->animate();
     }

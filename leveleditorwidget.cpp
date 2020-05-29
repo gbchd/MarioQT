@@ -66,7 +66,7 @@ LevelEditorWidget::LevelEditorWidget()
     QPixmap brickWithCoin(buttonSize,buttonSize);
     QPainter p1(&brickWithCoin);
     p1.drawImage(QPoint(0, 0), brickImage.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    p1.drawImage(QPoint(6, 6), coinIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p1.drawImage(QPoint(buttonSize*0.1, buttonSize*0.1), coinIcon.scaled(buttonSize*0.8, buttonSize*0.8, Qt::KeepAspectRatio));
     p1.end();
 
     QIcon brickWithCoinButtonIcon(brickWithCoin);
@@ -92,7 +92,7 @@ LevelEditorWidget::LevelEditorWidget()
     QPixmap boxWithMushroom(secretBoxIcon.size());
     QPainter p2(&boxWithMushroom);
     p2.drawImage(QPoint(0, 0), secretBoxIcon);
-    p2.drawImage(QPoint(2, 2 ), mushroomIcon.scaled(secretBoxIcon.size()/1.5));
+    p2.drawImage(QPoint(2, 2), mushroomIcon.scaled(secretBoxIcon.size()*0.7));
     p2.end();
 
     QIcon secretBoxMushroomButtonIcon(boxWithMushroom.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));

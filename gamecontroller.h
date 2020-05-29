@@ -2,6 +2,7 @@
 #define GAMECONTROLLER_H
 
 #include <QTimer>
+#include <QtMath>
 
 #include "gameview.h"
 #include "objectmodel.h"

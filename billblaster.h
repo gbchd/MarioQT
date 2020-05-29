@@ -15,6 +15,7 @@ public:
     virtual void animate() override;
     bool isShooting() { return shooting; }
     void setShooting(bool b) { shooting = b; }
+    void restartShootTimer() { shootTimer.restart(); }
 };
 
 #endif // BILLBLASTER_H
