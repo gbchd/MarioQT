@@ -169,7 +169,6 @@ void GameController::billblasterHandler(BillBlaster *billblaster){
             addEntity(bulletBill);
         }
     }
-
 }
 
 
@@ -280,7 +279,6 @@ void GameController::updateDirection(){
         }
     }
 }
-
 
 // Gestion des objets dans le controller (peut être le role du modèle?)
 void GameController::setPlayer(Mario * m){

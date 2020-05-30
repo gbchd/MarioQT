@@ -17,7 +17,13 @@ protected:
     QPixmap texture_shell;
     int durationWalkTexture = 100; // in ms
     QElapsedTimer timerWalk;
-    int currentWalkTexture = 0;           // walking animation (2 textures)
+    int currentWalkTexture = 0;                         // walking animation (2 textures)
+
+    //Used to prevent mario from taking damage immediatly after hitting the shell on the side
+    //We don't use a timer here in case of low framerate
+    int counterNonHurtfulFrame = 0;
+    int maxNonHurtfulFrame = 100;
+    void hurtfulFrameHandler();
 
     void collisionOnLeftHandler(ObjectModel *o) override;
     void collisionOnRightHandler(ObjectModel *o) override;

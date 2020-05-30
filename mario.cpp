@@ -269,7 +269,9 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
     Entity::collisionOnLeftHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        hurt();
+        if(enemy->isHurtful()){
+            hurt();
+        }
     }
 }
 
@@ -277,8 +279,10 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
     Entity::collisionOnRightHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        //Rajouter un attribut au ennemis qui check si ils peuvent faire mal à mario
-        hurt();
+        if(enemy->isHurtful()){
+            hurt();
+        }
+
     }
 }
 
@@ -286,7 +290,9 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
     Entity::collisionOnTopHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        hurt();
+        if(enemy->isHurtful()){
+            hurt();
+        }
     }
 }
 

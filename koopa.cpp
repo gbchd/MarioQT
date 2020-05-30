@@ -35,6 +35,7 @@ Koopa::Koopa(Direction spawnDirection)
 
 void Koopa::advance(){
     groundHandler();
+    hurtfulFrameHandler();
     if(dead && timeOfDeath.elapsed() >= delayBeforeDeletable){
         deletable = true;
     }
@@ -55,6 +56,7 @@ void Koopa::animate()
     if(shell)
     {
         setCurrentTexture(texture_shell);
+
     }
     else if(dead)
     {
@@ -67,12 +69,23 @@ void Koopa::animate()
 }
 
 void Koopa::setCurrentTexture(QPixmap texture){
-    if(movingDirection == RIGHT){
-        texture = texture.transformed(QTransform().scale(-1,1));
-    }
+
     ObjectModel::setCurrentTexture(texture);
 }
 
+void Koopa::hurtfulFrameHandler(){
+    if(moving){
+        if(counterNonHurtfulFrame < maxNonHurtfulFrame){
+            counterNonHurtfulFrame++;
+        }
+        else{
+            hurtful = true;
+        }
+    }
+    else{
+        counterNonHurtfulFrame = 0;
+    }
+}
 
 void Koopa::collisionOnLeftHandler(ObjectModel *o){
     //Entity::collisionOnLeftHandler(o);
@@ -104,6 +117,7 @@ void Koopa::collisionOnTopHandler(ObjectModel *o){
         }
         else{
             moving = !moving;
+            hurtful = false;
         }
 
     }
