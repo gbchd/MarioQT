@@ -105,22 +105,27 @@ void GameController::advance() {
     }
 
     for(Entity * entity : entities){
-        Mario * mario = dynamic_cast<Mario*>(entity);
-        if(mario && mario->isDeletable()){
-            removePlayer();
-        }
-        else{
-            entity->advance();
-            for(ObjectModel * o : objects){
-                if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
-                    entity->collisionHandler(o);
+        if(entity && entity!=nullptr && entity!=NULL){
+            Mario * mario = dynamic_cast<Mario*>(entity);
+            if(mario && mario->isDeletable()){
+                removePlayer();
+            }
+            else{
+                entity->advance();
+                for(ObjectModel * o : objects){
+                    if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
+                        entity->collisionHandler(o);
+                    }
+                }
+                entity->animate();
+
+                if(entity->isDeletable()){
+                    removeEntity(entity);
                 }
             }
-            entity->animate();
-
-            if(entity->isDeletable()){
-                removeEntity(entity);
-            }
+        }
+        else{
+            qDebug() << "WTFF";
         }
     }
     gameview->repaint();

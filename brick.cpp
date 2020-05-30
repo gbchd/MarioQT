@@ -20,7 +20,10 @@ void Brick::startBlockBounceAnimation()
 
 void Brick::handleCollisionFromMario(bool isMarioBig)
 {
-    if(isMarioBig && brickState==NOBRICKSTATE){
+    if(brickState==USEDCOINBRICK){
+        //Do nothing
+    }
+    else if(isMarioBig && brickState==NOBRICKSTATE){
         brickState = BREAKBRICK; // Will be handled in the gamecontroller later
     }
     else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
