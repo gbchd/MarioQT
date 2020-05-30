@@ -60,6 +60,12 @@ public:
     static bool strends (std::string const &str, std::string const &end);
     static QPixmap loadTextureTransparent(const std::string & file, QColor mask_color = Qt::magenta);
     static QPixmap loadTexture(const std::string file, QColor mask_color = Qt::magenta);
+
+
+    virtual void collisionOnLeftHandler(ObjectModel * o){}
+    virtual void collisionOnRightHandler(ObjectModel * o){}
+    virtual void collisionOnTopHandler(ObjectModel * o){}
+    virtual void collisionOnBottomHandler(ObjectModel * o){}
 };
 
 #endif // OBJECTMODEL_H

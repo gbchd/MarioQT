@@ -59,3 +59,4 @@ bool ObjectModel::strends(std::string const &str, std::string const &end)
     else
         return false;
 }
+

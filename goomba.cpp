@@ -61,35 +61,27 @@ void Goomba::animate()
     }
 }
 
-void Goomba::reactionNoMoreOnGround(){
-    /* Stay on ground object*/
-    if(movingDirection == LEFT){
-        movingDirection = RIGHT;
-    }
-    else{
-        movingDirection = LEFT;
-    }
-}
 
 void Goomba::collisionOnLeftHandler(ObjectModel *o){
-    if(velocity.x() < 0){velocity.setX(0);}
+    Entity::collisionOnLeftHandler(o);
     movingDirection = RIGHT;
-    Mario * mario = dynamic_cast<Mario*>(o);
-    if(mario!=nullptr){
-        mario->hurt();
+    Koopa * koopa = dynamic_cast<Koopa*>(o);
+    if(koopa && koopa->isInShell() && koopa->isMoving()){
+        hurt();
     }
 }
 
 void Goomba::collisionOnRightHandler(ObjectModel *o){
-    if(velocity.x() > 0){velocity.setX(0);}
+    Entity::collisionOnRightHandler(o);
     movingDirection = LEFT;
-    Mario * mario = dynamic_cast<Mario*>(o);
-    if(mario!=nullptr){
-        mario->hurt();
+    Koopa * koopa = dynamic_cast<Koopa*>(o);
+    if(koopa && koopa->isInShell() && koopa->isMoving()){
+        hurt();
     }
 }
 
 void Goomba::collisionOnTopHandler(ObjectModel *o){
+    Entity::collisionOnTopHandler(o);
     if(dynamic_cast<Mario*>(o)){
         hurt();
     }

@@ -50,12 +50,6 @@ protected:
 
     virtual void solveCollision(ObjectModel * o);
 
-
-    virtual void collisionOnLeftHandler(ObjectModel * o);
-    virtual void collisionOnRightHandler(ObjectModel * o);
-    virtual void collisionOnTopHandler(ObjectModel * o);
-    virtual void collisionOnBottomHandler(ObjectModel * o);
-
     void bounce();
     virtual void die(){}
 
@@ -91,6 +85,12 @@ public:
     void setMoving(bool state){ moving = state; }
     Direction getDirection(){ return movingDirection; }
     void setDirection(Direction direction){ movingDirection = direction; currentTexture = currentTexture.transformed(QTransform().scale(-1,1));}
+
+    virtual void collisionOnLeftHandler(ObjectModel * o) override;
+    virtual void collisionOnRightHandler(ObjectModel * o) override;
+    virtual void collisionOnTopHandler(ObjectModel * o) override;
+    virtual void collisionOnBottomHandler(ObjectModel * o) override;
+
 };
 
 #endif // ENTITY_H

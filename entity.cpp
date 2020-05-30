@@ -132,23 +132,128 @@ bool Entity::isColliding(ObjectModel *o){
            hitbox.top() < oHitbox.bottom());
 }
 
+//PROBLEME AVEC LES COLLISIONS ENTRE ENTITE
 void Entity::solveCollision(ObjectModel *o){
-    QRectF hitbox;
+    QRectF thisHitbox;
     QRectF oHitbox;
     Entity * e = dynamic_cast<Entity *>(o);
     if(e){
         if(!isCollidableWithOtherEntities() || !e->isCollidableWithOtherEntities()){
             return;
         }
-        hitbox = getHitboxEntity();
+        thisHitbox = getHitboxEntity();
         oHitbox = e->getHitboxEntity();
     }
     else{
-        hitbox = getHitbox();
+        thisHitbox = getHitbox();
         oHitbox = o->getHitbox();
     }
-    QRectF intersection = hitbox.intersected(oHitbox);
 
+
+    /**
+     * COLLISION RESOLUTION INSPIRED BY : https://hopefultoad.blogspot.com/2017/09/2d-aabb-collision-detection-and-response.html
+     */
+
+    // We calculate the previous position of the hitbox via the velocity.
+    QRectF prevHitbox = thisHitbox;
+    prevHitbox.moveTo(thisHitbox.topLeft() - velocity);
+
+    QRectF intersection = thisHitbox.intersected(oHitbox);
+
+    // We find out in which area was the previous hitbox
+    // See this for more information : https://3.bp.blogspot.com/-ggebdmaQZ-0/WcDZchz2pzI/AAAAAAAAAZU/Y2huS7Ks2Ec-dMbX-c9fvuSTHXqrA619wCLcBGAs/s1600/collision%2Bquadrant%2Bchart.png
+    bool top = false;
+    bool right = false;
+    bool bottom = false;
+    bool left = false;
+
+    if(prevHitbox.bottom() <= oHitbox.top()){
+        top = true;
+    }
+    if(prevHitbox.left() >= oHitbox.right()){
+        right = true;
+    }
+    if(prevHitbox.top() >= oHitbox.bottom()){
+        bottom = true;
+    }
+    if(prevHitbox.right() <= oHitbox.left()){
+        left = true;
+    }
+
+    // The slope of the two vector : velocity and the vector between the closest corner of the two objects.
+    float slopeVelocity;
+    float slopeCorner;
+
+    // We handle the corner cases.
+    if(top && left){
+        slopeVelocity = (thisHitbox.top() - prevHitbox.bottom())/(thisHitbox.left() - prevHitbox.right());
+        slopeCorner = (oHitbox.top() - prevHitbox.bottom())/(oHitbox.left() - prevHitbox.right());
+        //Hit top side
+        if(slopeVelocity < slopeCorner){
+            left = false;
+        }
+        //Hit left side
+        else{
+            top = false;
+        }
+    }
+    else if(top && right){
+        slopeVelocity = (thisHitbox.top() - prevHitbox.bottom())/(thisHitbox.right() - prevHitbox.left());
+        slopeCorner = (oHitbox.top() - prevHitbox.bottom())/(oHitbox.right() - prevHitbox.left());
+        //Hit top side
+        if(slopeVelocity > slopeCorner){
+            right = false;
+        }
+        //Hit right side
+        else{
+            top = false;
+        }
+    }
+    else if(right && bottom){
+        slopeVelocity = (thisHitbox.bottom() - prevHitbox.top())/(thisHitbox.right() - prevHitbox.left());
+        slopeCorner = (oHitbox.bottom() - prevHitbox.top())/(oHitbox.right() - prevHitbox.left());
+        //Hit bottom side
+        if(slopeVelocity < slopeCorner){
+            right = false;
+        }
+        //Hit right side
+        else{
+            bottom = false;
+        }
+    }
+    if(left && bottom){
+        slopeVelocity = (thisHitbox.bottom() - prevHitbox.top())/(thisHitbox.left() - prevHitbox.right());
+        slopeCorner = (oHitbox.bottom() - prevHitbox.top())/(oHitbox.left() - prevHitbox.right());
+        //Hit bottom side
+        if(slopeVelocity > slopeCorner){
+            left = false;
+        }
+        //Hit left side
+        else{
+            bottom = false;
+        }
+    }
+
+
+    //We move this object to the correct position
+    if(top){
+        moveTo(position.x(), oHitbox.top() - thisHitbox.height());
+    }
+    if(right){
+        moveTo(position.x() + intersection.width(), position.y());
+        //moveTo(oHitbox.right(), position.y()); Check ce qui va pas avec ça
+    }
+    if(bottom){
+        moveTo(position.x(), oHitbox.bottom());
+    }
+    if(left){
+        moveTo(position.x() - intersection.width(), position.y());
+    }
+
+
+    /*
+     * CODE QUE JE GARDE AU CAS OU J'AI TOUT CASSE SANS M'EN RENDRE COMPTE
+    QRectF intersection = thisHitbox.intersected(oHitbox);
     if(intersection.width() < intersection.height()){
         //Collision on x axis
         if(hitbox.x() < oHitbox.x()){
@@ -171,6 +276,7 @@ void Entity::solveCollision(ObjectModel *o){
             moveTo(position.x(), position.y() + intersection.height());
         }
     }
+    */
 }
 
 void Entity::collisionHandler(ObjectModel *o){
@@ -199,16 +305,24 @@ void Entity::collisionHandler(ObjectModel *o){
     }
 
     if(hitbox.left() == oHitbox.right()){
+        //qDebug() << "Left";
         collisionOnLeftHandler(o);
+        o->collisionOnRightHandler(this);
     }
     if(hitbox.right() == oHitbox.left()){
+        //qDebug() << "Right";
         collisionOnRightHandler(o);
+        o->collisionOnLeftHandler(this);
     }
     if(hitbox.top() == oHitbox.bottom()){
+        //qDebug() << "Top";
         collisionOnTopHandler(o);
+        o->collisionOnBottomHandler(this);
     }
     if(hitbox.bottom() == oHitbox.top()){
+        //qDebug() << "Bottom";
         collisionOnBottomHandler(o);
+        o->collisionOnTopHandler(this);
     }
 }
 

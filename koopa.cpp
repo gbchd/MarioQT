@@ -87,76 +87,45 @@ void Koopa::reactionNoMoreOnGround(){
 }
 
 void Koopa::collisionOnLeftHandler(ObjectModel *o){
-    if(velocity.x() < 0){velocity.setX(0);}
+    //Entity::collisionOnLeftHandler(o);
     movingDirection = RIGHT;
-    if(moving){
-        Mario * mario = dynamic_cast<Mario*>(o);
-        if(mario!=nullptr){
-            mario->hurt();
-        }
-
-        Enemy * enemy = dynamic_cast<Enemy*>(o);
-        if(enemy!=nullptr && shell){
-            enemy->hurt();
+    if(shell){
+        if(dynamic_cast<Mario*>(o) && !moving){
+            moving = true;
         }
     }
 }
 
 void Koopa::collisionOnRightHandler(ObjectModel *o){
-    if(velocity.x() > 0){velocity.setX(0);}
+    //Entity::collisionOnRightHandler(o);
     movingDirection = LEFT;
-    if(moving){
-        Mario * mario = dynamic_cast<Mario*>(o);
-        if(mario!=nullptr){
-            mario->hurt();
-        }
-
-        Enemy * enemy = dynamic_cast<Enemy*>(o);
-        if(enemy!=nullptr && shell){
-            enemy->hurt();
+    if(shell){
+        if(dynamic_cast<Mario*>(o) && !moving){
+            moving = true;
         }
     }
+
 }
 
 void Koopa::collisionOnTopHandler(ObjectModel *o){
-    if(dynamic_cast<Mario*>(o) && !shell){
-        hurt();
+    Entity::collisionOnTopHandler(o);
+
+    if(dynamic_cast<Mario*>(o)){
+        if(!shell){
+            hurt();
+        }
+        else{
+            moving = !moving;
+        }
+
     }
 }
 
-void Koopa::hitShellTop(ObjectModel *o){
-    Mario *mario = dynamic_cast<Mario*>(o);
-    if(!shell){
-        if(mario){
-            hurt();
-        }
-    }
-    else if(moving == true){
-        moving = false;
-    }
-    else{
-        setDirection(mario->getDirection());
-        moving = true;
-    }
-}
-
-void Koopa::hitShellSide(ObjectModel *o){
-    Mario *mario = dynamic_cast<Mario*>(o);
-    if(!shell || moving){
-        if(mario){
-            hurt();
-        }
-    }
-    else{
-        setDirection(mario->getDirection());
-        moving = true;
-    }
-}
 
 void Koopa::hurt(){
     if(!shell){
         shell = true;
         moving=false;
-        speed = 3;
+        speed = 6;
     }
 }

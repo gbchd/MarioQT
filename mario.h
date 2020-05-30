@@ -40,10 +40,7 @@ private:
     void stopTransforming();
 
     void doTransforming();
-    void collisionOnBottomHandler(ObjectModel *o) override;
-    void collisionOnLeftHandler(ObjectModel * o) override;
-    void collisionOnRightHandler(ObjectModel * o) override;
-    void collisionOnTopHandler(ObjectModel * o) override;
+
 
     // === Jumping tools ===
     /**
@@ -95,6 +92,11 @@ public:
     void die() override;
     void startTransforming();
     Direction getDirection(){return movingDirection;};
+
+    void collisionOnBottomHandler(ObjectModel *o) override;
+    void collisionOnLeftHandler(ObjectModel * o) override;
+    void collisionOnRightHandler(ObjectModel * o) override;
+    void collisionOnTopHandler(ObjectModel * o) override;
 };
 
 #endif // MARIO_H

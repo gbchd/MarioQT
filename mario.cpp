@@ -257,35 +257,24 @@ void Mario::stopTransforming(){
 }
 
 void Mario::collisionOnLeftHandler(ObjectModel *o){
-    if(velocity.x() < 0){velocity.setX(0);}
+    Entity::collisionOnLeftHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        Koopa * koopa = dynamic_cast<Koopa *>(o);
-        if(koopa){
-            koopa->hitShellSide(this);
-        }
-        else{
-            enemy->hurt();
-        }
+        hurt();
     }
 }
 
 void Mario::collisionOnRightHandler(ObjectModel *o){
-    if(velocity.x() > 0){velocity.setX(0);}
+    Entity::collisionOnRightHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        Koopa * koopa = dynamic_cast<Koopa *>(o);
-        if(koopa){
-            koopa->hitShellSide(this);
-        }
-        else{
-            enemy->hurt();
-        }
+        //Rajouter un attribut au ennemis qui check si ils peuvent faire mal à mario
+        hurt();
     }
 }
 
 void Mario::collisionOnTopHandler(ObjectModel *o){
-    if(velocity.y()<0){velocity.setY(0);}
+    Entity::collisionOnTopHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         hurt();
@@ -296,13 +285,6 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     Entity::collisionOnBottomHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
-        Koopa * koopa = dynamic_cast<Koopa *>(o);
-        if(koopa){
-            koopa->hitShellTop(this);
-        }
-        else{
-            enemy->hurt();
-        }
         bounce();
     }
 }

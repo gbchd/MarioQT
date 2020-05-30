@@ -19,8 +19,6 @@ protected:
     QElapsedTimer timerWalk;
     int currentWalkTexture = 0;           // walking animation (2 textures)
 
-    void reactionNoMoreOnGround() override;
-
     void collisionOnLeftHandler(ObjectModel *o) override;
     void collisionOnRightHandler(ObjectModel *o) override;
     void collisionOnTopHandler(ObjectModel *o) override;
@@ -38,9 +36,6 @@ public:
     void advance() override;
     void animate() override;
     void hurt() override;
-
-    void hitShellTop(ObjectModel *o);
-    void hitShellSide(ObjectModel *o);
 };
 
 #endif // KOOPA_H
