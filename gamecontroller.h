@@ -37,6 +37,9 @@ private:
 
     QList<ObjectModel *> objects;
 
+    void handleCollision(Entity * entity);
+    void addObjectToCollidingList(QList<ObjectModel*>& collidingObjects, Entity* entity, ObjectModel*o);
+
     int BLOCSIZE = 32; //taille d'un bloc devrait le passer en constante globale
 
     // Key queue for smooth transitions for pro players

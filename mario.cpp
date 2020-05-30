@@ -71,14 +71,6 @@ void Mario::advance(){
         deletable = true;
     }
 
-    if(dead){
-        qDebug() << "isDead and position y is" << position.y();
-        if(position.y() > 25 * BLOCSIZE){
-            qDebug() << "yep we can delete";
-            deletable = true;
-        }
-    }
-
     if(jumping && velocity.y() > 0){
         jumping = false;
     }

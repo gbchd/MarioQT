@@ -1,6 +1,8 @@
 #include "gamecontroller.h"
 #include "mainwindow.h"
 #include "QDebug"
+#include <QtMath>
+
 
 GameController::GameController(){
     mario = nullptr;
@@ -50,12 +52,9 @@ void GameController::advance() {
 
     for(Entity * entity : entities){
         entity->advance();
-        for(ObjectModel * o : objects){
-            if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
-                // Possibilité de faire une liste d'objets qui collide et la trier dans par ordre de proximité avec l'entité
-                entity->collisionHandler(o);
-            }
-        }
+
+        handleCollision(entity);
+
         entity->animate();
 
         if(entity->isDeletable()){
@@ -66,11 +65,47 @@ void GameController::advance() {
                 removeEntity(entity);
             }
         }
-
     }
 
-
     gameview->repaint();
+}
+
+void GameController::handleCollision(Entity *entity){
+    // We create a list of colliding objects and we add all the objects which we are colliding with.
+    // We sort this list by the distance between entity and the object colliding.
+    QList<ObjectModel*> collidingObjects;
+    for(ObjectModel * o : objects){
+        if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
+            addObjectToCollidingList(collidingObjects, entity, o);
+        }
+    }
+
+    // We iterate through the list and we solve the collision one by one.
+    // We check between each object if the collision has already been solved or not.
+    for(ObjectModel* o : collidingObjects){
+        if(entity->isColliding(o)){
+            entity->collisionHandler(o);
+        }
+    }
+}
+
+void GameController::addObjectToCollidingList(QList<ObjectModel *> &collidingObjects, Entity* entity, ObjectModel *o){
+    if(collidingObjects.size() == 0){
+        collidingObjects.append(o);
+    }
+    else{
+        for(int i = 0; i < collidingObjects.size(); i++){
+            QPointF entityCenter = entity->getHitbox().center();
+            QPointF objectInListCenter = collidingObjects.at(i)->getHitbox().center();
+            QPointF newObjectCenter = o->getHitbox().center();
+            float distObjectInList = qPow(entityCenter.x() - objectInListCenter.x(),2) + qPow(entityCenter.y() - objectInListCenter.y(),2);
+            float distNewObject = qPow(entityCenter.x() - newObjectCenter.x(),2) + qPow(entityCenter.y() - newObjectCenter.y(),2);
+            if(distNewObject < distObjectInList){
+                collidingObjects.insert(i,o);
+                break;
+            }
+        }
+    }
 }
 
 
