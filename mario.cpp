@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "enemy.h"
 #include "koopa.h"
+#include "brick.h"
 
 Mario::Mario()
 {
@@ -286,9 +287,16 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
 
 void Mario::collisionOnTopHandler(ObjectModel *o){
     if(velocity.y()<0){velocity.setY(0);}
+
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         hurt();
+    }
+    else{
+        Brick * brick = dynamic_cast<Brick *>(o);
+        if(brick != nullptr){
+            brick->handleCollisionFromMario(big);
+        }
     }
 }
 

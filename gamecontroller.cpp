@@ -28,14 +28,9 @@ void GameController::advance() {
     for(Inert * inert : inerts){
         BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
         if(billblaster){
-            if(mario!=nullptr && qAbs(mario->getPosition().x()-billblaster->getPosition().x()) <= 3*BLOCSIZE && qAbs(mario->getPosition().y()-billblaster->getPosition().y()) <= 3*BLOCSIZE){
+            if(mario!=nullptr && qAbs(mario->getPosition().x()-billblaster->getPosition().x()) <= 2*BLOCSIZE && qAbs(mario->getPosition().y()-billblaster->getPosition().y()) <= 2*BLOCSIZE){
                 billblaster->setShooting(false);
                 billblaster->restartShootTimer();
-                qDebug() << "mario is close";
-            }
-            else{
-
-                qDebug() << "mario isnt close";
             }
 
             if(billblaster->isShooting()){
@@ -53,9 +48,53 @@ void GameController::advance() {
                 objects.append(newBulletBill);
             }
         }
+        else{
+            Brick * brick = dynamic_cast<Brick *>(inert);
+            if(brick){
+                switch(brick->getBrickState()){
+                case BREAKBRICK:{
+                        brick->setDeletable(true);
 
+                        BrickDebris * bd1 = new BrickDebris(LEFT);
+                        bd1->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
+                        bd1->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
+                        addEntity(bd1);
+                        BrickDebris * bd2 = new BrickDebris(UP);
+                        bd2->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
+                        bd2->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
+                        addEntity(bd2);
+                        BrickDebris * bd3 = new BrickDebris(RIGHT);
+                        bd3->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
+                        bd3->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
+                        addEntity(bd3);
+                        BrickDebris * bd4 = new BrickDebris(DOWN);
+                        bd4->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
+                        bd4->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
+                        addEntity(bd4);
 
-        inert->animate();
+                    break;}
+                case GIVECOIN:{
+                    brick->setBrickState(NOBRICKSTATE);
+                    Coin * coin = new Coin();
+                    coin->setPositionX(brick->getPosition().x());
+                    coin->setPositionY(brick->getPosition().y()-BLOCSIZE);
+                    entities.append(coin);
+                    objects.append(coin);
+                    break;}
+                case NOBRICKSTATE:
+                default:
+                    //do nothing
+                    break;
+                }
+            }
+        }
+
+        if(inert->isDeletable()){
+            removeInert(inert);
+        }
+        else{
+            inert->animate();
+        }
     }
 
     for(Entity * entity : entities){

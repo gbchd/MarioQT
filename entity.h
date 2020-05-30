@@ -12,7 +12,6 @@ class Entity : public ObjectModel
 protected:
     // === States ===
     bool phantom = false;
-    bool deletable = false;
     bool dead = false;
     bool moving = false;
     bool sliding = false;
@@ -75,7 +74,6 @@ public:
 
     QRectF getHitboxEntity(){ return hitboxEntity; }
 
-    bool isDeletable(){return deletable;}
     bool isDead(){return dead;}
     bool isCollidableWithOtherEntities(){return collidableWithOtherEntities;}
 

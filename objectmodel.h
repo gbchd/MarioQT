@@ -14,6 +14,7 @@ class ObjectModel
 protected:
     bool walkable;
     bool collidable;
+    bool deletable = false;
 
     QPointF position;
     QRectF hitbox;
@@ -35,6 +36,8 @@ public:
 
     bool isWalkable(){ return walkable; }
     bool isCollidable(){ return collidable; }
+    bool isDeletable(){return deletable;}
+    void setDeletable(bool b) { deletable = b; }
 
     QPointF getPosition(){ return position; }
     void setPositionX(float x){ position.setX(x); } //Prefer the moveTo method instead of this one

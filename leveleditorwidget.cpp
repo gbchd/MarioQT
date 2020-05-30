@@ -53,8 +53,6 @@ LevelEditorWidget::LevelEditorWidget()
     buttonClear.setFixedSize(80, 20);
     menuVerticalLayout.addWidget(&buttonClear);
 
-    firstHorizontalLayout.addLayout(&objectButtonsHorizontalLayout);
-
     QPixmap brickIcon(":/resources/graphics/blocs/brick.bmp");
     QIcon brickButtonIcon(brickIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonBrick.setIcon(brickButtonIcon);
@@ -195,6 +193,11 @@ LevelEditorWidget::LevelEditorWidget()
     buttonMario.setIconSize(QSize(buttonSize, buttonSize));
     buttonMario.resize(buttonSize,buttonSize);
 
+    buttonScrollArea.setWidgetResizable(true);
+    buttonsWidget.setLayout(&objectButtonsHorizontalLayout);
+    buttonScrollArea.setWidget(&buttonsWidget);
+
+    objectButtonsHorizontalLayout.addWidget(&buttonMario);
     objectButtonsHorizontalLayout.addWidget(&buttonBrick);
     objectButtonsHorizontalLayout.addWidget(&buttonCoinBrick);
     objectButtonsHorizontalLayout.addWidget(&buttonBlock);
@@ -212,7 +215,12 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
     objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
     objectButtonsHorizontalLayout.addWidget(&buttonFlyingTurtle);
-    objectButtonsHorizontalLayout.addWidget(&buttonMario);
+
+    firstHorizontalLayout.addWidget(&buttonScrollArea);
+
+    buttonScrollArea.setMaximumHeight(90);
+    buttonScrollArea.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
 
     gridRadioButton.setText("Grid");
     firstHorizontalLayout.addWidget(&gridRadioButton);

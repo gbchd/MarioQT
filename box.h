@@ -11,6 +11,7 @@ private:
     QList<QPixmap> texture;
 
     BoxContent boxContent;
+    bool used=false;
 
 public:
     Box();

@@ -12,6 +12,8 @@
 #include "bulletbill.h"
 #include "billblaster.h"
 #include "cameravisitor.h"
+#include "brickdebris.h"
+#include "coin.h"
 
 class MainWindow;
 
