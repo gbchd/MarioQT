@@ -11,6 +11,7 @@ Brick::Brick()
 
 void Brick::startBlockBounceAnimation()
 {
+    setPositionY(getHitbox().y());
     if(!timerBounceAnimation.isValid()){
         timerBounceAnimation.start();
     }
