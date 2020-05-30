@@ -36,6 +36,7 @@ Koopa::Koopa(Direction spawnDirection)
 void Koopa::advance(){
     groundHandler();
     hurtfulFrameHandler();
+    qDebug() << hurtful;
     if(dead && timeOfDeath.elapsed() >= delayBeforeDeletable){
         deletable = true;
     }
@@ -68,10 +69,6 @@ void Koopa::animate()
 
 }
 
-void Koopa::setCurrentTexture(QPixmap texture){
-
-    ObjectModel::setCurrentTexture(texture);
-}
 
 void Koopa::hurtfulFrameHandler(){
     if(moving){
@@ -112,14 +109,7 @@ void Koopa::collisionOnTopHandler(ObjectModel *o){
     Entity::collisionOnTopHandler(o);
 
     if(dynamic_cast<Mario*>(o)){
-        if(!shell){
-            hurt();
-        }
-        else{
-            moving = !moving;
-            hurtful = false;
-        }
-
+        hurt();
     }
 }
 
@@ -130,4 +120,8 @@ void Koopa::hurt(){
         moving=false;
         speed = 6;
     }
+    else{
+         moving = !moving;
+    }
+    hurtful = false;
 }

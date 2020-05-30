@@ -10,7 +10,7 @@ protected:
     QPixmap texture_dead;
 
     bool hurtable;		// whether it can be hurt by Mario's feet
-    bool hurtful;       // can hurt other (more specifically mario)
+    bool hurtful = true;       // can hurt other (more specifically mario)
 
     QElapsedTimer timeOfDeath;
     int delayBeforeDeletable = 500; //in ms

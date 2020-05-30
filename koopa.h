@@ -22,14 +22,13 @@ protected:
     //Used to prevent mario from taking damage immediatly after hitting the shell on the side
     //We don't use a timer here in case of low framerate
     int counterNonHurtfulFrame = 0;
-    int maxNonHurtfulFrame = 100;
+    int maxNonHurtfulFrame = 10;
     void hurtfulFrameHandler();
 
     void collisionOnLeftHandler(ObjectModel *o) override;
     void collisionOnRightHandler(ObjectModel *o) override;
     void collisionOnTopHandler(ObjectModel *o) override;
 
-    void setCurrentTexture(QPixmap texture) override;
 
 public:
     Koopa(Direction spawnDirection = RIGHT);
