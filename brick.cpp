@@ -1,5 +1,7 @@
 #include "brick.h"
 
+#include <QDebug>
+
 Brick::Brick()
 {
     currentTexture = QPixmap(loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(BLOCSIZE, BLOCSIZE));
@@ -9,7 +11,6 @@ Brick::Brick()
 
 void Brick::startBlockBounceAnimation()
 {
-    setPositionY(getHitbox().y());
     if(!timerBounceAnimation.isValid()){
         timerBounceAnimation.start();
     }
@@ -32,7 +33,7 @@ void Brick::collisionOnBottomHandler(ObjectModel *o){
         if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
         startBlockBounceAnimation();
     }
-    else if(!isMarioBig){
+    else {
         startBlockBounceAnimation();
     }
 }
@@ -48,7 +49,6 @@ void Brick::animate()
     }
 
     if(timerBounceAnimation.isValid() && timerBounceAnimation.elapsed() < animationDuration){
-
         if(timerBounceAnimation.elapsed() < animationDuration/2){
             setPositionY(position.y()-1.5);
         }

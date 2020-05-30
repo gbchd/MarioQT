@@ -36,6 +36,11 @@ void GameController::advance() {
             brickHandler(brick);
         }
 
+        Box * box = dynamic_cast<Box*>(inert);
+        if(box){
+            boxHandler(box);
+        }
+
         inert->animate();
 
         if(inert->isDeletable()){
@@ -63,6 +68,126 @@ void GameController::advance() {
         }
 
     }
+
+
+
+    /*
+    for(Inert * inert : inerts){
+        BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
+        if(billblaster){
+            if(mario!=nullptr && qAbs(mario->getPosition().x()-billblaster->getPosition().x()) <= 2*BLOCSIZE && qAbs(mario->getPosition().y()-billblaster->getPosition().y()) <= 2*BLOCSIZE){
+                billblaster->setShooting(false);
+                billblaster->restartShootTimer();
+            }
+
+            if(billblaster->isShooting()){
+                billblaster->setShooting(false);
+                BulletBill * newBulletBill = new BulletBill();
+
+                if(mario!=nullptr && mario->getPosition().x() > billblaster->getPosition().x()){
+                    newBulletBill->setUpRightMovingBulletBill(billblaster->getPosition());
+                }
+                else{
+                    newBulletBill->setUpLeftMovingBulletBill(billblaster->getPosition());
+                }
+
+                entities.append(newBulletBill);
+                objects.append(newBulletBill);
+            }
+        }
+        else{
+            Brick * brick = dynamic_cast<Brick *>(inert);
+            if(brick){
+                switch(brick->getBrickState()){
+                    case BREAKBRICK:{
+                            brick->setDeletable(true);
+
+                            BrickDebris * bd1 = new BrickDebris(LEFT);
+                            bd1->setPositionX(brick->getPosition().x()+BLOCSIZE/4);
+                            bd1->setPositionY(brick->getPosition().y()+3*BLOCSIZE/4);
+                            addEntity(bd1);
+
+                            BrickDebris * bd2 = new BrickDebris(UP);
+                            bd2->setPositionX(brick->getPosition().x()+BLOCSIZE/4);
+                            bd2->setPositionY(brick->getPosition().y()+BLOCSIZE/4);
+                            addEntity(bd2);
+
+                            BrickDebris * bd3 = new BrickDebris(RIGHT);
+                            bd3->setPositionX(brick->getPosition().x()+3*BLOCSIZE/4);
+                            bd3->setPositionY(brick->getPosition().y()+BLOCSIZE/4);
+                            addEntity(bd3);
+
+                            BrickDebris * bd4 = new BrickDebris(DOWN);
+                            bd4->setPositionX(brick->getPosition().x()+3*BLOCSIZE/4);
+                            bd4->setPositionY(brick->getPosition().y()+3*BLOCSIZE/4);
+                            addEntity(bd4);
+
+                        break;}
+                    case GIVECOIN:{
+                        brick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
+                        Coin * coin = new Coin();
+                        coin->setPositionX(brick->getPosition().x());
+                        coin->setPositionY(brick->getPosition().y()-BLOCSIZE);
+                        entities.append(coin);
+                        objects.append(coin);
+                        break;}
+                    case BRICKWILLGIVECOINONNEXTHIT:
+                    case NOBRICKSTATE:
+                    case USEDCOINBRICK:
+                        // Do nothing
+                        break;
+                    default:
+                        qDebug() << "why are we still here";
+                        break;
+                }
+            }
+            else{
+                Box * box = dynamic_cast<Box *>(inert);
+                if(box){
+                    if(box->doesBoxNeedToSpawnItem()){
+                        qDebug() << box->getBoxContent();
+                        switch(box->getBoxContent()){
+                        case MUSHROOMBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(MUSHROOMCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case FLOWERBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(FLOWERCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case COINBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(COINCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case STARBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(STARCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case EMPTYBOX:
+                        default:
+                            break;
+                        }
+                    }
+                }
+                else{
+                    // other block not handled yet...
+                }
+            }
+        }
+
+        if(inert->isDeletable()){
+            removeInert(inert);
+        }
+        else{
+            inert->animate();
+        }
+    }
+    */
+
 
     gameview->repaint();
 }
@@ -100,6 +225,32 @@ void GameController::brickHandler(Brick *brick){
     }
 }
 
+void GameController::boxHandler(Box *box){
+    BoxContent boxContent = box->getBoxContent();
+    if(box->doesBoxNeedToSpawnItem()){
+        switch (boxContent) {
+            case MUSHROOMBOX:{
+                addEntity(box->spawnMushroom());
+                break;
+            }
+            case FLOWERBOX:{
+               addEntity(box->spawnFlower());
+                break;
+            }
+            case COINBOX:{
+                addEntity(box->spawnCoin());
+                 break;
+            }
+            case STARBOX:{
+                addEntity(box->spawnStar());
+                break;
+            }
+            case EMPTYBOX:
+            default:
+                break;
+        }
+    }
+}
 
 void GameController::update(CameraVisitor & visitor){
     if(mario!=nullptr){

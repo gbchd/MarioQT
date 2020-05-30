@@ -36,7 +36,6 @@ Koopa::Koopa(Direction spawnDirection)
 void Koopa::advance(){
     groundHandler();
     hurtfulFrameHandler();
-    qDebug() << hurtful;
     if(dead && timeOfDeath.elapsed() >= delayBeforeDeletable){
         deletable = true;
     }

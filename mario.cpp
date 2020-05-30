@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "koopa.h"
 #include "brick.h"
+#include "box.h"
 
 Mario::Mario()
 {

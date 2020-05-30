@@ -14,6 +14,7 @@
 #include "cameravisitor.h"
 #include "brickdebris.h"
 #include "coin.h"
+#include "collectableitem.h"
 
 class MainWindow;
 
@@ -47,6 +48,7 @@ private:
 
     void billblasterHandler(BillBlaster * billblaster);
     void brickHandler(Brick * brick);
+    void boxHandler(Box * box);
 
     MainWindow * mainWindow;
 
