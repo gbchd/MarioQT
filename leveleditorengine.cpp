@@ -38,7 +38,7 @@ void LevelEditorEngine::exportMapToJSon()
             if(indice>0){ stream<<","; }
             stream<<"\"block"<<indice<<"\":{\"type\":\""<<getTypeFromInert(inerts[indice])<<"\",";
             if(getTypeFromInert(inerts[indice]).compare("brick")==0){
-                stream<<"\"isCoinBrick\":\""<<dynamic_cast<Brick*>(inerts[indice])->getCoinBrick()<<"\",";
+                stream<<"\"isCoinBrick\":"<<dynamic_cast<Brick*>(inerts[indice])->getBrickState()<<",";
             }
             else if(getTypeFromInert(inerts[indice]).compare("box")==0){
                 stream<<"\"content\":\""<<dynamic_cast<Box*>(inerts[indice])->getBoxContent()<<"\",";
@@ -143,7 +143,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case COINBRICK: {
             Brick * newBrick = new Brick();
-            newBrick->setCoinBrick(true);
+            newBrick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);

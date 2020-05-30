@@ -3,8 +3,8 @@
 Brick::Brick()
 {
     currentTexture = QPixmap(loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(BLOCSIZE, BLOCSIZE));
-    coinBrick = false;
     brickState = NOBRICKSTATE;
+    usedBrickTexture = QPixmap(loadTexture(":/resources/graphics/blocs/box-used.bmp").scaled(BLOCSIZE, BLOCSIZE));
 }
 
 void Brick::startBlockBounceAnimation()
@@ -20,15 +20,15 @@ void Brick::startBlockBounceAnimation()
 
 void Brick::handleCollisionFromMario(bool isMarioBig)
 {
-    if(isMarioBig && !coinBrick){
+    if(isMarioBig && brickState==NOBRICKSTATE){
         brickState = BREAKBRICK; // Will be handled in the gamecontroller later
     }
-    else if(coinBrick){
+    else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
         brickState = GIVECOIN; // Will be handled in the gamecontroller later
         if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
         startBlockBounceAnimation();
     }
-    else{
+    else if(!isMarioBig){
         startBlockBounceAnimation();
     }
 }
@@ -36,10 +36,9 @@ void Brick::handleCollisionFromMario(bool isMarioBig)
 void Brick::animate()
 {
     if(timerSinceCoinBlockHit.isValid() && timerSinceCoinBlockHit.elapsed() > timeToGetCoins){
-        brickState = NOBRICKSTATE;
-        coinBrick = false;
+        brickState = USEDCOINBRICK;
+        currentTexture = usedBrickTexture;
         timerSinceCoinBlockHit.invalidate();
-
     }
 
     if(timerBounceAnimation.elapsed() < animationDuration){

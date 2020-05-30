@@ -77,16 +77,20 @@ void GameController::advance() {
 
                         break;}
                     case GIVECOIN:{
-                        brick->setBrickState(NOBRICKSTATE);
+                        brick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
                         Coin * coin = new Coin();
                         coin->setPositionX(brick->getPosition().x());
                         coin->setPositionY(brick->getPosition().y()-BLOCSIZE);
                         entities.append(coin);
                         objects.append(coin);
                         break;}
+                    case BRICKWILLGIVECOINONNEXTHIT:
                     case NOBRICKSTATE:
+                    case USEDCOINBRICK:
+                        // Do nothing
+                        break;
                     default:
-                        //do nothing
+                        qDebug() << "why are we still here";
                         break;
                 }
             }
@@ -132,7 +136,6 @@ void GameController::update(CameraVisitor & visitor){
 }
 
 void GameController::keyPressEventHandler(QKeyEvent *e){
-    // A faire
     if(mario != nullptr){
         if(e->key() == Qt::Key_Q){
             if(!keyQueue.contains(Qt::Key_Q)){

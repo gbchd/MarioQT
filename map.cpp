@@ -139,7 +139,9 @@ void Map::addInert(QJsonObject inertObject){
         QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/brick.bmp");
         brick->setCurrentTexture(newTexture);
 
-        brick->setCoinBrick(inertObject["isCoinBrick"].toBool());
+        if(inertObject["isCoinBrick"].toInt()==1){
+            brick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
+        }
 
         inerts.append(brick);
     }
