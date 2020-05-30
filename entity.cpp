@@ -237,20 +237,16 @@ void Entity::solveCollision(ObjectModel *o){
 
     //We move this object to the correct position
     if(top){
-        qDebug() << "solve Top";
         moveTo(position.x(), oHitbox.top() - thisHitbox.height());
     }
     if(right){
-        qDebug() << "solve Right";
         moveTo(position.x() + intersection.width(), position.y());
         //moveTo(oHitbox.right(), position.y()); Check ce qui va pas avec ça
     }
     if(bottom){
-        qDebug() << "solve Bottom";
         moveTo(position.x(), oHitbox.bottom());
     }
     if(left){
-        qDebug() << "solve Left";
         moveTo(position.x() - intersection.width(), position.y());
     }
 
