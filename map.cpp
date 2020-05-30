@@ -117,6 +117,28 @@ void Map::addInert(QJsonObject inertObject){
         QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/box-0.bmp");
         box->setCurrentTexture(newTexture);
 
+
+        switch(inertObject["content"].toInt()){
+        case 1:
+            box->setBoxContent(MUSHROOMBOX);
+            break;
+        case 2:
+            box->setBoxContent(FLOWERBOX);
+            break;
+        case 3:
+            box->setBoxContent(COINBOX);
+            break;
+        case 4:
+            box->setBoxContent(STARBOX);
+            break;
+        case 5:
+            box->setBoxContent(USEDBOX);
+            break;
+        case 0:
+        default:
+            break;
+        }
+
         // We transform the int corresponding to the content back into the enum object
         box->setBoxContent(static_cast<BoxContent>(inertObject["content"].toInt()));
 

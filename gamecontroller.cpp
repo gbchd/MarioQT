@@ -34,7 +34,7 @@ void GameController::advance() {
 
         Brick * brick = dynamic_cast<Brick*>(inert);
         if(brick){
-            //brickHandler();
+            brickHandler(brick);
         }
 
         inert->animate();
@@ -135,6 +135,42 @@ void GameController::advance() {
                     default:
                         qDebug() << "why are we still here";
                         break;
+                }
+            }
+            else{
+                Box * box = dynamic_cast<Box *>(inert);
+                if(box){
+                    if(box->doesBoxNeedToSpawnItem()){
+                        qDebug() << box->getBoxContent();
+                        switch(box->getBoxContent()){
+                        case MUSHROOMBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(MUSHROOMCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case FLOWERBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(FLOWERCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case COINBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(COINCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case STARBOX:{
+                            CollectableItem * newCollectableItem = new CollectableItem(STARCOLLECTABLE, box->getPosition());
+                            addEntity(newCollectableItem);
+                            box->setBoxNeedToSpawnItem(false);
+                            break;}
+                        case EMPTYBOX:
+                        default:
+                            break;
+                        }
+                    }
+                }
+                else{
+                    // other block not handled yet...
                 }
             }
         }

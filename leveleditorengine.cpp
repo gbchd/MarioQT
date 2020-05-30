@@ -41,7 +41,7 @@ void LevelEditorEngine::exportMapToJSon()
                 stream<<"\"isCoinBrick\":"<<dynamic_cast<Brick*>(inerts[indice])->getBrickState()<<",";
             }
             else if(getTypeFromInert(inerts[indice]).compare("box")==0){
-                stream<<"\"content\":\""<<dynamic_cast<Box*>(inerts[indice])->getBoxContent()<<"\",";
+                stream<<"\"content\":"<<dynamic_cast<Box*>(inerts[indice])->getBoxContent()<<",";
             }
             stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
         }
@@ -165,7 +165,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case SECRETBOXFLOWER: {
             Box * newBox = new Box();
-            newBox->setBoxContent(FLOWER);
+            newBox->setBoxContent(FLOWERBOX);
             newBox->moveTo(X, Y);
             inerts.append(newBox);
             objects.append(newBox);
@@ -173,7 +173,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case SECRETBOXMUSHROOM: {
             Box * newBox = new Box();
-            newBox->setBoxContent(MUSHROOM);
+            newBox->setBoxContent(MUSHROOMBOX);
             newBox->moveTo(X, Y);
             inerts.append(newBox);
             objects.append(newBox);
@@ -181,7 +181,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case SECRETBOXSTAR: {
             Box * newBox = new Box();
-            newBox->setBoxContent(STAR);
+            newBox->setBoxContent(STARBOX);
             newBox->moveTo(X, Y);
             inerts.append(newBox);
             objects.append(newBox);
@@ -189,7 +189,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case SECRETBOXCOIN: {
             Box * newBox = new Box();
-            newBox->setBoxContent(COIN);
+            newBox->setBoxContent(COINBOX);
             newBox->moveTo(X, Y);
             inerts.append(newBox);
             objects.append(newBox);

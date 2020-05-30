@@ -24,6 +24,7 @@ SOURCES += \
     bulletbill.cpp \
     cameravisitor.cpp \
     coin.cpp \
+    collectableitem.cpp \
     enemy.cpp \
     entity.cpp \
     gamecontroller.cpp \
@@ -58,6 +59,7 @@ HEADERS += \
     bulletbill.h \
     cameravisitor.h \
     coin.h \
+    collectableitem.h \
     direction.h \
     enemy.h \
     entity.h \

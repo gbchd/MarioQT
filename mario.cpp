@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "koopa.h"
 #include "brick.h"
+#include "box.h"
 
 Mario::Mario()
 {
@@ -292,6 +293,15 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
     if(enemy != nullptr){
         if(enemy->isHurtful()){
             hurt();
+        }
+        else{
+            Box * box = dynamic_cast<Box *>(o);
+            if(box != nullptr){
+                box->handleCollisionFromMario();
+            }
+            else{
+                // something else not handled yet
+            }
         }
     }
 }

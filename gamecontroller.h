@@ -14,6 +14,7 @@
 #include "cameravisitor.h"
 #include "brickdebris.h"
 #include "coin.h"
+#include "collectableitem.h"
 
 class MainWindow;
 
