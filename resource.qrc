@@ -73,5 +73,6 @@
         <file>resources/graphics/flag.png</file>
         <file>resources/graphics/flagpole.png</file>
         <file>resources/maps/CompleteTestLevel.json</file>
+        <file>resources/maps/simpleMechanicTest.json</file>
     </qresource>
 </RCC>

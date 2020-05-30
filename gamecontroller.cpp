@@ -77,6 +77,7 @@ void GameController::handleCollision(Entity *entity){
     for(ObjectModel * o : objects){
         if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
             addObjectToCollidingList(collidingObjects, entity, o);
+            //entity->collisionHandler(o);
         }
     }
 
@@ -94,6 +95,7 @@ void GameController::addObjectToCollidingList(QList<ObjectModel *> &collidingObj
         collidingObjects.append(o);
     }
     else{
+        bool added = false;
         for(int i = 0; i < collidingObjects.size(); i++){
             QPointF entityCenter = entity->getHitbox().center();
             QPointF objectInListCenter = collidingObjects.at(i)->getHitbox().center();
@@ -102,8 +104,12 @@ void GameController::addObjectToCollidingList(QList<ObjectModel *> &collidingObj
             float distNewObject = qPow(entityCenter.x() - newObjectCenter.x(),2) + qPow(entityCenter.y() - newObjectCenter.y(),2);
             if(distNewObject < distObjectInList){
                 collidingObjects.insert(i,o);
+                added = true;
                 break;
             }
+        }
+        if(!added){
+            collidingObjects.append(o);
         }
     }
 }
