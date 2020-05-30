@@ -52,39 +52,42 @@ void GameController::advance() {
             Brick * brick = dynamic_cast<Brick *>(inert);
             if(brick){
                 switch(brick->getBrickState()){
-                case BREAKBRICK:{
-                        brick->setDeletable(true);
+                    case BREAKBRICK:{
+                            brick->setDeletable(true);
 
-                        BrickDebris * bd1 = new BrickDebris(LEFT);
-                        bd1->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
-                        bd1->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
-                        addEntity(bd1);
-                        BrickDebris * bd2 = new BrickDebris(UP);
-                        bd2->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
-                        bd2->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
-                        addEntity(bd2);
-                        BrickDebris * bd3 = new BrickDebris(RIGHT);
-                        bd3->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
-                        bd3->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
-                        addEntity(bd3);
-                        BrickDebris * bd4 = new BrickDebris(DOWN);
-                        bd4->setPositionX(brick->getPosition().x()+BLOCSIZE/2);
-                        bd4->setPositionY(brick->getPosition().y()+BLOCSIZE/2);
-                        addEntity(bd4);
+                            BrickDebris * bd1 = new BrickDebris(LEFT);
+                            bd1->setPositionX(brick->getPosition().x()+BLOCSIZE/4);
+                            bd1->setPositionY(brick->getPosition().y()+3*BLOCSIZE/4);
+                            addEntity(bd1);
 
-                    break;}
-                case GIVECOIN:{
-                    brick->setBrickState(NOBRICKSTATE);
-                    Coin * coin = new Coin();
-                    coin->setPositionX(brick->getPosition().x());
-                    coin->setPositionY(brick->getPosition().y()-BLOCSIZE);
-                    entities.append(coin);
-                    objects.append(coin);
-                    break;}
-                case NOBRICKSTATE:
-                default:
-                    //do nothing
-                    break;
+                            BrickDebris * bd2 = new BrickDebris(UP);
+                            bd2->setPositionX(brick->getPosition().x()+BLOCSIZE/4);
+                            bd2->setPositionY(brick->getPosition().y()+BLOCSIZE/4);
+                            addEntity(bd2);
+
+                            BrickDebris * bd3 = new BrickDebris(RIGHT);
+                            bd3->setPositionX(brick->getPosition().x()+3*BLOCSIZE/4);
+                            bd3->setPositionY(brick->getPosition().y()+BLOCSIZE/4);
+                            addEntity(bd3);
+
+                            BrickDebris * bd4 = new BrickDebris(DOWN);
+                            bd4->setPositionX(brick->getPosition().x()+3*BLOCSIZE/4);
+                            bd4->setPositionY(brick->getPosition().y()+3*BLOCSIZE/4);
+                            addEntity(bd4);
+
+                        break;}
+                    case GIVECOIN:{
+                        brick->setBrickState(NOBRICKSTATE);
+                        Coin * coin = new Coin();
+                        coin->setPositionX(brick->getPosition().x());
+                        coin->setPositionY(brick->getPosition().y()-BLOCSIZE);
+                        entities.append(coin);
+                        objects.append(coin);
+                        break;}
+                    case NOBRICKSTATE:
+                    default:
+                        //do nothing
+                        break;
                 }
             }
         }
@@ -102,9 +105,6 @@ void GameController::advance() {
         if(mario && mario->isDeletable()){
             removePlayer();
         }
-        else if(entity->isDeletable()){
-            removeEntity(entity);
-        }
         else{
             entity->advance();
             for(ObjectModel * o : objects){
@@ -113,6 +113,10 @@ void GameController::advance() {
                 }
             }
             entity->animate();
+
+            if(entity->isDeletable()){
+                removeEntity(entity);
+            }
         }
     }
     gameview->repaint();
@@ -284,7 +288,6 @@ void GameController::generateMap(){
     for(Entity * entity : mapEntities){
         addEntity(entity);
     }
-
 }
 
 

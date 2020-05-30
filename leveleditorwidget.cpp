@@ -206,15 +206,15 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxFlower);
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxStar);
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxCoin);
+    objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
+    objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
+    objectButtonsHorizontalLayout.addWidget(&buttonFlyingTurtle);
     objectButtonsHorizontalLayout.addWidget(&buttonSmallPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonMedPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonBigPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonBulletBlaster);
     objectButtonsHorizontalLayout.addWidget(&buttonFlagpole);
     objectButtonsHorizontalLayout.addWidget(&buttonCastle);
-    objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
-    objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
-    objectButtonsHorizontalLayout.addWidget(&buttonFlyingTurtle);
 
     firstHorizontalLayout.addWidget(&buttonScrollArea);
 

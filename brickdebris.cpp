@@ -5,29 +5,37 @@ BrickDebris::BrickDebris(Direction direction)
     currentTexture = loadTexture(":/resources/graphics/brick-debris.bmp").scaled(BLOCSIZE/2, BLOCSIZE/2);
 
     moving = true;
+    running = false;
+    collidable = false;
+
     speed = 2;
-    speedLimit=4;
+    gravity=0.3;
+
     switch(direction){
-    case LEFT:{
-        velocity.setX(1);
-        velocity.setY(-1);
-        break;}
-    case UP:{
-        velocity.setX(-1);
-        velocity.setY(-1);
-        break;}
-    case RIGHT:{
-        velocity.setX(-1);
-        velocity.setY(1);
-        break;}
-    case DOWN:{
-        velocity.setX(1);
-        velocity.setY(1);
-        break;}
-    default:
-        velocity.setX(0);
-        velocity.setY(0);
-        break;
+        case LEFT:{
+            movingDirection = LEFT;
+            velocity.setX(-1.5);
+            velocity.setY(-4);
+            break;}
+        case UP:{
+            movingDirection = LEFT;
+            velocity.setX(-1.5);
+            velocity.setY(-6);
+            break;}
+        case RIGHT:{
+            movingDirection = RIGHT;
+            velocity.setX(1.5);
+            velocity.setY(-6);
+            break;}
+        case DOWN:{
+            movingDirection = RIGHT;
+            velocity.setX(1.5);
+            velocity.setY(-4);
+            break;}
+        default:{
+            velocity.setX(0);
+            velocity.setY(0);
+            break;}
     }
 
     timerToDeletion.start();
@@ -36,8 +44,9 @@ BrickDebris::BrickDebris(Direction direction)
 void BrickDebris::advance(){
     if(timerToDeletion.elapsed() > lifeDuration){
         deletable = true;
-
     }
+    velocity.setY(velocity.y() + gravity);
+
     moveTo(position+velocity);
 }
 

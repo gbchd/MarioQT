@@ -1,7 +1,5 @@
 #include "brick.h"
 
-#include <QDebug>
-
 Brick::Brick()
 {
     currentTexture = QPixmap(loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(BLOCSIZE, BLOCSIZE));
@@ -23,7 +21,6 @@ void Brick::startBlockBounceAnimation()
 void Brick::handleCollisionFromMario(bool isMarioBig)
 {
     if(isMarioBig && !coinBrick){
-        qDebug() << "state = break";
         brickState = BREAKBRICK; // Will be handled in the gamecontroller later
     }
     else if(coinBrick){
