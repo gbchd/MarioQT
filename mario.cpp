@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "enemy.h"
 #include "koopa.h"
+#include "brick.h"
 
 Mario::Mario()
 {
@@ -67,6 +68,14 @@ void Mario::advance(){
     // Mettre en place la taille du niveau
     if(dead && position.y() > 25 * BLOCSIZE){
         deletable = true;
+    }
+
+    if(dead){
+        qDebug() << "isDead and position y is" << position.y();
+        if(position.y() > 25 * BLOCSIZE){
+            qDebug() << "yep we can delete";
+            deletable = true;
+        }
     }
 
     if(jumping && velocity.y() > 0){

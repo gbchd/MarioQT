@@ -92,6 +92,7 @@ public:
     void die() override;
     void startTransforming();
     Direction getDirection(){return movingDirection;};
+    bool isBig(){return big;}
 
     void collisionOnBottomHandler(ObjectModel *o) override;
     void collisionOnLeftHandler(ObjectModel * o) override;

@@ -25,46 +25,167 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
+
     for(Inert * inert : inerts){
         BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
-        if(billblaster && billblaster->isShooting()){
-            billblaster->setShooting(false);
-            BulletBill * newBulletBill = new BulletBill();
+        if(billblaster){
+            billblasterHandler(billblaster);
+        }
 
-            if(mario!=nullptr && mario->getPosition().x() > billblaster->getPosition().x()){
-                newBulletBill->setUpRightMovingBulletBill(billblaster->getPosition());
-            }
-            else{
-                newBulletBill->setUpLeftMovingBulletBill(billblaster->getPosition());
-            }
-
-            entities.append(newBulletBill);
-            objects.append(newBulletBill);
+        Brick * brick = dynamic_cast<Brick*>(inert);
+        if(brick){
+            //brickHandler();
         }
 
         inert->animate();
+
+        if(inert->isDeletable()){
+            removeInert(inert);
+        }
     }
 
     for(Entity * entity : entities){
         Mario * mario = dynamic_cast<Mario*>(entity);
-        if(mario && mario->isDeletable()){
-            removePlayer();
+        entity->advance();
+        for(ObjectModel * o : objects){
+            if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
+                entity->collisionHandler(o);
+            }
         }
-        else if(entity->isDeletable()){
-            removeEntity(entity);
+        entity->animate();
+
+        if(entity->isDeletable()){
+            if(dynamic_cast<Mario *>(entity)){
+                removePlayer();
+            }
+            else{
+                removeEntity(entity);
+            }
+        }
+
+    }
+
+
+
+    /*
+    for(Inert * inert : inerts){
+        BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
+        if(billblaster){
+            if(mario!=nullptr && qAbs(mario->getPosition().x()-billblaster->getPosition().x()) <= 2*BLOCSIZE && qAbs(mario->getPosition().y()-billblaster->getPosition().y()) <= 2*BLOCSIZE){
+                billblaster->setShooting(false);
+                billblaster->restartShootTimer();
+            }
+
+            if(billblaster->isShooting()){
+                billblaster->setShooting(false);
+                BulletBill * newBulletBill = new BulletBill();
+
+                if(mario!=nullptr && mario->getPosition().x() > billblaster->getPosition().x()){
+                    newBulletBill->setUpRightMovingBulletBill(billblaster->getPosition());
+                }
+                else{
+                    newBulletBill->setUpLeftMovingBulletBill(billblaster->getPosition());
+                }
+
+                entities.append(newBulletBill);
+                objects.append(newBulletBill);
+            }
         }
         else{
-            entity->advance();
-            for(ObjectModel * o : objects){
-                if(dynamic_cast<Entity *>(o) != entity && entity->isColliding(o)){
-                    entity->collisionHandler(o);
+            Brick * brick = dynamic_cast<Brick *>(inert);
+            if(brick){
+                switch(brick->getBrickState()){
+                    case BREAKBRICK:{
+                            brick->setDeletable(true);
+
+                            BrickDebris * bd1 = new BrickDebris(LEFT);
+                            bd1->setPositionX(brick->getPosition().x()+BLOCSIZE/4);
+                            bd1->setPositionY(brick->getPosition().y()+3*BLOCSIZE/4);
+                            addEntity(bd1);
+
+                            BrickDebris * bd2 = new BrickDebris(UP);
+                            bd2->setPositionX(brick->getPosition().x()+BLOCSIZE/4);
+                            bd2->setPositionY(brick->getPosition().y()+BLOCSIZE/4);
+                            addEntity(bd2);
+
+                            BrickDebris * bd3 = new BrickDebris(RIGHT);
+                            bd3->setPositionX(brick->getPosition().x()+3*BLOCSIZE/4);
+                            bd3->setPositionY(brick->getPosition().y()+BLOCSIZE/4);
+                            addEntity(bd3);
+
+                            BrickDebris * bd4 = new BrickDebris(DOWN);
+                            bd4->setPositionX(brick->getPosition().x()+3*BLOCSIZE/4);
+                            bd4->setPositionY(brick->getPosition().y()+3*BLOCSIZE/4);
+                            addEntity(bd4);
+
+                        break;}
+                    case GIVECOIN:{
+                        brick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
+                        Coin * coin = new Coin();
+                        coin->setPositionX(brick->getPosition().x());
+                        coin->setPositionY(brick->getPosition().y()-BLOCSIZE);
+                        entities.append(coin);
+                        objects.append(coin);
+                        break;}
+                    case BRICKWILLGIVECOINONNEXTHIT:
+                    case NOBRICKSTATE:
+                    case USEDCOINBRICK:
+                        // Do nothing
+                        break;
+                    default:
+                        qDebug() << "why are we still here";
+                        break;
                 }
             }
-            entity->animate();
+        }
+
+        if(inert->isDeletable()){
+            removeInert(inert);
+        }
+        else{
+            inert->animate();
         }
     }
+    */
+
+
     gameview->repaint();
 }
+
+
+void GameController::billblasterHandler(BillBlaster *billblaster){
+
+    // We check if mario is not near the billblaster shooter
+    if(mario != nullptr){
+        if(qAbs(mario->getPosition().x()-billblaster->getPosition().x()) <= 2*BLOCSIZE && qAbs(mario->getPosition().y()-billblaster->getPosition().y()) <= 2*BLOCSIZE){
+            billblaster->setShooting(false);
+            billblaster->restartShootTimer();
+        }
+        else{
+            billblaster->setShooting(true);
+        }
+        BulletBill * bulletBill = billblaster->shoot(mario->getPosition());
+        if(bulletBill){
+            addEntity(bulletBill);
+        }
+    }
+
+}
+
+
+void GameController::brickHandler(Brick *brick){
+    BrickState brickState = brick->getBrickState();
+    if(brickState==BREAKBRICK){
+        QList<BrickDebris*> brickDebris = brick->doBreak();
+        for(BrickDebris* debris : brickDebris){
+            addEntity(debris);
+        }
+    }
+    else if(brickState==GIVECOIN){
+        addEntity(brick->spawnCoin());
+    }
+}
+
 
 void GameController::update(CameraVisitor & visitor){
     if(mario!=nullptr){
@@ -76,7 +197,6 @@ void GameController::update(CameraVisitor & visitor){
 }
 
 void GameController::keyPressEventHandler(QKeyEvent *e){
-    // A faire
     if(mario != nullptr){
         if(e->key() == Qt::Key_Q){
             if(!keyQueue.contains(Qt::Key_Q)){
@@ -232,45 +352,9 @@ void GameController::generateMap(){
     for(Entity * entity : mapEntities){
         addEntity(entity);
     }
-
 }
 
 
-// Here to test will be deleted later
-void GameController::setUpTest(){
-
-    //Create the mario player
-
-    Mario * m = new Mario();
-    m->moveTo(100,100);
-    qDebug() << "Position :" << m->getPosition();
-    qDebug() << "Hitbox :" << m->getHitbox();
-    setPlayer(m);
-
-
-    //Create some inerts
-
-    Inert * i1 = new Inert();
-    Inert * i2 = new Inert();
-
-    i1->setCurrentTexture(ObjectModel::loadTexture(":/resources/graphics/blocs/block.png").scaled(32,32));
-    i2->setCurrentTexture(ObjectModel::loadTexture(":/resources/graphics/blocs/block.png").scaled(32,32));
-
-    i1->setHitboxWidth(32);
-    i1->setHitboxHeight(32);
-    i2->setHitboxWidth(32);
-    i2->setHitboxHeight(32);
-
-    i1->moveTo(QPointF(1000,100));
-    i2->moveTo(QPointF(10,100));
-
-    addInert(i1);
-    addInert(i2);
-
-
-    //Create some entities
-
-}
 
 void GameController::start(){
     //We setup the game engine : A timer that calls advance every 10ms
@@ -291,6 +375,6 @@ void GameController::stop(){
     QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
 }
 
-void GameController::reset(){
+void GameController::reset(){ 
     generateMap();
 }

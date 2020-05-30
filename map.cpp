@@ -117,6 +117,9 @@ void Map::addInert(QJsonObject inertObject){
         QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/box-0.bmp");
         box->setCurrentTexture(newTexture);
 
+        // We transform the int corresponding to the content back into the enum object
+        box->setBoxContent(static_cast<BoxContent>(inertObject["content"].toInt()));
+
         inerts.append(box);
     }
     else if(type.compare("brick") == 0){
@@ -135,6 +138,10 @@ void Map::addInert(QJsonObject inertObject){
 
         QPixmap newTexture = paintSurface(w, h,":/resources/graphics/blocs/brick.bmp");
         brick->setCurrentTexture(newTexture);
+
+        if(inertObject["isCoinBrick"].toInt()==1){
+            brick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
+        }
 
         inerts.append(brick);
     }

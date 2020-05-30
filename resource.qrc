@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/maps/test.json</file>
-        <file>resources/maps/alex.json</file>
         <file>resources/graphics/brick-debris.bmp</file>
         <file>resources/graphics/bush-big.png</file>
         <file>resources/graphics/bush-med.png</file>
@@ -74,5 +72,6 @@
         <file>resources/graphics/bullet-bill.png</file>
         <file>resources/graphics/flag.png</file>
         <file>resources/graphics/flagpole.png</file>
+        <file>resources/maps/CompleteTestLevel.json</file>
     </qresource>
 </RCC>

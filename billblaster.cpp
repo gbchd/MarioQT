@@ -14,3 +14,18 @@ void BillBlaster::animate()
         shootTimer.restart();
     }
 }
+
+BulletBill* BillBlaster::shoot(QPointF marioPosition){
+    if(shootTimer.elapsed() > shootDelay && shooting){
+        BulletBill * bullet = new BulletBill();
+        if(marioPosition.x() > position.x()){
+            bullet->setUpRightMovingBulletBill(position);
+        }
+        else{
+            bullet->setUpLeftMovingBulletBill(position);
+        }
+        shootTimer.restart();
+        return bullet;
+    }
+    return nullptr;
+}

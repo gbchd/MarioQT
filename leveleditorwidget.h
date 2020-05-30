@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QSlider>
+#include <QScrollArea>
 #include <QImage>
 #include <QPainter>
 #include <QRadioButton>
@@ -53,7 +54,11 @@ private:
     QGridLayout mainGridLayout;
     QHBoxLayout firstHorizontalLayout;
     QVBoxLayout menuVerticalLayout;
+
+    QWidget buttonsWidget;
+    QScrollArea buttonScrollArea;
     QHBoxLayout objectButtonsHorizontalLayout;
+
     QWidget gameDisplayContainerWidget;
 
     QSlider slider;

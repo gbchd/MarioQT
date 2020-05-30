@@ -2,6 +2,7 @@
 #define GAMECONTROLLER_H
 
 #include <QTimer>
+#include <QtMath>
 
 #include "gameview.h"
 #include "objectmodel.h"
@@ -11,6 +12,8 @@
 #include "bulletbill.h"
 #include "billblaster.h"
 #include "cameravisitor.h"
+#include "brickdebris.h"
+#include "coin.h"
 
 class MainWindow;
 
@@ -42,12 +45,10 @@ private:
     QString mapFilepath;
     void generateMap();
 
-    //Testing purpose
-    void setUpTest();
+    void billblasterHandler(BillBlaster * billblaster);
+    void brickHandler(Brick * brick);
 
     MainWindow * mainWindow;
-
-
 
 public:
     GameController();

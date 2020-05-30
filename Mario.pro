@@ -20,8 +20,10 @@ SOURCES += \
     block.cpp \
     box.cpp \
     brick.cpp \
+    brickdebris.cpp \
     bulletbill.cpp \
     cameravisitor.cpp \
+    coin.cpp \
     enemy.cpp \
     entity.cpp \
     gamecontroller.cpp \
@@ -52,8 +54,10 @@ HEADERS += \
     block.h \
     box.h \
     brick.h \
+    brickdebris.h \
     bulletbill.h \
     cameravisitor.h \
+    coin.h \
     direction.h \
     enemy.h \
     entity.h \

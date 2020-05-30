@@ -74,18 +74,6 @@ void Koopa::setCurrentTexture(QPixmap texture){
 }
 
 
-void Koopa::reactionNoMoreOnGround(){
-    if(!shell){
-        /* Stay on ground object*/
-        if(movingDirection == LEFT){
-            movingDirection = RIGHT;
-        }
-        else{
-            movingDirection = LEFT;
-        }
-    }
-}
-
 void Koopa::collisionOnLeftHandler(ObjectModel *o){
     //Entity::collisionOnLeftHandler(o);
     movingDirection = RIGHT;

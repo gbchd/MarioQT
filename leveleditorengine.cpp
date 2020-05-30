@@ -36,7 +36,14 @@ void LevelEditorEngine::exportMapToJSon()
                     "\"inerts\":{";
         for(int indice=0; indice<inerts.length(); indice++){
             if(indice>0){ stream<<","; }
-            stream<<"\"block"<<indice<<"\":{\"type\":\""<<getTypeFromInert(inerts[indice])<<"\",\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
+            stream<<"\"block"<<indice<<"\":{\"type\":\""<<getTypeFromInert(inerts[indice])<<"\",";
+            if(getTypeFromInert(inerts[indice]).compare("brick")==0){
+                stream<<"\"isCoinBrick\":"<<dynamic_cast<Brick*>(inerts[indice])->getBrickState()<<",";
+            }
+            else if(getTypeFromInert(inerts[indice]).compare("box")==0){
+                stream<<"\"content\":\""<<dynamic_cast<Box*>(inerts[indice])->getBoxContent()<<"\",";
+            }
+            stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
         }
         stream<<"},\"entities\":{";
         for(int indice=0; indice<entities.length(); indice++){
@@ -136,7 +143,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case COINBRICK: {
             Brick * newBrick = new Brick();
-            newBrick->setCoinBrick(true);
+            newBrick->setBrickState(BRICKWILLGIVECOINONNEXTHIT);
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -190,7 +197,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case SMALLPIPE: {
             Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size, block_size));
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size*2, block_size*2));
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -198,7 +205,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case MEDPIPE: {
             Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-med.png").scaled(block_size, block_size));
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-med.png").scaled(block_size*2, block_size*3));
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -206,7 +213,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
         }
         case BIGPIPE: {
             Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size, block_size));
+            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size*2, block_size*4));
             newBrick->moveTo(X, Y);
             inerts.append(newBrick);
             objects.append(newBrick);
@@ -338,19 +345,19 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         }
         case SMALLPIPE: {
                 objectToPaintOnMouse = new Inert();
-                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-small.png").scaled(block_size*2, block_size*2)));
                 objectToPaintOnMouse->setOpacity(0.5);
                 break;
         }
         case MEDPIPE: {
                 objectToPaintOnMouse = new Inert();
-                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-med.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-med.png").scaled(block_size*2, block_size*3)));
                 objectToPaintOnMouse->setOpacity(0.5);
                 break;
         }
         case BIGPIPE: {
                 objectToPaintOnMouse = new Inert();
-                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size, block_size)));
+                objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/pipe-big.png").scaled(block_size*2, block_size*4)));
                 objectToPaintOnMouse->setOpacity(0.5);
                 break;
         }
