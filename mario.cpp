@@ -4,6 +4,7 @@
 #include "koopa.h"
 #include "brick.h"
 #include "box.h"
+#include "collectableitem.h"
 
 Mario::Mario()
 {
@@ -41,6 +42,8 @@ Mario::Mario()
     running = false;
     sliding = false;
     transforming = false;
+    big = false;
+    onFire = false;
 
     //Engine Value
     speed = 4;
@@ -266,6 +269,12 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
             hurt();
         }
     }
+    else{
+        CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
+        if(collectableItem != nullptr){
+            handleCollectableItemCollision(collectableItem);
+        }
+    }
 }
 
 void Mario::collisionOnRightHandler(ObjectModel *o){
@@ -275,7 +284,12 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
         if(enemy->isHurtful()){
             hurt();
         }
-
+    }
+    else{
+        CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
+        if(collectableItem != nullptr){
+            handleCollectableItemCollision(collectableItem);
+        }
     }
 }
 
@@ -287,6 +301,12 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             hurt();
         }
     }
+    else{
+        CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
+        if(collectableItem != nullptr){
+            handleCollectableItemCollision(collectableItem);
+        }
+    }
 }
 
 void Mario::collisionOnBottomHandler(ObjectModel *o){
@@ -295,5 +315,34 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     if(enemy != nullptr){
         bounce();
     }
+    else{
+        CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
+        if(collectableItem != nullptr){
+            handleCollectableItemCollision(collectableItem);
+        }
+    }
 }
 
+void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
+{
+    switch(collectableItem->getItemType()){
+        case COINCOLLECTABLE:{
+            // TODO COLLECT COIN
+            break;}
+        case STARCOLLECTABLE:{
+            // TODO GO IN INVINCIBLE MODE
+            break;}
+        case MUSHROOMCOLLECTABLE:{
+            if(!big && !onFire){
+                startTransforming();
+            }
+            break;}
+        case FLOWERCOLLECTABLE:{
+            if(!onFire){
+                // TODO TRANSFORM IN FIRE MODE
+            }
+            break;}
+        default:
+            break;
+    }
+}

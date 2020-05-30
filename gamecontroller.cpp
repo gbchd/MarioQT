@@ -150,11 +150,11 @@ void GameController::boxHandler(Box *box){
                 break;
             }
             case FLOWERBOX:{
-               addEntity(box->spawnFlower());
+                addEntity(box->spawnFlower());
                 break;
             }
             case COINBOX:{
-                addEntity(box->spawnCoin());
+                 addEntity(box->spawnCoin());
                  break;
             }
             case STARBOX:{

@@ -4,6 +4,8 @@
 #include "entity.h"
 #include <QArrayData>
 
+class CollectableItem;
+
 class Mario : public Entity
 {
 private:
@@ -98,6 +100,8 @@ public:
     void collisionOnLeftHandler(ObjectModel * o) override;
     void collisionOnRightHandler(ObjectModel * o) override;
     void collisionOnTopHandler(ObjectModel * o) override;
+
+    void handleCollectableItemCollision(CollectableItem * collectableItem);
 };
 
 #endif // MARIO_H
