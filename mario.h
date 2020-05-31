@@ -52,7 +52,7 @@ private:
       */
 
     bool jumping = false;
-    int jumpHeight = 5*BLOCSIZE;
+    int jumpHeight = 4.2*BLOCSIZE;
 
     // Theses floats are the number of frame / time to get to the summit of a jump
     // They are used to calculate the gravity
