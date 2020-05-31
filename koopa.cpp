@@ -25,7 +25,6 @@ Koopa::Koopa(Direction spawnDirection)
 
     hitbox.moveTo(position.x(), position.y());
 
-
     setHitboxEntityWidth(2*BLOCSIZE/3);
     setHitboxEntityHeight(2*BLOCSIZE/3);
 

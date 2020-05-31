@@ -81,5 +81,24 @@
         <file>resources/graphics/moving-platform-3.png</file>
         <file>resources/graphics/cloud-platform.png</file>
         <file>resources/maps/World 1-1.json</file>
+        <file>resources/graphics/characters/mario/fiery-mario-climb-1.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-climb-2.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-duck.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-fireball.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-jump.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-skid.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-stand.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-swim-1.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-swim-2.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-swim-3.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-swim-4.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-swim-5.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-swim-6.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-walk-1.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-walk-2.png</file>
+        <file>resources/graphics/characters/mario/fiery-mario-walk-3.png</file>
+        <file>resources/graphics/firework-0.png</file>
+        <file>resources/graphics/firework-1.png</file>
+        <file>resources/graphics/firework-2.png</file>
     </qresource>
 </RCC>

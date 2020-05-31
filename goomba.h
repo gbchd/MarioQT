@@ -9,9 +9,9 @@ class Goomba : public Enemy
 {
 protected:
     // textures
-    QList<QPixmap> texture_walk;                        // walking animation (2 textures)
+    QList<QPixmap> texture_walk; // walking animation (2 textures)
 
-    int durationWalkTexture = 1000; // in ms
+    int durationWalkTexture = 150; // in ms
     QElapsedTimer timerWalk;
     int currentWalkTexture = 0;
 

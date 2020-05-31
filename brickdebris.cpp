@@ -8,7 +8,7 @@ BrickDebris::BrickDebris(Direction direction)
     running = false;
     collidable = false;
     deletable = false;
-    lifeDuration = 500;
+    lifeDuration = 2000;
 
     speed = 2;
     gravity=0.3;

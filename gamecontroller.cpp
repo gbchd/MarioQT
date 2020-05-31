@@ -27,6 +27,12 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
+    if(mario && mario->isTransforming()){
+        mario->animate();
+        gameview->repaint();
+        return;
+    }
+
     for(int inertIt = 0; inertIt < inerts.size(); inertIt++){
         Inert * inert = inerts.at(inertIt);
 
@@ -164,7 +170,12 @@ void GameController::boxHandler(Box *box){
                 break;
             }
             case FLOWERBOX:{
-                addEntity(box->spawnFlower());
+                if(mario->isBig()){
+                    addEntity(box->spawnFlower());
+                }
+                else{
+                    addEntity(box->spawnMushroom());
+                }
                 break;
             }
             case COINBOX:{
@@ -231,7 +242,12 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
     }
 
     if(e->key() == Qt::Key_Shift){
-        //entities.append(mario->shootFireBall());
+        if(mario->isOnFire()){
+            FireBall * newFireBall = mario->shootFireBall();
+            if(newFireBall){
+                addEntity(newFireBall);
+            }
+        }
     }
 
     if(e->key() == Qt::Key_Escape){

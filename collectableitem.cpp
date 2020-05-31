@@ -35,6 +35,10 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
         break;
     case FLOWERCOLLECTABLE:
         currentTexture = loadTexture(":/resources/graphics/items/fire-flower-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[0] = loadTexture(":/resources/graphics/items/fire-flower-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[1] = loadTexture(":/resources/graphics/items/fire-flower-1.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[2] = loadTexture(":/resources/graphics/items/fire-flower-2.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[3] = loadTexture(":/resources/graphics/items/fire-flower-3.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
         spawnAnimationTimer.start();
         break;
     default:
@@ -42,6 +46,8 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
     }
 
     zValue = 2;
+    animationTimer.start();
+    currentTextureNumber=0;
 }
 
 void CollectableItem::advance()
@@ -81,6 +87,17 @@ void CollectableItem::animate()
             moveTo(position.x(), spawnerBlockPos.y()-BLOCSIZE);
             moving = true;
             gravity = 5;
+        }
+    }
+
+    if(typeItem == FLOWERCOLLECTABLE){
+        if(animationTimer.elapsed() > newAnimationDelay){
+            animationTimer.restart();
+            if(currentTextureNumber > 3){
+                currentTextureNumber = 0;
+            }
+            setCurrentTexture(flowerTexture[currentTextureNumber]);
+            currentTextureNumber++;
         }
     }
 }

@@ -17,6 +17,11 @@ private:
     int durationSpawnAnimation = 1100; // in ms
     QElapsedTimer spawnAnimationTimer;
 
+    QPixmap flowerTexture[4];
+    int newAnimationDelay = 100; // in ms
+    int currentTextureNumber;
+    QElapsedTimer animationTimer;
+
 public:
     CollectableItem(TypeItem t, QPointF spawnerBlockPos);
     bool wasItemPickedUpByMario() { return itemWasPickedUpByMario; }
