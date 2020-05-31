@@ -202,7 +202,7 @@ void Mario::doTransforming(){
                 setHitboxEntityWidth(BLOCSIZE/2);
                 setHitboxEntityHeight(BLOCSIZE);
 
-                if(currentTransformingTexture == 5 && !transformationType){
+                if(currentTransformingTexture == 5 && transformationType == 0){
                     moveTo(position.x(), position.y() + BLOCSIZE);
                 }
                 else{
@@ -211,7 +211,8 @@ void Mario::doTransforming(){
                 big=false;
             }
             else if(currentTransformingTexture == 1 || currentTransformingTexture == 3 || currentTransformingTexture == 6){
-                if(!transformationType){
+
+                if(transformationType == 0 || currentTransformingTexture == 1){
                     moveTo(position.x(), position.y() - BLOCSIZE/2);
                 }
                 else{
@@ -229,7 +230,7 @@ void Mario::doTransforming(){
                 setHitboxEntityWidth(BLOCSIZE/2);
                 setHitboxEntityHeight(2*BLOCSIZE - BLOCSIZE/10);
 
-                if(currentTransformingTexture == 4 && transformationType){
+                if(currentTransformingTexture == 4 && transformationType == 1){
                     moveTo(position.x(), position.y() - BLOCSIZE);
                 }
                 else{
@@ -238,7 +239,6 @@ void Mario::doTransforming(){
                 big=true;
             }
         }
-
     }
 }
 
