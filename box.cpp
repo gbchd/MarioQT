@@ -1,5 +1,5 @@
 #include "box.h"
-
+#include <QDebug>
 Box::Box()
 {
     texture.append(QPixmap(loadTexture(":/resources/graphics/blocs/box-0.bmp")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
@@ -12,7 +12,7 @@ Box::Box()
     boxContent = EMPTYBOX;
     used = false;
     needToSpawnItem = false;
-    zValue = 1;
+    qDebug() << zValue;
 }
 
 void Box::collisionOnBottomHandler(ObjectModel *o){

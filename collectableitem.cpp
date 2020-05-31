@@ -10,7 +10,6 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
     this->spawnerBlockPos = spawnerBlockPos;
     moveTo(spawnerBlockPos);
     gravity = 0;
-    zValue = 0;
     moving = false;
     itemWasPickedUpByMario = false;
 
@@ -41,6 +40,8 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
     default:
         break;
     }
+
+    zValue = 2;
 }
 
 void CollectableItem::advance()
