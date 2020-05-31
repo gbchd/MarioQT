@@ -5,6 +5,7 @@
 #include <QArrayData>
 
 class CollectableItem;
+class FireBall;
 
 class Mario : public Entity
 {
@@ -95,6 +96,8 @@ public:
     void startTransforming();
     Direction getDirection(){return movingDirection;};
     bool isBig(){return big;}
+
+    FireBall * shootFireBall();
 
     void collisionOnBottomHandler(ObjectModel *o) override;
     void collisionOnLeftHandler(ObjectModel * o) override;

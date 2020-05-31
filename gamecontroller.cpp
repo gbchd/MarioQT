@@ -222,6 +222,10 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
+    if(e->key() == Qt::Key_Shift){
+        //entities.append(mario->shootFireBall());
+    }
+
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
     }

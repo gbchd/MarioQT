@@ -8,27 +8,11 @@
         <file>resources/graphics/cloud-big.png</file>
         <file>resources/graphics/cloud-med.png</file>
         <file>resources/graphics/cloud-small.png</file>
-        <file>resources/graphics/coin-0.png</file>
-        <file>resources/graphics/coin-1.png</file>
-        <file>resources/graphics/coin-2.png</file>
-        <file>resources/graphics/coin-3.png</file>
-        <file>resources/graphics/fireball-0.bmp</file>
-        <file>resources/graphics/fireball-1.bmp</file>
-        <file>resources/graphics/fireball-2.bmp</file>
-        <file>resources/graphics/fireball-3.bmp</file>
-        <file>resources/graphics/flower.png</file>
-        <file>resources/graphics/flower-0.bmp</file>
-        <file>resources/graphics/flower-1.bmp</file>
-        <file>resources/graphics/flower-2.bmp</file>
-        <file>resources/graphics/flower-3.bmp</file>
         <file>resources/graphics/hill-big.png</file>
         <file>resources/graphics/hill-small.png</file>
-        <file>resources/graphics/mushroom-green.png</file>
-        <file>resources/graphics/mushroom-red.png</file>
         <file>resources/graphics/pipe-big.png</file>
         <file>resources/graphics/pipe-med.png</file>
         <file>resources/graphics/pipe-small.png</file>
-        <file>resources/graphics/star.png</file>
         <file>resources/graphics/welcome.png</file>
         <file>resources/graphics/blocs/block.png</file>
         <file>resources/graphics/blocs/box-0.bmp</file>
@@ -74,5 +58,27 @@
         <file>resources/graphics/flagpole.png</file>
         <file>resources/maps/CompleteTestLevel.json</file>
         <file>resources/maps/simpleMechanicTest.json</file>
+        <file>resources/graphics/items/coin-0.png</file>
+        <file>resources/graphics/items/coin-1.png</file>
+        <file>resources/graphics/items/coin-2.png</file>
+        <file>resources/graphics/items/coin-3.png</file>
+        <file>resources/graphics/items/fire-flower-0.png</file>
+        <file>resources/graphics/items/fire-flower-1.png</file>
+        <file>resources/graphics/items/fire-flower-2.png</file>
+        <file>resources/graphics/items/fire-flower-3.png</file>
+        <file>resources/graphics/items/fireball-0.png</file>
+        <file>resources/graphics/items/fireball-1.png</file>
+        <file>resources/graphics/items/fireball-2.png</file>
+        <file>resources/graphics/items/fireball-3.png</file>
+        <file>resources/graphics/items/mushroom-green.png</file>
+        <file>resources/graphics/items/mushroom-red.png</file>
+        <file>resources/graphics/items/starman-0.png</file>
+        <file>resources/graphics/items/starman-1.png</file>
+        <file>resources/graphics/items/starman-2.png</file>
+        <file>resources/graphics/items/starman-3.png</file>
+        <file>resources/graphics/moving-platform-1.png</file>
+        <file>resources/graphics/moving-platform-2.png</file>
+        <file>resources/graphics/moving-platform-3.png</file>
+        <file>resources/graphics/cloud-platform.png</file>
     </qresource>
 </RCC>

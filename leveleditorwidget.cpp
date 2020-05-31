@@ -59,7 +59,7 @@ LevelEditorWidget::LevelEditorWidget()
     buttonBrick.setIconSize(QSize(buttonSize, buttonSize));
     buttonBrick.resize(buttonSize,buttonSize);
 
-    QImage coinIcon(":/resources/graphics/coin-1.png");
+    QImage coinIcon(":/resources/graphics/items/coin-0.png");
     QImage brickImage(":/resources/graphics/blocs/brick.bmp");
     QPixmap brickWithCoin(buttonSize,buttonSize);
     QPainter p1(&brickWithCoin);
@@ -86,7 +86,7 @@ LevelEditorWidget::LevelEditorWidget()
 
     QImage secretBoxIcon(":/resources/graphics/blocs/box-used.bmp");
 
-    QImage mushroomIcon(":/resources/graphics/mushroom-red.png");
+    QImage mushroomIcon(":/resources/graphics/items/mushroom-red.png");
     QPixmap boxWithMushroom(secretBoxIcon.size());
     QPainter p2(&boxWithMushroom);
     p2.drawImage(QPoint(0, 0), secretBoxIcon);
@@ -98,7 +98,7 @@ LevelEditorWidget::LevelEditorWidget()
     buttonSecretBoxMushroom.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxMushroom.resize(buttonSize,buttonSize);
 
-    QImage flowerIcon(":/resources/graphics/flower.png");
+    QImage flowerIcon(":/resources/graphics/items/fire-flower-0.png");
     QPixmap boxWithFlower(buttonSize,buttonSize);
     QPainter p3(&boxWithFlower);
     p3.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
@@ -110,7 +110,7 @@ LevelEditorWidget::LevelEditorWidget()
     buttonSecretBoxFlower.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxFlower.resize(buttonSize,buttonSize);
 
-    QImage starIcon(":/resources/graphics/star.png");
+    QImage starIcon(":/resources/graphics/items/starman-0.png");
     QPixmap boxWithStar(buttonSize,buttonSize);
     QPainter p4(&boxWithStar);
     p4.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
