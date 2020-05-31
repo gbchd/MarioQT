@@ -4,6 +4,8 @@ Scenery::Scenery(TypeOfSceneryObject typeOfSceneryObject)
 {
     objectSceneryType = typeOfSceneryObject;
 
+    zValue = 1;
+
     switch (typeOfSceneryObject) {
     case SMALLHILLOBJECT:
         currentTexture = loadTexture(":/resources/graphics/hill-small.png");

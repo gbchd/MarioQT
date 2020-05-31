@@ -4,6 +4,7 @@ ObjectModel::ObjectModel()
 {
     collidable = true;
     walkable   = false;
+    zValue = 2;
 }
 
 ObjectModel::~ObjectModel(){
