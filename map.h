@@ -20,7 +20,7 @@
 #include "box.h"
 #include "brick.h"
 #include "billblaster.h"
-
+#include "scenery.h"
 
 class Map
 {

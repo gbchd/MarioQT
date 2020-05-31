@@ -16,6 +16,7 @@ protected:
     bool moving = false;
     bool sliding = false;
     bool running = false;
+    bool solid = true;      // Does not block the other entity in a collision (does not call solveCollision)
     bool collidableWithOtherEntities = true;
 
     bool grounded = false;
@@ -68,6 +69,7 @@ public:
 
     QRectF getHitboxEntity(){ return hitboxEntity; }
 
+    bool isSolid(){ return solid; }
     bool isDead(){return dead;}
     bool isCollidableWithOtherEntities(){return collidableWithOtherEntities;}
 
@@ -84,6 +86,7 @@ public:
     Direction getDirection(){ return movingDirection; }
     void setDirection(Direction direction){ movingDirection = direction; currentTexture = currentTexture.transformed(QTransform().scale(-1,1));}
 
+    virtual void collisionByDefaultHandler(ObjectModel * o) override;
     virtual void collisionOnLeftHandler(ObjectModel * o) override;
     virtual void collisionOnRightHandler(ObjectModel * o) override;
     virtual void collisionOnTopHandler(ObjectModel * o) override;

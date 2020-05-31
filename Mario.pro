@@ -27,6 +27,7 @@ SOURCES += \
     collectableitem.cpp \
     enemy.cpp \
     entity.cpp \
+    fireball.cpp \
     gamecontroller.cpp \
     gameview.cpp \
     goomba.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
     objectmodel.cpp \
     pausemenucontroller.cpp \
     pausemenuwidget.cpp \
+    scenery.cpp \
     visitor.cpp \
     wall.cpp
 
@@ -63,6 +65,7 @@ HEADERS += \
     direction.h \
     enemy.h \
     entity.h \
+    fireball.h \
     gamecontroller.h \
     gameview.h \
     goomba.h \
@@ -82,6 +85,7 @@ HEADERS += \
     objectmodel.h \
     pausemenucontroller.h \
     pausemenuwidget.h \
+    scenery.h \
     visitor.h \
     wall.h
 

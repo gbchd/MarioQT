@@ -284,18 +284,22 @@ void Entity::collisionHandler(ObjectModel *o){
     if(!o->isCollidable() || !isCollidable()){
         return;
     }
+    Entity * e = dynamic_cast<Entity *>(o);
+    if(e && !isCollidableWithOtherEntities() && !e->isCollidableWithOtherEntities()){
+        return;
+    }
 
     // On corrige la position de l'entité
-    solveCollision(o);
+
+    if(e && (!isSolid() || !e->isSolid()) ){}
+    else{
+        solveCollision(o);
+    }
 
     // On agit en fonction de la direction de la collision
     QRectF hitbox;
     QRectF oHitbox;
-    Entity * e = dynamic_cast<Entity *>(o);
     if(e){
-        if(!isCollidableWithOtherEntities() || !e->isCollidableWithOtherEntities()){
-            return;
-        }
         hitbox = getHitboxEntity();
         oHitbox = e->getHitboxEntity();
     }
@@ -309,23 +313,30 @@ void Entity::collisionHandler(ObjectModel *o){
         collisionOnLeftHandler(o);
         o->collisionOnRightHandler(this);
     }
-    if(hitbox.right() == oHitbox.left()){
+    else if(hitbox.right() == oHitbox.left()){
         //qDebug() << "Right";
         collisionOnRightHandler(o);
         o->collisionOnLeftHandler(this);
     }
-    if(hitbox.top() == oHitbox.bottom()){
+    else if(hitbox.top() == oHitbox.bottom()){
         //qDebug() << "Top";
         collisionOnTopHandler(o);
         o->collisionOnBottomHandler(this);
     }
-    if(hitbox.bottom() == oHitbox.top()){
+    else if(hitbox.bottom() == oHitbox.top()){
         //qDebug() << "Bottom";
         collisionOnBottomHandler(o);
         o->collisionOnTopHandler(this);
     }
+    else {
+        collisionByDefaultHandler(o);
+        o->collisionByDefaultHandler(this);
+    }
 }
 
+void Entity::collisionByDefaultHandler(ObjectModel *o){
+
+}
 
 void Entity::collisionOnLeftHandler(ObjectModel *o){
     //qDebug() << "Colliding LEFT";

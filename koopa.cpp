@@ -4,8 +4,8 @@
 Koopa::Koopa(Direction spawnDirection)
 {
     // set textures
-    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
-    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
+    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio).transformed(QTransform().scale(-1,1)));
+    texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio).transformed(QTransform().scale(-1,1)));
     texture_shell = QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-turtleback-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
 
     movingDirection = spawnDirection;
@@ -36,6 +36,14 @@ Koopa::Koopa(Direction spawnDirection)
 void Koopa::advance(){
     groundHandler();
     hurtfulFrameHandler();
+
+    if(shell && moving){
+        solid = false;
+    }
+    else{
+        solid = true;
+    }
+
     if(dead && timeOfDeath.elapsed() >= delayBeforeDeletable){
         deletable = true;
     }

@@ -2,6 +2,7 @@
 #define ENEMY_H
 
 #include "entity.h"
+#include "collectableitem.h"
 #include <QElapsedTimer>
 
 class Enemy : public Entity
@@ -23,6 +24,14 @@ public:
     bool isHurtful(){return hurtful;}
     virtual void die() override;
     virtual void hurt();
+
+    virtual void collisionByDefaultHandler(ObjectModel *o) override;
+    /*
+    virtual void collisionOnLeftHandler(ObjectModel * o) override;
+    virtual void collisionOnRightHandler(ObjectModel * o) override;
+    virtual void collisionOnTopHandler(ObjectModel * o) override;
+    virtual void collisionOnBottomHandler(ObjectModel * o) override;
+    */
 };
 
 #endif // ENEMY_H

@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "koopa.h"
 
 Enemy::Enemy()
 {
@@ -17,4 +18,11 @@ void Enemy::die(){
     moving = false;
     moveTo(position.x(), position.y() + (BLOCSIZE-texture_dead.size().height()));
     timeOfDeath.start();
+}
+
+void Enemy::collisionByDefaultHandler(ObjectModel *o){
+    Koopa * koopa = dynamic_cast<Koopa *>(o);
+    if(koopa && koopa->isInShell() && koopa->isMoving()){
+        die();
+    }
 }

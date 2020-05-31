@@ -33,6 +33,14 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
     connect(&buttonFlyingTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtleFlying()));
     connect(&buttonMario, SIGNAL (clicked()), this, SLOT (handleButtonMario()));
+    connect(&buttonSmallHill, SIGNAL (clicked()), this, SLOT (handleButtonSmallHill()));
+    connect(&buttonBigHill, SIGNAL (clicked()), this, SLOT (handleButtonBigHill()));
+    connect(&buttonSmallBush, SIGNAL (clicked()), this, SLOT (handleButtonSmallBush()));
+    connect(&buttonMedBush, SIGNAL (clicked()), this, SLOT (handleButtonMedBush()));
+    connect(&buttonBigBush, SIGNAL (clicked()), this, SLOT (handleButtonBigBush()));
+    connect(&buttonSmallCloud, SIGNAL (clicked()), this, SLOT (handleButtonSmallCloud()));
+    connect(&buttonMedCloud, SIGNAL (clicked()), this, SLOT (handleButtonMedCloud()));
+    connect(&buttonBigCloud, SIGNAL (clicked()), this, SLOT (handleButtonBigCloud()));
 
     connect(&slider, SIGNAL (valueChanged(int)), this, SLOT (handleSliderValueChange(int)));
 
@@ -53,22 +61,19 @@ LevelEditorWidget::LevelEditorWidget()
     buttonClear.setFixedSize(80, 20);
     menuVerticalLayout.addWidget(&buttonClear);
 
-    QPixmap brickIcon(":/resources/graphics/blocs/brick.bmp");
-    QIcon brickButtonIcon(brickIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonBrick.setIcon(brickButtonIcon);
+    buttonBrick.setIcon(QPixmap(":/resources/graphics/blocs/brick.bmp").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonBrick.setIconSize(QSize(buttonSize, buttonSize));
     buttonBrick.resize(buttonSize,buttonSize);
 
-    QImage coinIcon(":/resources/graphics/coin-1.png");
+    QImage coinIcon(":/resources/graphics/items/coin-0.png");
     QImage brickImage(":/resources/graphics/blocs/brick.bmp");
     QPixmap brickWithCoin(buttonSize,buttonSize);
     QPainter p1(&brickWithCoin);
     p1.drawImage(QPoint(0, 0), brickImage.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    p1.drawImage(QPoint(buttonSize*0.1, buttonSize*0.1), coinIcon.scaled(buttonSize*0.8, buttonSize*0.8, Qt::KeepAspectRatio));
+    p1.drawImage(QPoint(14, 6), coinIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
     p1.end();
 
-    QIcon brickWithCoinButtonIcon(brickWithCoin);
-    buttonCoinBrick.setIcon(brickWithCoinButtonIcon);
+    buttonCoinBrick.setIcon(QIcon(brickWithCoin));
     buttonCoinBrick.setIconSize(QSize(buttonSize, buttonSize));
     buttonCoinBrick.resize(buttonSize,buttonSize);
 
@@ -86,7 +91,7 @@ LevelEditorWidget::LevelEditorWidget()
 
     QImage secretBoxIcon(":/resources/graphics/blocs/box-used.bmp");
 
-    QImage mushroomIcon(":/resources/graphics/mushroom-red.png");
+    QImage mushroomIcon(":/resources/graphics/items/mushroom-red.png");
     QPixmap boxWithMushroom(secretBoxIcon.size());
     QPainter p2(&boxWithMushroom);
     p2.drawImage(QPoint(0, 0), secretBoxIcon);
@@ -98,23 +103,22 @@ LevelEditorWidget::LevelEditorWidget()
     buttonSecretBoxMushroom.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxMushroom.resize(buttonSize,buttonSize);
 
-    QImage flowerIcon(":/resources/graphics/flower.png");
+    QImage flowerIcon(":/resources/graphics/items/fire-flower-0.png");
     QPixmap boxWithFlower(buttonSize,buttonSize);
     QPainter p3(&boxWithFlower);
     p3.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     p3.drawImage(QPoint(6, 6), flowerIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
     p3.end();
 
-    QIcon secretBoxFlowerButtonIcon(boxWithFlower);
-    buttonSecretBoxFlower.setIcon(secretBoxFlowerButtonIcon);
+    buttonSecretBoxFlower.setIcon(QIcon(boxWithFlower));
     buttonSecretBoxFlower.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxFlower.resize(buttonSize,buttonSize);
 
-    QImage starIcon(":/resources/graphics/star.png");
+    QImage starIcon(":/resources/graphics/items/starman-0.png");
     QPixmap boxWithStar(buttonSize,buttonSize);
     QPainter p4(&boxWithStar);
     p4.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    p4.drawImage(QPoint(6, 6), starIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p4.drawImage(QPoint(8, 5), starIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
     p4.end();
 
     QIcon secretBoxStarButtonIcon(boxWithStar);
@@ -125,7 +129,7 @@ LevelEditorWidget::LevelEditorWidget()
     QPixmap boxWithCoin(buttonSize,buttonSize);
     QPainter p5(&boxWithCoin);
     p5.drawImage(QPoint(0, 0), secretBoxIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    p5.drawImage(QPoint(6, 6), coinIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
+    p5.drawImage(QPoint(14, 6), coinIcon.scaled(buttonSize/1.3, buttonSize/1.3, Qt::KeepAspectRatio));
     p5.end();
 
     QIcon secretBoxCoinButtonIcon(boxWithCoin);
@@ -133,65 +137,78 @@ LevelEditorWidget::LevelEditorWidget()
     buttonSecretBoxCoin.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxCoin.resize(buttonSize,buttonSize);
 
-    QPixmap smallPipeIcon(":/resources/graphics/pipe-small.png");
-    QIcon smallPipeButtonIcon(smallPipeIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonSmallPipe.setIcon(smallPipeButtonIcon);
+    buttonSmallPipe.setIcon(QPixmap(":/resources/graphics/pipe-small.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonSmallPipe.setIconSize(QSize(buttonSize, buttonSize));
     buttonSmallPipe.resize(buttonSize,buttonSize);
 
-    QPixmap medPipeIcon(":/resources/graphics/pipe-med.png");
-    QIcon medPipeButtonIcon(medPipeIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonMedPipe.setIcon(medPipeIcon);
+    buttonMedPipe.setIcon(QPixmap(":/resources/graphics/pipe-med.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonMedPipe.setIconSize(QSize(buttonSize, buttonSize));
     buttonMedPipe.resize(buttonSize,buttonSize);
 
-    QPixmap bigPipeIcon(":/resources/graphics/pipe-big.png");
-    QIcon bigPipeButtonIcon(bigPipeIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonBigPipe.setIcon(bigPipeButtonIcon);
+    buttonBigPipe.setIcon(QPixmap(":/resources/graphics/pipe-big.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonBigPipe.setIconSize(QSize(buttonSize, buttonSize));
     buttonBigPipe.resize(buttonSize,buttonSize);
 
-    QPixmap bulletBlasterIcon(":/resources/graphics/bill-blaster.png");
-    QIcon bulletBlasterButtonIcon(bulletBlasterIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonBulletBlaster.setIcon(bulletBlasterButtonIcon);
+    buttonBulletBlaster.setIcon(QPixmap(":/resources/graphics/bill-blaster.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonBulletBlaster.setIconSize(QSize(buttonSize, buttonSize));
     buttonBulletBlaster.resize(buttonSize,buttonSize);
 
-    QPixmap flagpoleIcon(":/resources/graphics/flagpole.png");
-    QIcon flagpoleButtonIcon(flagpoleIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonFlagpole.setIcon(flagpoleButtonIcon);
+    buttonFlagpole.setIcon(QPixmap(":/resources/graphics/flagpole.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonFlagpole.setIconSize(QSize(buttonSize, buttonSize));
     buttonFlagpole.resize(buttonSize,buttonSize);
 
-    QPixmap castleIcon(":/resources/graphics/castle.png");
-    QIcon castleButtonIcon(castleIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonCastle.setIcon(castleButtonIcon);
+    buttonCastle.setIcon(QPixmap(":/resources/graphics/castle.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonCastle.setIconSize(QSize(buttonSize, buttonSize));
     buttonCastle.resize(buttonSize,buttonSize);
 
-    QPixmap goombaIcon(":/resources/graphics/mobs/goomba/goomba-0.png");
-    QIcon goombaButtonIcon(goombaIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonGoomba.setIcon(goombaButtonIcon);
+    buttonGoomba.setIcon(QPixmap(":/resources/graphics/mobs/goomba/goomba-0.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonGoomba.setIconSize(QSize(buttonSize, buttonSize));
     buttonGoomba.resize(buttonSize,buttonSize);
 
-    QPixmap turtleIcon(":/resources/graphics/mobs/turtle/turtle-walk-0.png");
-    QIcon turtleButtonIcon(turtleIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonTurtle.setIcon(turtleButtonIcon);
+    buttonTurtle.setIcon(QPixmap(":/resources/graphics/mobs/turtle/turtle-walk-0.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonTurtle.setIconSize(QSize(buttonSize, buttonSize));
     buttonTurtle.resize(buttonSize,buttonSize);
 
-    QPixmap flyingTurtleIcon(":/resources/graphics/mobs/turtle_fly/turtle-fly-0.png");
-    QIcon flyingTurtleButtonIcon(flyingTurtleIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonFlyingTurtle.setIcon(flyingTurtleButtonIcon);
+    buttonFlyingTurtle.setIcon(QPixmap(":/resources/graphics/mobs/turtle_fly/turtle-fly-0.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonFlyingTurtle.setIconSize(QSize(buttonSize, buttonSize));
     buttonFlyingTurtle.resize(buttonSize,buttonSize);
 
-    QPixmap marioIcon(":/resources/graphics/characters/mario/mario-big-stand.png");
-    QIcon marioButtonIcon(marioIcon.scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonMario.setIcon(marioButtonIcon);
+    buttonMario.setIcon(QPixmap(":/resources/graphics/characters/mario/mario-big-stand.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonMario.setIconSize(QSize(buttonSize, buttonSize));
     buttonMario.resize(buttonSize,buttonSize);
+
+    buttonSmallHill.setIcon(QPixmap(":/resources/graphics/hill-small.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonSmallHill.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSmallHill.resize(buttonSize,buttonSize);
+
+    buttonBigHill.setIcon(QPixmap(":/resources/graphics/hill-big.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonBigHill.setIconSize(QSize(buttonSize, buttonSize));
+    buttonBigHill.resize(buttonSize,buttonSize);
+
+    buttonSmallBush.setIcon(QPixmap(":/resources/graphics/bush-small.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonSmallBush.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSmallBush.resize(buttonSize,buttonSize);
+
+    buttonMedBush.setIcon(QPixmap(":/resources/graphics/bush-small.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonMedBush.setIconSize(QSize(buttonSize, buttonSize));
+    buttonMedBush.resize(buttonSize,buttonSize);
+
+    buttonBigBush.setIcon(QPixmap(":/resources/graphics/bush-big.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonBigBush.setIconSize(QSize(buttonSize, buttonSize));
+    buttonBigBush.resize(buttonSize,buttonSize);
+
+    buttonSmallCloud.setIcon(QPixmap(":/resources/graphics/cloud-small.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonSmallCloud.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSmallCloud.resize(buttonSize,buttonSize);
+
+    buttonMedCloud.setIcon(QPixmap(":/resources/graphics/cloud-med.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonMedCloud.setIconSize(QSize(buttonSize, buttonSize));
+    buttonMedCloud.resize(buttonSize,buttonSize);
+
+    buttonBigCloud.setIcon(QPixmap(":/resources/graphics/cloud-big.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonBigCloud.setIconSize(QSize(buttonSize, buttonSize));
+    buttonBigCloud.resize(buttonSize,buttonSize);
+
 
     buttonScrollArea.setWidgetResizable(true);
     buttonsWidget.setLayout(&objectButtonsHorizontalLayout);
@@ -215,6 +232,14 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonBulletBlaster);
     objectButtonsHorizontalLayout.addWidget(&buttonFlagpole);
     objectButtonsHorizontalLayout.addWidget(&buttonCastle);
+    objectButtonsHorizontalLayout.addWidget(&buttonSmallHill);
+    objectButtonsHorizontalLayout.addWidget(&buttonBigHill);
+    objectButtonsHorizontalLayout.addWidget(&buttonSmallBush);
+    objectButtonsHorizontalLayout.addWidget(&buttonMedBush);
+    objectButtonsHorizontalLayout.addWidget(&buttonBigBush);
+    objectButtonsHorizontalLayout.addWidget(&buttonSmallCloud);
+    objectButtonsHorizontalLayout.addWidget(&buttonMedCloud);
+    objectButtonsHorizontalLayout.addWidget(&buttonBigCloud);
 
     firstHorizontalLayout.addWidget(&buttonScrollArea);
 
@@ -281,6 +306,22 @@ void LevelEditorWidget::handleButtonTurtle() { levelEditorEngine->setSelectedBut
 void LevelEditorWidget::handleButtonTurtleFlying() { levelEditorEngine->setSelectedButton(FLYINGTURTLE); }
 
 void LevelEditorWidget::handleButtonMario() { levelEditorEngine->setSelectedButton(MARIO); }
+
+void LevelEditorWidget::handleButtonSmallHill() { levelEditorEngine->setSelectedButton(SMALLHILL); }
+
+void LevelEditorWidget::handleButtonBigHill() { levelEditorEngine->setSelectedButton(BIGHILL); }
+
+void LevelEditorWidget::handleButtonSmallBush() { levelEditorEngine->setSelectedButton(SMALLBUSH); }
+
+void LevelEditorWidget::handleButtonMedBush() { levelEditorEngine->setSelectedButton(MEDBUSH); }
+
+void LevelEditorWidget::handleButtonBigBush() { levelEditorEngine->setSelectedButton(BIGBUSH); }
+
+void LevelEditorWidget::handleButtonSmallCloud() { levelEditorEngine->setSelectedButton(SMALLCLOUD); }
+
+void LevelEditorWidget::handleButtonMedCloud() { levelEditorEngine->setSelectedButton(MEDCLOUD); }
+
+void LevelEditorWidget::handleButtonBigCloud() { levelEditorEngine->setSelectedButton(BIGCLOUD); }
 
 void LevelEditorWidget::handleSliderValueChange(int value) {
     if(levelEditorEngine != nullptr){

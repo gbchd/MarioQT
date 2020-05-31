@@ -13,7 +13,7 @@ class ObjectModel
 {
 protected:
     bool walkable;
-    bool collidable;
+    bool collidable;        // Cannot have an interaction with this object
     bool deletable = false;
 
     QPointF position;
@@ -64,7 +64,7 @@ public:
     static QPixmap loadTextureTransparent(const std::string & file, QColor mask_color = Qt::magenta);
     static QPixmap loadTexture(const std::string file, QColor mask_color = Qt::magenta);
 
-
+    virtual void collisionByDefaultHandler(ObjectModel * o){}
     virtual void collisionOnLeftHandler(ObjectModel * o){}
     virtual void collisionOnRightHandler(ObjectModel * o){}
     virtual void collisionOnTopHandler(ObjectModel * o){}

@@ -57,7 +57,7 @@ void GameController::advance() {
 
         entity->animate();
 
-        if(entity->isDeletable()){
+        if(entity->isDeletable() || entity->getPosition().y() >= gameview->getlevelSize().height()){
             if(dynamic_cast<Mario *>(entity)){
                 removePlayer();
             }
@@ -222,6 +222,10 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
+    if(e->key() == Qt::Key_Shift){
+        //entities.append(mario->shootFireBall());
+    }
+
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
     }
@@ -295,14 +299,20 @@ void GameController::removePlayer(){
     }
 }
 void GameController::removeInert(Inert *i){
-    objects.removeOne(i);
-    inerts.removeOne(i);
-    delete i;
+    if(i != nullptr){
+        objects.removeOne(i);
+        inerts.removeOne(i);
+        delete i;
+        i = nullptr;
+    }
 }
 void GameController::removeEntity(Entity *e){
-    objects.removeOne(e);
-    entities.removeOne(e);
-    delete e;
+    if(e != nullptr){
+        objects.removeOne(e);
+        entities.removeOne(e);
+        delete e;
+        e = nullptr;
+    }
 }
 
 void GameController::clean(){

@@ -25,6 +25,7 @@ public:
     virtual void advance() override;
     virtual void animate() override;
 
+    void collisionByDefaultHandler(ObjectModel *o) override;
     void collisionOnBottomHandler(ObjectModel *o) override;
     void collisionOnLeftHandler(ObjectModel * o) override;
     void collisionOnRightHandler(ObjectModel * o) override;

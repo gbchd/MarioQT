@@ -5,6 +5,7 @@
 
 CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
 {
+    solid = false;
     typeItem = t;
     this->spawnerBlockPos = spawnerBlockPos;
     moveTo(spawnerBlockPos);
@@ -22,19 +23,19 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
 
     switch(typeItem){
     case COINCOLLECTABLE:
-        currentTexture = loadTexture(":/resources/graphics/coin-1.png").scaled(BLOCSIZE*0.75, BLOCSIZE*0.75, Qt::KeepAspectRatio);
+        currentTexture = loadTexture(":/resources/graphics/items/coin-0.png").scaled(BLOCSIZE*0.75, BLOCSIZE*0.75, Qt::KeepAspectRatio);
         break;
     case STARCOLLECTABLE:
-        currentTexture = loadTexture(":/resources/graphics/star.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        currentTexture = loadTexture(":/resources/graphics/items/starman-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
         spawnAnimationTimer.start();
         break;
     case MUSHROOMCOLLECTABLE:
-        currentTexture = loadTexture(":/resources/graphics/mushroom-green.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        currentTexture = loadTexture(":/resources/graphics/items/mushroom-red.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
         movingDirection = RIGHT;
         spawnAnimationTimer.start();
         break;
     case FLOWERCOLLECTABLE:
-        currentTexture = loadTexture(":/resources/graphics/flower.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        currentTexture = loadTexture(":/resources/graphics/items/fire-flower-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
         spawnAnimationTimer.start();
         break;
     default:
@@ -83,9 +84,13 @@ void CollectableItem::animate()
     }
 }
 
+
+void CollectableItem::collisionByDefaultHandler(ObjectModel *o){
+    handleCollisionWithObject(o);
+}
+
 void CollectableItem::collisionOnBottomHandler(ObjectModel *o)
 {
-    qDebug() << "here";
     handleCollisionWithObject(o);
 }
 

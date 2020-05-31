@@ -38,10 +38,13 @@ void LevelEditorEngine::exportMapToJSon()
             if(indice>0){ stream<<","; }
             stream<<"\"block"<<indice<<"\":{\"type\":\""<<getTypeFromInert(inerts[indice])<<"\",";
             if(getTypeFromInert(inerts[indice]).compare("brick")==0){
-                stream<<"\"isCoinBrick\":"<<dynamic_cast<Brick*>(inerts[indice])->getBrickState()<<",";
+                stream<<"\"isCoinBrick\":"<<dynamic_cast<Brick *>(inerts[indice])->getBrickState()<<",";
             }
             else if(getTypeFromInert(inerts[indice]).compare("box")==0){
-                stream<<"\"content\":"<<dynamic_cast<Box*>(inerts[indice])->getBoxContent()<<",";
+                stream<<"\"content\":"<<dynamic_cast<Box *>(inerts[indice])->getBoxContent()<<",";
+            }
+            else if(getTypeFromInert(inerts[indice]).compare("scenery")==0){
+                stream<<"\"sceneryType\":"<<dynamic_cast<Scenery *>(inerts[indice])->getObjectSceneryType()<<",";
             }
             stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
         }
@@ -72,6 +75,9 @@ QString LevelEditorEngine::getTypeFromInert(Inert *inert)
     }
     else if(dynamic_cast<BillBlaster *>(inert)){
         return "billBlaster";
+    }
+    else if(dynamic_cast<Scenery *>(inert)){
+        return "scenery";
     }
     else{
         return "unknown";
@@ -131,7 +137,12 @@ void LevelEditorEngine::addObjectOnMousePosition()
     int X = getColumnFromMousePosition()*block_size;
     int Y = getLineFromMousePosition()*block_size;
 
-    deleteObjectAtPosition(X, Y);
+    if(dynamic_cast<Scenery *>(objectToPaintOnMouse)){
+        deleteSceneryObjectAtPosition(X, Y);
+    }
+    else{
+        deleteObjectAtPosition(X, Y);
+    }
 
     switch(selectedButton){
         case BRICK: {
@@ -265,6 +276,69 @@ void LevelEditorEngine::addObjectOnMousePosition()
             fakeMario->moveTo(X, Y);
             break;
         }
+        case SMALLHILL: {
+            Scenery * scenery = new Scenery(SMALLHILLOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            BIGHILL: {
+            Scenery * scenery = new Scenery(BIGHILLOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            SMALLBUSH: {
+            Scenery * scenery = new Scenery(SMALLBUSHOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            MEDBUSH: {
+            Scenery * scenery = new Scenery(MEDBUSHOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            BIGBUSH: {
+            Scenery * scenery = new Scenery(BIGBUSHOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            SMALLCLOUD: {
+            Scenery * scenery = new Scenery(SMALLCLOUDOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            MEDCLOUD: {
+            Scenery * scenery = new Scenery(MEDCLOUDOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
+        case
+            BIGCLOUD: {
+            Scenery * scenery = new Scenery(BIGCLOUDOBJECT);
+            scenery->moveTo(X, Y);
+            inerts.append(scenery);
+            objects.append(scenery);
+            break;
+        }
         default: {
             break;
         }
@@ -299,6 +373,18 @@ void LevelEditorEngine::deleteObjectAtPosition(int x, int y)
                         delete inert;
                     }
                 }
+            }
+        }
+    }
+}
+
+void LevelEditorEngine::deleteSceneryObjectAtPosition(int x, int y){
+    for(Inert * inert : inerts){
+        if(dynamic_cast<Scenery *>(inert)){
+            if(inert->getPosition().x() == x && inert->getPosition().y() == y){
+                objects.removeOne(inert);
+                inerts.removeOne(inert);
+                delete inert;
             }
         }
     }
@@ -391,6 +477,53 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         }
         case MARIO: {
             objectToPaintOnMouse = new Mario();
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case SMALLHILL: {
+            objectToPaintOnMouse = new Scenery(SMALLHILLOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            BIGHILL: {
+            objectToPaintOnMouse = new Scenery(BIGHILLOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            SMALLBUSH: {
+            objectToPaintOnMouse = new Scenery(SMALLBUSHOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            MEDBUSH: {
+            objectToPaintOnMouse = new Scenery(MEDBUSHOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            BIGBUSH: {
+            objectToPaintOnMouse = new Scenery(BIGBUSHOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            SMALLCLOUD: {
+            objectToPaintOnMouse = new Scenery(SMALLCLOUDOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            MEDCLOUD: {
+            objectToPaintOnMouse = new Scenery(MEDCLOUDOBJECT);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case
+            BIGCLOUD: {
+            objectToPaintOnMouse = new Scenery(BIGCLOUDOBJECT);
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }

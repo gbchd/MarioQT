@@ -12,6 +12,7 @@
 #include "objectmodel.h"
 #include "inert.h"
 #include "box.h"
+#include "scenery.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 
@@ -58,6 +59,7 @@ public:
     void setSelectedButton(SelectedButton sb);
     void addObjectOnMousePosition();
     void deleteObjectAtPosition(int x, int y);
+    void deleteSceneryObjectAtPosition(int x, int y);
     void update(CameraVisitor & visitor);
     void changeCameraPosition(int value);
     void start();

@@ -261,6 +261,18 @@ void Mario::stopTransforming(){
     timerTransformation.invalidate();
 }
 
+void Mario::collisionByDefaultHandler(ObjectModel *o){
+    CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
+    if(collectableItem != nullptr){
+        handleCollectableItemCollision(collectableItem);
+    }
+
+    Koopa * koopa = dynamic_cast<Koopa*>(o);
+    if(koopa && koopa->isInShell() && koopa->isMoving()){
+        hurt();
+    }
+}
+
 void Mario::collisionOnLeftHandler(ObjectModel *o){
     Entity::collisionOnLeftHandler(o);
     Enemy * enemy = dynamic_cast<Enemy *>(o);

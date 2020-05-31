@@ -144,6 +144,47 @@ void Map::addInert(QJsonObject inertObject){
 
         inerts.append(box);
     }
+    else if(type.compare("scenery") == 0){
+        Scenery * scenery;
+
+        switch(inertObject["sceneryType"].toInt()){
+        case 1:
+            scenery = new Scenery(SMALLHILLOBJECT);
+            break;
+        case 2:
+            scenery = new Scenery(BIGHILLOBJECT);
+            break;
+        case 3:
+            scenery = new Scenery(SMALLBUSHOBJECT);
+            break;
+        case 4:
+            scenery = new Scenery(MEDBUSHOBJECT);
+            break;
+        case 5:
+            scenery = new Scenery(BIGBUSHOBJECT);
+            break;
+        case 6:
+            scenery = new Scenery(SMALLCLOUDOBJECT);
+            break;
+        case 7:
+            scenery = new Scenery(MEDCLOUDOBJECT);
+            break;
+        case 8:
+            scenery = new Scenery(BIGCLOUDOBJECT);
+            break;
+        case 0:
+        default:
+            scenery = new Scenery(EMPTYSCENERYOBJECT);
+            break;
+        }
+
+        int x = inertObject["x"].toInt();
+        int y = inertObject["y"].toInt();
+
+        scenery->moveTo(x*block_size,y*block_size);
+
+        inerts.append(scenery);
+    }
     else if(type.compare("brick") == 0){
         Brick * brick = new Brick();
 
