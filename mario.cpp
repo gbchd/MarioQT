@@ -60,6 +60,8 @@ Mario::Mario()
     transformingDown = false;
     currentTransformingTexture = 0;
 
+    setCurrentTexture(texture_stand[0]);
+
     //States
     setSmall();
     running = false;
@@ -76,6 +78,7 @@ Mario::Mario()
     //Graphical value
     zValue = 5;
     timerWalk.start();
+
 }
 
 Mario::~Mario(){

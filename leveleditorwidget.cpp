@@ -173,7 +173,7 @@ LevelEditorWidget::LevelEditorWidget()
     buttonFlyingTurtle.setIconSize(QSize(buttonSize, buttonSize));
     buttonFlyingTurtle.resize(buttonSize,buttonSize);
 
-    buttonMario.setIcon(QPixmap(":/resources/graphics/characters/mario/mario-big-stand.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonMario.setIcon(QPixmap(":/resources/graphics/characters/mario/mario-small-stand.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonMario.setIconSize(QSize(buttonSize, buttonSize));
     buttonMario.resize(buttonSize,buttonSize);
 
