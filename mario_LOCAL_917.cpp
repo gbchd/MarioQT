@@ -297,7 +297,6 @@ void Mario::doTransforming(){
                 setBigToFiery();
             }
         }
-
         if(transformingDown==true){
             if(currentTransformingTexture==18 || currentTransformingTexture==16 || currentTransformingTexture==14 || currentTransformingTexture==12 || currentTransformingTexture==10){
                 setFieryToBig();
