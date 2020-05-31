@@ -39,7 +39,3 @@ Scenery::Scenery(TypeOfSceneryObject typeOfSceneryObject)
     collidable = false;
     walkable = false;
 }
-
-void Scenery::animate(){
-    // No animations
-}
