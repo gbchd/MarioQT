@@ -48,6 +48,7 @@ SOURCES += \
     objectmodel.cpp \
     pausemenucontroller.cpp \
     pausemenuwidget.cpp \
+    scenery.cpp \
     visitor.cpp \
     wall.cpp
 
@@ -84,6 +85,7 @@ HEADERS += \
     objectmodel.h \
     pausemenucontroller.h \
     pausemenuwidget.h \
+    scenery.h \
     visitor.h \
     wall.h
 

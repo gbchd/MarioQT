@@ -14,7 +14,34 @@
 class LevelEditorView;
 class LevelEditorEngine;
 
-enum SelectedButton {NOBUTTON, BRICK, COINBRICK, BLOCK, WALL, SECRETBOXMUSHROOM, SECRETBOXFLOWER, SECRETBOXSTAR,SECRETBOXCOIN, SMALLPIPE, MEDPIPE, BIGPIPE, BULLETBLASTER, FLAGPOLE, CASTLE, GOOMBA, TURTLE, FLYINGTURTLE, MARIO};
+enum SelectedButton {   NOBUTTON,
+                        BRICK,
+                        COINBRICK,
+                        BLOCK,
+                        WALL,
+                        SECRETBOXMUSHROOM,
+                        SECRETBOXFLOWER,
+                        SECRETBOXSTAR,
+                        SECRETBOXCOIN,
+                        SMALLPIPE,
+                        MEDPIPE,
+                        BIGPIPE,
+                        BULLETBLASTER,
+                        FLAGPOLE,
+                        CASTLE,
+                        GOOMBA,
+                        TURTLE,
+                        FLYINGTURTLE,
+                        MARIO,
+                        SMALLHILL,
+                        BIGHILL,
+                        SMALLBUSH,
+                        MEDBUSH,
+                        BIGBUSH,
+                        SMALLCLOUD,
+                        MEDCLOUD,
+                        BIGCLOUD   };
+
 enum MouseState {NOTPRESSED, LEFTCLICKPRESSED, RIGHTCLICKPRESSED};
 
 class LevelEditorWidget : public QWidget
@@ -48,6 +75,14 @@ private:
     QPushButton buttonTurtle;
     QPushButton buttonFlyingTurtle;
     QPushButton buttonMario;
+    QPushButton buttonSmallHill;
+    QPushButton buttonBigHill;
+    QPushButton buttonSmallBush;
+    QPushButton buttonMedBush;
+    QPushButton buttonBigBush;
+    QPushButton buttonSmallCloud;
+    QPushButton buttonMedCloud;
+    QPushButton buttonBigCloud;
 
     QRadioButton gridRadioButton;
 
@@ -93,6 +128,14 @@ private slots:
     void handleButtonTurtle();
     void handleButtonTurtleFlying();
     void handleButtonMario();
+    void handleButtonSmallHill();
+    void handleButtonBigHill();
+    void handleButtonSmallBush();
+    void handleButtonMedBush();
+    void handleButtonBigBush();
+    void handleButtonSmallCloud();
+    void handleButtonMedCloud();
+    void handleButtonBigCloud();
 
     void handleSliderValueChange(int value);
 };
