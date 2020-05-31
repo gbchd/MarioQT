@@ -27,7 +27,9 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
-    for(Inert * inert : inerts){
+    for(int inertIt = 0; inertIt < inerts.size(); inertIt++){
+        Inert * inert = inerts.at(inertIt);
+
         BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
         if(billblaster){
             billblasterHandler(billblaster);
@@ -47,10 +49,13 @@ void GameController::advance() {
 
         if(inert->isDeletable()){
             removeInert(inert);
+            inertIt--;
         }
     }
 
-    for(Entity * entity : entities){
+    for(int entityIt = 0 ; entityIt <entities.size(); entityIt++ ){
+        Entity * entity = entities.at(entityIt);
+
         entity->advance();
 
         handleCollision(entity);
@@ -64,6 +69,7 @@ void GameController::advance() {
             else{
                 removeEntity(entity);
             }
+            entityIt--;
         }
     }
 
@@ -135,15 +141,17 @@ void GameController::billblasterHandler(BillBlaster *billblaster){
 
 
 void GameController::brickHandler(Brick *brick){
-    BrickState brickState = brick->getBrickState();
-    if(brickState==BREAKBRICK){
-        QList<BrickDebris*> brickDebris = brick->doBreak();
-        for(BrickDebris* debris : brickDebris){
-            addEntity(debris);
+    if(brick != nullptr){
+        BrickState brickState = brick->getBrickState();
+        if(brickState==BREAKBRICK){
+            QList<BrickDebris*> brickDebris = brick->doBreak();
+            for(BrickDebris* debris : brickDebris){
+                addEntity(debris);
+            }
         }
-    }
-    else if(brickState==GIVECOIN){
-        addEntity(brick->spawnCoin());
+        else if(brickState==GIVECOIN){
+            addEntity(brick->spawnCoin());
+        }
     }
 }
 
@@ -308,8 +316,8 @@ void GameController::removeInert(Inert *i){
 }
 void GameController::removeEntity(Entity *e){
     if(e != nullptr){
-        objects.removeOne(e);
-        entities.removeOne(e);
+        objects.removeAll(e);
+        entities.removeAll(e);
         delete e;
         e = nullptr;
     }
@@ -317,13 +325,17 @@ void GameController::removeEntity(Entity *e){
 
 void GameController::clean(){
     qDebug() << "Before :" << "Objects :" << objects.size() << " Inerts :" << inerts.size() << "Entities :" << entities.size();
+
     removePlayer();
-    for(Entity * entity : entities){
+    for(int i=0; i<entities.size();){
+        Entity * entity = entities.at(i);
         removeEntity(entity);
     }
-    for(Inert * inert : inerts){
+    for(int i=0; i<inerts.size();){
+        Inert * inert = inerts.at(i);
         removeInert(inert);
     }
+
     qDebug() << "After :" << "Objects :" << objects.size() << " Inerts :" << inerts.size() << "Entities :" << entities.size();
 }
 

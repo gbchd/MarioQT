@@ -1,4 +1,4 @@
-#include "brick.h"
+ #include "brick.h"
 
 #include <QDebug>
 

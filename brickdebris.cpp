@@ -7,6 +7,8 @@ BrickDebris::BrickDebris(Direction direction)
     moving = true;
     running = false;
     collidable = false;
+    deletable = false;
+    lifeDuration = 500;
 
     speed = 2;
     gravity=0.3;
@@ -43,8 +45,9 @@ BrickDebris::BrickDebris(Direction direction)
 
 void BrickDebris::advance(){
     if(timerToDeletion.elapsed() > lifeDuration){
-        deletable = true;
+        deletable = true ;
     }
+
     velocity.setY(velocity.y() + gravity);
 
     moveTo(position+velocity);

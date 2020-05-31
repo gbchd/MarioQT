@@ -10,6 +10,7 @@ private:
     QElapsedTimer timerToDeletion;
 public:
     BrickDebris(Direction direction);
+
     virtual void advance() override;
     virtual void animate() override;
 };
