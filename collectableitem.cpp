@@ -97,11 +97,13 @@ void CollectableItem::collisionOnBottomHandler(ObjectModel *o)
 
 void CollectableItem::collisionOnLeftHandler(ObjectModel *o)
 {
+    movingDirection =  RIGHT;
     handleCollisionWithObject(o);
 }
 
 void CollectableItem::collisionOnRightHandler(ObjectModel *o)
 {
+    movingDirection  = LEFT;
     handleCollisionWithObject(o);
 }
 
@@ -116,4 +118,5 @@ void CollectableItem::handleCollisionWithObject(ObjectModel *o)
     if(mario != nullptr){
         deletable = true;
     }
+
 }
