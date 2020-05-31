@@ -318,7 +318,7 @@ void GameController::clean(){
 }
 
 void GameController::generateMap(){
-    //On crée les maps dans le controlleur
+    //On crée lQes maps dans le controlleur
     Map * map = new Map(mapFilepath);
     gameview->setLevelSize(map->getWidth(), map->getHeight());
     qDebug() << map->getCreator() << map->getCreationDate();
