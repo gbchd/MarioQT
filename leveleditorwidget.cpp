@@ -189,7 +189,7 @@ LevelEditorWidget::LevelEditorWidget()
     buttonSmallBush.setIconSize(QSize(buttonSize, buttonSize));
     buttonSmallBush.resize(buttonSize,buttonSize);
 
-    buttonMedBush.setIcon(QPixmap(":/resources/graphics/bush-small.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonMedBush.setIcon(QPixmap(":/resources/graphics/bush-med.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonMedBush.setIconSize(QSize(buttonSize, buttonSize));
     buttonMedBush.resize(buttonSize,buttonSize);
 

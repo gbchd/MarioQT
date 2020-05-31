@@ -13,6 +13,7 @@
 #include "inert.h"
 #include "box.h"
 #include "scenery.h"
+#include "pipe.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 

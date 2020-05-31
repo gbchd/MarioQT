@@ -21,6 +21,7 @@
 #include "brick.h"
 #include "billblaster.h"
 #include "scenery.h"
+#include "pipe.h"
 
 class Map
 {

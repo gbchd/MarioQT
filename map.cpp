@@ -144,6 +144,32 @@ void Map::addInert(QJsonObject inertObject){
 
         inerts.append(box);
     }
+    else if(type.compare("pipe") == 0){
+        Pipe * pipe;
+
+        switch(inertObject["pipeType"].toInt()){
+        case 1:
+            pipe = new Pipe(SMALLPIPEOBJECT);
+            break;
+        case 2:
+            pipe = new Pipe(MEDPIPEOBJECT);
+            break;
+        case 3:
+            pipe = new Pipe(BIGPIPEOBJECT);
+            break;
+        case 0:
+        default:
+            pipe = new Pipe(NOPIPETYPE);
+            break;
+        }
+
+        int x = inertObject["x"].toInt();
+        int y = inertObject["y"].toInt();
+
+        pipe->moveTo(x*block_size,y*block_size);
+
+        inerts.append(pipe);
+    }
     else if(type.compare("scenery") == 0){
         Scenery * scenery;
 

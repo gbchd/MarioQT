@@ -80,5 +80,6 @@
         <file>resources/graphics/moving-platform-2.png</file>
         <file>resources/graphics/moving-platform-3.png</file>
         <file>resources/graphics/cloud-platform.png</file>
+        <file>resources/maps/World 1-1.json</file>
     </qresource>
 </RCC>

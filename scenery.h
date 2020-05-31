@@ -20,8 +20,6 @@ private:
 public:
     Scenery(TypeOfSceneryObject typeOfSceneryObject);
 
-    void animate() override;
-
     TypeOfSceneryObject getObjectSceneryType() { return objectSceneryType; }
 };
 
