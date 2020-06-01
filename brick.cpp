@@ -1,6 +1,4 @@
- #include "brick.h"
-
-#include <QDebug>
+#include "brick.h"
 
 Brick::Brick()
 {
@@ -24,24 +22,25 @@ void Brick::startBlockBounceAnimation()
 
 void Brick::collisionOnBottomHandler(ObjectModel *o){
     Mario * mario = dynamic_cast<Mario*>(o);
-    bool isMarioBig = mario->isBig();
-    if(brickState==USEDCOINBRICK){
-        //Do nothing
-    }
-    else if(isMarioBig && brickState==NOBRICKSTATE){
-        brickState = BREAKBRICK; // Will be handled in the gamecontroller later
-    }
-    else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
-        brickState = GIVECOIN; // Will be handled in the gamecontroller later
-        if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
-        startBlockBounceAnimation();
-    }
-    else {
-        startBlockBounceAnimation();
+    if(mario){
+        bool isMarioBig = mario->isBig();
+        if(brickState==USEDCOINBRICK){
+            //Do nothing
+        }
+        else if(isMarioBig && brickState==NOBRICKSTATE){
+            brickState = BREAKBRICK; // Will be handled in the gamecontroller later
+        }
+        else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
+            brickState = GIVECOIN; // Will be handled in the gamecontroller later
+            if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
+            startBlockBounceAnimation();
+        }
+        else {
+            startBlockBounceAnimation();
+        }
     }
 }
 
-#include <QDebug>
 void Brick::animate()
 {
 

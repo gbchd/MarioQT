@@ -31,7 +31,7 @@ void LevelEditorEngine::exportMapToJSon()
         stream << "{\"name\":\""<<QFileInfo(myFile.fileName()).completeBaseName()<<"\","
                     "\"creator\":\"Map Editor\","
                     "\"date\":\""<<QDateTime::currentDateTime().toString("yyyy-MM-dd  HH:mm:ss")<<"\","
-                    "\"size\":{\"width\":320, \"height\":30},"
+                    "\"size\":{\"width\":400, \"height\":30},"
                     "\"player\":{\"x\":"<<fakeMario->getPosition().x()/32<<",\"y\":"<<fakeMario->getPosition().y()/32<<"},"
                     "\"inerts\":{";
         for(int indice=0; indice<inerts.length(); indice++){

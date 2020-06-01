@@ -42,10 +42,10 @@ void LevelEditorView::paintEvent(QPaintEvent *event)
         int block_size = 32;
 
         for(int i=block_size-(cameraPosition-windowSize.width()/2)%block_size; i < windowSize.width()*1.5; i += block_size){
-            painter.drawLine(i, 0, i, windowSize.height());
+            painter.drawLine(i, 0, i, 1.5*windowSize.height());
         }
 
-        for(int i=0; i < windowSize.height (); i += block_size){
+        for(int i=0; i < 1.5*windowSize.height (); i += block_size){
             painter.drawLine(0, i, windowSize.width()*1.5, i);
         }
     }
