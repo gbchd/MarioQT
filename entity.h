@@ -66,6 +66,7 @@ public:
     void moveTo(QPointF newPosition) override;
     void moveTo(float x, float y) override;
 
+    void bounceWithVariableVelocity(float bounceVelocity);
 
     QRectF getHitboxEntity(){ return hitboxEntity; }
 

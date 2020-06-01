@@ -16,6 +16,8 @@ protected:
     bool collidable;        // Cannot have an interaction with this object
     bool deletable = false;
 
+    int score;
+
     QPointF position;
     QRectF hitbox;
 
@@ -27,6 +29,8 @@ protected:
 public:
     ObjectModel();
     virtual ~ObjectModel();
+
+    int getScore() { return score; }
 
     void setOpacity(float o) { opacity = o; }
     float getOpacity(){ return opacity; }

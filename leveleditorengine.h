@@ -14,6 +14,7 @@
 #include "box.h"
 #include "scenery.h"
 #include "pipe.h"
+#include "trampoline.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 

@@ -18,6 +18,7 @@ private:
     QElapsedTimer spawnAnimationTimer;
 
     QPixmap flowerTexture[4];
+    QPixmap starTexture[4];
     int newAnimationDelay = 100; // in ms
     int currentTextureNumber;
     QElapsedTimer animationTimer;

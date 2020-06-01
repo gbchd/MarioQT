@@ -27,6 +27,7 @@ public:
     void collisionOnLeftHandler(ObjectModel *o) override;
     void collisionOnRightHandler(ObjectModel *o) override;
     void collisionOnTopHandler(ObjectModel *o) override;
+    void collisionOnBottomHandler(ObjectModel *o) override;
 };
 
 #endif // GOOMBA_H

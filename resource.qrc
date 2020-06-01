@@ -100,5 +100,8 @@
         <file>resources/graphics/firework-0.png</file>
         <file>resources/graphics/firework-1.png</file>
         <file>resources/graphics/firework-2.png</file>
+        <file>resources/graphics/trampoline-0.png</file>
+        <file>resources/graphics/trampoline-1.png</file>
+        <file>resources/graphics/trampoline-2.png</file>
     </qresource>
 </RCC>

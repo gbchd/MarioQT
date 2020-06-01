@@ -60,6 +60,15 @@ void FireBall::animate()
     }
     else if(dead){
         currentTexture = deathTextures[deathFrameCounter];
+
+        // We center the explosion at every frame (since every frame is larger that the previous one)
+        if(deathFrameCounter==0){
+            moveTo(position.x() - (deathTextures[0].width()-textures[0].width())/2, position.y() - (deathTextures[0].width()-textures[0].width())/2);
+        }
+        else{
+            moveTo(position.x() - (deathTextures[deathFrameCounter].width()-deathTextures[deathFrameCounter-1].width())/2, position.y() - (deathTextures[deathFrameCounter].width()-textures[deathFrameCounter-1].width())/2);
+        }
+
         deathFrameCounter++;
     }
     else if(animationTimer.elapsed() > animationDelay){

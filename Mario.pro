@@ -50,6 +50,8 @@ SOURCES += \
     pausemenuwidget.cpp \
     pipe.cpp \
     scenery.cpp \
+    statsmodel.cpp \
+    trampoline.cpp \
     visitor.cpp \
     wall.cpp
 
@@ -88,6 +90,8 @@ HEADERS += \
     pausemenuwidget.h \
     pipe.h \
     scenery.h \
+    statsmodel.h \
+    trampoline.h \
     visitor.h \
     wall.h
 

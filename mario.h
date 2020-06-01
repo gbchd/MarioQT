@@ -3,8 +3,10 @@
 
 #include "entity.h"
 #include <QArrayData>
+#include <QColorTransform>
 
 class CollectableItem;
+class Coin;
 class FireBall;
 
 class Mario : public Entity
@@ -113,6 +115,7 @@ public:
     void collisionOnTopHandler(ObjectModel * o) override;
 
     void handleCollectableItemCollision(CollectableItem * collectableItem);
+    void handleCoinCollision(Coin * coin);
 };
 
 #endif // MARIO_H

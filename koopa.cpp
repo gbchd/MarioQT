@@ -1,8 +1,11 @@
 #include "koopa.h"
 #include <QDebug>
+#include "trampoline.h"
 
 Koopa::Koopa(Direction spawnDirection)
 {
+    score = 100;
+
     // set textures
     texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio).transformed(QTransform().scale(-1,1)));
     texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/turtle/turtle-walk-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio).transformed(QTransform().scale(-1,1)));
@@ -108,7 +111,6 @@ void Koopa::collisionOnRightHandler(ObjectModel *o){
             moving = true;
         }
     }
-
 }
 
 void Koopa::collisionOnTopHandler(ObjectModel *o){
@@ -116,6 +118,20 @@ void Koopa::collisionOnTopHandler(ObjectModel *o){
 
     if(dynamic_cast<Mario*>(o)){
         hurt();
+    }
+}
+
+void Koopa::collisionOnBottomHandler(ObjectModel *o)
+{
+    Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
+
+    if(trampoline){
+        if(trampoline->isTrampolineBig()){
+            bounceWithVariableVelocity(-22);
+        }
+        else{
+            bounceWithVariableVelocity(-18);
+        }
     }
 }
 

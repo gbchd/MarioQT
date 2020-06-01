@@ -5,6 +5,7 @@
 #include "brick.h"
 #include "box.h"
 #include "collectableitem.h"
+#include "trampoline.h"
 #include "fireball.h"
 
 Mario::Mario()
@@ -170,8 +171,8 @@ void Mario::jump(){
         gravity = jumpGravity;
         velocity.setY(jumpInitialSpeed);
     }
-
 }
+
 void Mario::releaseJump(){
     if(jumping && velocity.y() < 0){
         jumping = false;
@@ -395,10 +396,17 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
     if(collectableItem != nullptr){
         handleCollectableItemCollision(collectableItem);
     }
-
-    Koopa * koopa = dynamic_cast<Koopa*>(o);
-    if(koopa && koopa->isInShell() && koopa->isMoving()){
-        hurt();
+    else{
+        Koopa * koopa = dynamic_cast<Koopa*>(o);
+        if(koopa && koopa->isInShell() && koopa->isMoving()){
+            hurt();
+        }
+        else{
+            Coin * coin = dynamic_cast<Coin *>(o);
+            if(coin != nullptr){
+                handleCoinCollision(coin);
+            }
+        }
     }
 }
 
@@ -414,6 +422,12 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
         CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
         if(collectableItem != nullptr){
             handleCollectableItemCollision(collectableItem);
+        }
+        else{
+            Coin * coin = dynamic_cast<Coin *>(o);
+            if(coin != nullptr){
+                handleCoinCollision(coin);
+            }
         }
     }
 }
@@ -431,6 +445,12 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
         if(collectableItem != nullptr){
             handleCollectableItemCollision(collectableItem);
         }
+        else{
+            Coin * coin = dynamic_cast<Coin *>(o);
+            if(coin != nullptr){
+                handleCoinCollision(coin);
+            }
+        }
     }
 }
 
@@ -447,6 +467,12 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
         if(collectableItem != nullptr){
             handleCollectableItemCollision(collectableItem);
         }
+        else{
+            Coin * coin = dynamic_cast<Coin *>(o);
+            if(coin != nullptr){
+                handleCoinCollision(coin);
+            }
+        }
     }
 }
 
@@ -460,6 +486,23 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
         CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
         if(collectableItem != nullptr){
             handleCollectableItemCollision(collectableItem);
+        }
+        else{
+            Coin * coin = dynamic_cast<Coin *>(o);
+            if(coin != nullptr){
+                handleCoinCollision(coin);
+            }
+            else{
+                Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
+                if(trampoline){
+                    if(trampoline->isTrampolineBig()){
+                        bounceWithVariableVelocity(-22);
+                    }
+                    else{
+                        bounceWithVariableVelocity(-18);
+                    }
+                }
+            }
         }
     }
 }
@@ -498,4 +541,9 @@ void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
         default:
             break;
     }
+}
+
+void Mario::handleCoinCollision(Coin *coin)
+{
+
 }

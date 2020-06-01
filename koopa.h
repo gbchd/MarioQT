@@ -28,7 +28,7 @@ protected:
     void collisionOnLeftHandler(ObjectModel *o) override;
     void collisionOnRightHandler(ObjectModel *o) override;
     void collisionOnTopHandler(ObjectModel *o) override;
-
+    void collisionOnBottomHandler(ObjectModel *o) override;
 
 public:
     Koopa(Direction spawnDirection = RIGHT);

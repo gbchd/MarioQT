@@ -7,6 +7,7 @@ class FireBall : public Entity
 {
 private:
     QPixmap textures[4];
+    QElapsedTimer animationTimer;
     int animationDelay = 100; // in ms
     int textureNumber;
 
@@ -17,8 +18,6 @@ private:
     float bounceDuration = 10; // in number of frames
     float bounceSpeed = -2*bounceHeight/bounceDuration;
     float bounceGravity = 2*bounceHeight/(bounceDuration*bounceDuration);
-
-    QElapsedTimer animationTimer;
 
 public:
     FireBall(Direction direction);

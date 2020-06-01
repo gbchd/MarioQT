@@ -4,6 +4,8 @@
 
 Brick::Brick()
 {
+    score = 50;
+
     currentTexture = QPixmap(loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(BLOCSIZE, BLOCSIZE));
     brickState = NOBRICKSTATE;
     usedBrickTexture = QPixmap(loadTexture(":/resources/graphics/blocs/box-used.bmp").scaled(BLOCSIZE, BLOCSIZE));
@@ -91,10 +93,9 @@ QList<BrickDebris*> Brick::doBreak(){
     return brickDebris;
 }
 
-Coin* Brick::spawnCoin(){
+Coin * Brick::spawnCoin(){
     setBrickState(BRICKWILLGIVECOINONNEXTHIT);
-    Coin * coin = new Coin();
-    coin->setPositionX(position.x());
-    coin->setPositionY(position.y()-BLOCSIZE);
+    Coin * coin = new Coin(true);
+    coin->moveTo(position.x()+(BLOCSIZE-coin->getCurrentTexture().width())/2, position.y()-BLOCSIZE);
     return coin;
 }
