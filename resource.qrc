@@ -56,8 +56,6 @@
         <file>resources/graphics/bullet-bill.png</file>
         <file>resources/graphics/flag.png</file>
         <file>resources/graphics/flagpole.png</file>
-        <file>resources/maps/CompleteTestLevel.json</file>
-        <file>resources/maps/simpleMechanicTest.json</file>
         <file>resources/graphics/items/coin-0.png</file>
         <file>resources/graphics/items/coin-1.png</file>
         <file>resources/graphics/items/coin-2.png</file>
@@ -103,5 +101,6 @@
         <file>resources/graphics/trampoline-0.png</file>
         <file>resources/graphics/trampoline-1.png</file>
         <file>resources/graphics/trampoline-2.png</file>
+        <file>resources/maps/Colin's World.json</file>
     </qresource>
 </RCC>
