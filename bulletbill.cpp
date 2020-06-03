@@ -44,8 +44,6 @@ void BulletBill::hurt(){
 }
 
 void BulletBill::die(){
-    Score::add(score);
-
     collidable = false;
     moving = false;
     dead = true;
@@ -79,40 +77,20 @@ void BulletBill::setUpRightMovingBulletBill(QPointF billBlasterPos)
 }
 
 void BulletBill::collisionOnLeftHandler(ObjectModel *o){
-    Mario * mario = dynamic_cast<Mario*>(o);
-    if(mario!=nullptr){
-        mario->hurt();
-    }
-    else{
-        hurt();
-    }
+    hurt();
 }
 
 void BulletBill::collisionOnRightHandler(ObjectModel *o){
-    Mario * mario = dynamic_cast<Mario*>(o);
-    if(mario!=nullptr){
-        mario->hurt();
-    }
-    else{
-        die();
-    }
+    hurt();
 }
 
 void BulletBill::collisionOnTopHandler(ObjectModel *o){
     if(dynamic_cast<Mario*>(o)){
-        hurt();
+        Score::add(score);
     }
-    else{
-        hurt();
-    }
+    hurt();
 }
 
 void BulletBill::collisionOnBottomHandler(ObjectModel *o){
-    Mario * mario = dynamic_cast<Mario*>(o);
-    if(mario!=nullptr){
-        mario->hurt();
-    }
-    else{
-        hurt();
-    }
+    hurt();
 }
