@@ -126,14 +126,14 @@ void CollectableItem::collisionOnBottomHandler(ObjectModel *o)
 
 void CollectableItem::collisionOnLeftHandler(ObjectModel *o)
 {
-    movingDirection =  RIGHT;
     handleCollisionWithObject(o);
+    handleCollisionOnSide(o);
 }
 
 void CollectableItem::collisionOnRightHandler(ObjectModel *o)
 {
-    movingDirection  = LEFT;
     handleCollisionWithObject(o);
+    handleCollisionOnSide(o);
 }
 
 void CollectableItem::collisionOnTopHandler(ObjectModel *o)
@@ -152,4 +152,17 @@ void CollectableItem::handleCollisionWithObject(ObjectModel *o)
         deletable = true;
     }
 
+}
+
+void CollectableItem::handleCollisionOnSide(ObjectModel *o)
+{
+    Inert * inert = dynamic_cast<Inert *>(o);
+    if(inert && typeItem==MUSHROOMCOLLECTABLE){
+        if(movingDirection==LEFT){
+            movingDirection = RIGHT;
+        }
+        else{
+            movingDirection = LEFT;
+        }
+    }
 }

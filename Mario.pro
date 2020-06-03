@@ -28,6 +28,7 @@ SOURCES += \
     enemy.cpp \
     entity.cpp \
     fireball.cpp \
+    flagpole.cpp \
     gamecontroller.cpp \
     gameview.cpp \
     goomba.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     enemy.h \
     entity.h \
     fireball.h \
+    flagpole.h \
     gamecontroller.h \
     gameview.h \
     goomba.h \

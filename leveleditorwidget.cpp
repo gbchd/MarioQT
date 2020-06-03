@@ -31,7 +31,6 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonMedTrampoline, SIGNAL (clicked()), this, SLOT (handleButtonMedTrampoline()));
     connect(&buttonBigTrampoline, SIGNAL (clicked()), this, SLOT (handleButtonBigTrampoline()));
     connect(&buttonFlagpole, SIGNAL (clicked()), this, SLOT (handleButtonFlagpole()));
-    connect(&buttonCastle, SIGNAL (clicked()), this, SLOT (handleButtonCastle()));
     connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
     connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
     connect(&buttonFlyingTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtleFlying()));
@@ -168,13 +167,9 @@ LevelEditorWidget::LevelEditorWidget()
     buttonBigTrampoline.setIconSize(QSize(buttonSize, buttonSize));
     buttonBigTrampoline.resize(buttonSize,buttonSize);
 
-    buttonFlagpole.setIcon(QPixmap(":/resources/graphics/flagpole.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonFlagpole.setIcon(QPixmap(":/resources/graphics/castle.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonFlagpole.setIconSize(QSize(buttonSize, buttonSize));
     buttonFlagpole.resize(buttonSize,buttonSize);
-
-    buttonCastle.setIcon(QPixmap(":/resources/graphics/castle.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
-    buttonCastle.setIconSize(QSize(buttonSize, buttonSize));
-    buttonCastle.resize(buttonSize,buttonSize);
 
     buttonGoomba.setIcon(QPixmap(":/resources/graphics/mobs/goomba/goomba-0.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonGoomba.setIconSize(QSize(buttonSize, buttonSize));
@@ -249,7 +244,6 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonMedTrampoline);
     objectButtonsHorizontalLayout.addWidget(&buttonBigTrampoline);
     objectButtonsHorizontalLayout.addWidget(&buttonFlagpole);
-    objectButtonsHorizontalLayout.addWidget(&buttonCastle);
     objectButtonsHorizontalLayout.addWidget(&buttonSmallHill);
     objectButtonsHorizontalLayout.addWidget(&buttonBigHill);
     objectButtonsHorizontalLayout.addWidget(&buttonSmallBush);
@@ -320,8 +314,6 @@ void LevelEditorWidget::handleButtonMedTrampoline() { levelEditorEngine->setSele
 void LevelEditorWidget::handleButtonBigTrampoline() { levelEditorEngine->setSelectedButton(BIGTRAMPOLINE); }
 
 void LevelEditorWidget::handleButtonFlagpole() { levelEditorEngine->setSelectedButton(FLAGPOLE); }
-
-void LevelEditorWidget::handleButtonCastle() { levelEditorEngine->setSelectedButton(CASTLE); }
 
 void LevelEditorWidget::handleButtonGoomba() { levelEditorEngine->setSelectedButton(GOOMBA); }
 

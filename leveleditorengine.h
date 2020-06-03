@@ -15,6 +15,7 @@
 #include "scenery.h"
 #include "pipe.h"
 #include "trampoline.h"
+#include "flagpole.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 
@@ -48,6 +49,10 @@ private:
     QList<Inert*> inerts;
     QList<Entity*> entities;
     QList<ObjectModel *> objects;
+    Inert * castle; // Since there can be only one castle and it moves with the flag, we keep a pointer to it outside inerts.
+    Inert * movingCastle; // The transparent castle to show where it will be.
+    Flagpole * flagpole; // Since there can be only one flagpole, we keep a pointer to it outside inerts.
+    Flagpole * movingFlagpole; // The transparent flagpole to show where it will be.
 
 public:
     LevelEditorEngine();

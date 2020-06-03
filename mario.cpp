@@ -7,6 +7,7 @@
 #include "collectableitem.h"
 #include "trampoline.h"
 #include "fireball.h"
+#include "flagpole.h"
 
 Mario::Mario()
 {
@@ -23,14 +24,14 @@ Mario::Mario()
 
     texture_fire = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-fireball.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
 
-    // small stand
-    texture_stand[0]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-stand.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    // med stand
-    texture_stand[1]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
-    // big stand
-    texture_stand[2]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
-    // fiery stand
-    texture_stand[3]   = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-stand.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-med-stand.bmp")).scaled(BLOCSIZE,1.5*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_stand[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+
+    texture_hang[0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-hang-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_hang[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-hang-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_hang[2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-hang-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
 
     texture_jump[0]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-jump.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
     texture_jump[1]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
@@ -70,6 +71,7 @@ Mario::Mario()
     transforming = false;
     big = false;
     onFire = false;
+    isInACinematic = false;
 
     //Engine Value
     speed = 4;
@@ -79,7 +81,6 @@ Mario::Mario()
     //Graphical value
     zValue = 5;
     timerWalk.start();
-
 }
 
 Mario::~Mario(){
@@ -393,6 +394,11 @@ void Mario::setSmall(){
     setHitboxEntityHeight(BLOCSIZE);
 }
 
+void Mario::handleFlagpoleCollision(Flagpole * flagpole)
+{
+    isInACinematic = true;
+}
+
 void Mario::collisionByDefaultHandler(ObjectModel *o){
     CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
     if(collectableItem != nullptr){
@@ -404,9 +410,9 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
             hurt();
         }
         else{
-            Coin * coin = dynamic_cast<Coin *>(o);
-            if(coin != nullptr){
-                handleCoinCollision(coin);
+            Flagpole * fp = dynamic_cast<Flagpole *>(o);
+            if(fp){
+                handleFlagpoleCollision(fp);
             }
         }
     }
@@ -426,9 +432,9 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
             handleCollectableItemCollision(collectableItem);
         }
         else{
-            Coin * coin = dynamic_cast<Coin *>(o);
-            if(coin != nullptr){
-                handleCoinCollision(coin);
+            Flagpole * fp = dynamic_cast<Flagpole *>(o);
+            if(fp){
+                handleFlagpoleCollision(fp);
             }
         }
     }
@@ -448,9 +454,9 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
             handleCollectableItemCollision(collectableItem);
         }
         else{
-            Coin * coin = dynamic_cast<Coin *>(o);
-            if(coin != nullptr){
-                handleCoinCollision(coin);
+            Flagpole * fp = dynamic_cast<Flagpole *>(o);
+            if(fp){
+                handleFlagpoleCollision(fp);
             }
         }
     }
@@ -470,9 +476,9 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             handleCollectableItemCollision(collectableItem);
         }
         else{
-            Coin * coin = dynamic_cast<Coin *>(o);
-            if(coin != nullptr){
-                handleCoinCollision(coin);
+            Flagpole * fp = dynamic_cast<Flagpole *>(o);
+            if(fp){
+                handleFlagpoleCollision(fp);
             }
         }
     }
@@ -490,19 +496,19 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
             handleCollectableItemCollision(collectableItem);
         }
         else{
-            Coin * coin = dynamic_cast<Coin *>(o);
-            if(coin != nullptr){
-                handleCoinCollision(coin);
+            Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
+            if(trampoline){
+                if(trampoline->isTrampolineBig()){
+                    bounceWithVariableVelocity(-22);
+                }
+                else{
+                    bounceWithVariableVelocity(-18);
+                }
             }
             else{
-                Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
-                if(trampoline){
-                    if(trampoline->isTrampolineBig()){
-                        bounceWithVariableVelocity(-22);
-                    }
-                    else{
-                        bounceWithVariableVelocity(-18);
-                    }
+                Flagpole * fp = dynamic_cast<Flagpole *>(o);
+                if(fp){
+                    handleFlagpoleCollision(fp);
                 }
             }
         }
@@ -543,9 +549,4 @@ void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
         default:
             break;
     }
-}
-
-void Mario::handleCoinCollision(Coin *coin)
-{
-
 }

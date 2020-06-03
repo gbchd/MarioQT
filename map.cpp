@@ -268,6 +268,24 @@ void Map::addInert(QJsonObject inertObject){
 
         inerts.append(trampoline);
     }
+    else if(type.compare("flagpole") == 0){
+        Flagpole * flagpole = new Flagpole();
+
+        float x = inertObject["x"].toDouble();
+        float y = inertObject["y"].toDouble();
+
+        flagpole->moveTo(x*block_size,y*block_size);
+
+        inerts.append(flagpole);
+
+
+        Inert * castle = new Inert();
+        castle->moveTo((x+5)*block_size, (y+7)*block_size);
+        castle->setHitboxWidth(4*block_size);
+        castle->setHitboxHeight(4*block_size);
+        castle->setCurrentTexture(ObjectModel::loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4));
+        inerts.append(castle);
+    }
     else if(type.compare("anotherBlock") == 0){
         //add another block
     }
