@@ -1,9 +1,9 @@
- #include "brick.h"
-
-#include <QDebug>
+#include "brick.h"
 
 Brick::Brick()
 {
+    score = 50;
+
     currentTexture = QPixmap(loadTexture(":/resources/graphics/blocs/brick.bmp").scaled(BLOCSIZE, BLOCSIZE));
     brickState = NOBRICKSTATE;
     usedBrickTexture = QPixmap(loadTexture(":/resources/graphics/blocs/box-used.bmp").scaled(BLOCSIZE, BLOCSIZE));
@@ -22,24 +22,25 @@ void Brick::startBlockBounceAnimation()
 
 void Brick::collisionOnBottomHandler(ObjectModel *o){
     Mario * mario = dynamic_cast<Mario*>(o);
-    bool isMarioBig = mario->isBig();
-    if(brickState==USEDCOINBRICK){
-        //Do nothing
-    }
-    else if(isMarioBig && brickState==NOBRICKSTATE){
-        brickState = BREAKBRICK; // Will be handled in the gamecontroller later
-    }
-    else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
-        brickState = GIVECOIN; // Will be handled in the gamecontroller later
-        if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
-        startBlockBounceAnimation();
-    }
-    else {
-        startBlockBounceAnimation();
+    if(mario){
+        bool isMarioBig = mario->isBig();
+        if(brickState==USEDCOINBRICK){
+            //Do nothing
+        }
+        else if(isMarioBig && brickState==NOBRICKSTATE){
+            brickState = BREAKBRICK; // Will be handled in the gamecontroller later
+        }
+        else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
+            brickState = GIVECOIN; // Will be handled in the gamecontroller later
+            if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
+            startBlockBounceAnimation();
+        }
+        else {
+            startBlockBounceAnimation();
+        }
     }
 }
 
-#include <QDebug>
 void Brick::animate()
 {
 
@@ -91,10 +92,9 @@ QList<BrickDebris*> Brick::doBreak(){
     return brickDebris;
 }
 
-Coin* Brick::spawnCoin(){
+Coin * Brick::spawnCoin(){
     setBrickState(BRICKWILLGIVECOINONNEXTHIT);
-    Coin * coin = new Coin();
-    coin->setPositionX(position.x());
-    coin->setPositionY(position.y()-BLOCSIZE);
+    Coin * coin = new Coin(true);
+    coin->moveTo(position.x()+(BLOCSIZE-coin->getCurrentTexture().width())/2, position.y()-BLOCSIZE);
     return coin;
 }

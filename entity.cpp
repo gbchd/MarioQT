@@ -16,6 +16,11 @@ void Entity::bounce(){
     velocity.setY(-2*speed);
 }
 
+void Entity::bounceWithVariableVelocity(float bounceVelocity)
+{
+    velocity.setY(bounceVelocity);
+}
+
 void Entity::groundHandler(){
     if(grounded && ground != nullptr){
         if(hitbox.bottom() < ground->getHitbox().y() ||

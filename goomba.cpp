@@ -1,8 +1,11 @@
 #include "goomba.h"
 #include "QDebug"
+#include "trampoline.h"
 
 Goomba::Goomba(Direction spawnDirection)
 {
+    score = 100;
+
     // set textures
     texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-0.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
     texture_walk.append(QPixmap(loadTexture(":/resources/graphics/mobs/goomba/goomba-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
@@ -84,6 +87,19 @@ void Goomba::collisionOnTopHandler(ObjectModel *o){
     Entity::collisionOnTopHandler(o);
     if(dynamic_cast<Mario*>(o)){
         hurt();
+    }
+}
+
+void Goomba::collisionOnBottomHandler(ObjectModel *o)
+{
+    Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
+    if(trampoline){
+        if(trampoline->isTrampolineBig()){
+            bounceWithVariableVelocity(-22);
+        }
+        else{
+            bounceWithVariableVelocity(-18);
+        }
     }
 }
 

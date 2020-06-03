@@ -22,6 +22,7 @@
 #include "billblaster.h"
 #include "scenery.h"
 #include "pipe.h"
+#include "trampoline.h"
 
 class Map
 {

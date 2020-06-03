@@ -4,6 +4,7 @@
 #include "inert.h"
 #include "collectableitem.h"
 #include "mario.h"
+#include "coin.h"
 
 enum BoxContent {EMPTYBOX, MUSHROOMBOX, FLOWERBOX, COINBOX, STARBOX, USEDBOX};
 
@@ -33,10 +34,10 @@ public:
 
     void collisionOnBottomHandler(ObjectModel *o) override;
 
-    CollectableItem* spawnMushroom();
-    CollectableItem* spawnFlower();
-    CollectableItem* spawnCoin();
-    CollectableItem* spawnStar();
+    CollectableItem * spawnMushroom();
+    CollectableItem * spawnFlower();
+    Coin * spawnCoin();
+    CollectableItem * spawnStar();
 
     void animate() override;
 };

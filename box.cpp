@@ -1,5 +1,5 @@
 #include "box.h"
-#include <QDebug>
+
 Box::Box()
 {
     texture.append(QPixmap(loadTexture(":/resources/graphics/blocs/box-0.bmp")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio));
@@ -12,7 +12,6 @@ Box::Box()
     boxContent = EMPTYBOX;
     used = false;
     needToSpawnItem = false;
-    qDebug() << zValue;
 }
 
 void Box::collisionOnBottomHandler(ObjectModel *o){
@@ -61,8 +60,9 @@ CollectableItem* Box::spawnFlower(){
     return flower;
 }
 
-CollectableItem* Box::spawnCoin(){
-    CollectableItem * coin = new CollectableItem(COINCOLLECTABLE, position);
+Coin * Box::spawnCoin(){
+    Coin * coin = new Coin(true);
+    coin->moveTo(position.x()+(BLOCSIZE-coin->getCurrentTexture().width())/2, position.y()-BLOCSIZE);
     setBoxNeedToSpawnItem(false);
     return coin;
 }

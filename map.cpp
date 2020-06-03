@@ -247,6 +247,26 @@ void Map::addInert(QJsonObject inertObject){
 
         inerts.append(billBlaster);
     }
+    else if(type.compare("trampoline") == 0){
+        Trampoline * trampoline = new Trampoline(inertObject["big"].toInt());
+
+        float x = inertObject["x"].toDouble();
+        float y = inertObject["y"].toDouble();
+
+        trampoline->moveTo(x*block_size,y*block_size);
+
+        trampoline->setHitboxWidth(block_size);
+
+        if(trampoline->isTrampolineBig()){
+            trampoline->moveTo(trampoline->getPosition().x(), trampoline->getPosition().y()-block_size);
+            trampoline->setHitboxHeight(3*block_size/2);
+        }
+        else{
+            trampoline->setHitboxHeight(block_size);
+        }
+
+        inerts.append(trampoline);
+    }
     else if(type.compare("anotherBlock") == 0){
         //add another block
     }
@@ -282,6 +302,16 @@ void Map::addEntity(QJsonObject entityObject){
         koopa->moveTo(x*block_size, y*block_size-koopa->getCurrentTexture().height());
 
         entities.append(koopa);
+
+    }
+    else if(type.compare("coin") == 0){
+
+        Coin * coin = new Coin(false);
+        int x = entityObject["x"].toInt();
+        int y = entityObject["y"].toInt();
+        coin->moveTo(x*block_size, y*block_size-coin->getCurrentTexture().height());
+
+        entities.append(coin);
 
     }
     else{

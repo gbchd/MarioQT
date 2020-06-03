@@ -4,6 +4,7 @@ ObjectModel::ObjectModel()
 {
     collidable = true;
     walkable   = false;
+    score = 0;
 }
 
 ObjectModel::~ObjectModel(){

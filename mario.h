@@ -3,23 +3,25 @@
 
 #include "entity.h"
 #include <QArrayData>
+#include <QColorTransform>
 
 class CollectableItem;
+class Coin;
 class FireBall;
 
 class Mario : public Entity
 {
 private:
     // === Sprites ===   
-    QList<QPixmap> texture_walk[2]; // small/big walking animation (3 textures)
-    QPixmap texture_stand[3]; // small/big stand texture
-    QPixmap texture_jump[2]; // small/big jump texture
+    QList<QPixmap> texture_walk[3]; // small/big/fire walking animation (3 textures)
+    QPixmap texture_stand[4]; // small/big/fire stand texture
+    QPixmap texture_jump[3]; // small/big/fire jump texture
+    QPixmap texture_fire;
     QPixmap texture_dead; // Mario dies
-    QPixmap texture_small_to_big[8]; // Mario small to big transformation
+    QPixmap texture_transitions_animations[20]; // Mario small to big transformation
     // ================
 
     // === Animations ===
-
     bool changedDirection = false; // Detect when we change direction
     int durationWalkTexture = 150; // in ms
     int durationRunningTexture = 100; // in ms
@@ -28,7 +30,6 @@ private:
     int durationOfTransformation = 100; // in ms
     QElapsedTimer timerTransformation;
     int currentTransformingTexture;
-    int transformationType;
     // ==================
 
     // === States ===
@@ -36,14 +37,20 @@ private:
     int runningSpeed;
     bool onFire;
     bool transforming;
-    // ==============
-
-    void setBig();
-    void setSmall();
-    void stopTransforming();
-
+    bool transformingDown;
+    int durationFireTimer = 100; // in ms
+    QElapsedTimer fireballShootingTimer;
     void doTransforming();
-
+    void setSmallToMed();
+    void setSmallToBig();
+    void setMedToSmall();
+    void setMedToBig();
+    void setBigToSmall();
+    void setBigToMed();
+    void setBigToFiery();
+    void setFieryToBig();
+    void setSmall();
+    // ==============
 
     // === Jumping tools ===
     /**
@@ -94,8 +101,10 @@ public:
     void hurt();
     void die() override;
     void startTransforming();
+    bool isTransforming(){ return transforming; }
     Direction getDirection(){return movingDirection;};
-    bool isBig(){return big;}
+    bool isBig(){ return big; }
+    bool isOnFire(){ return onFire; }
 
     FireBall * shootFireBall();
 
@@ -106,6 +115,7 @@ public:
     void collisionOnTopHandler(ObjectModel * o) override;
 
     void handleCollectableItemCollision(CollectableItem * collectableItem);
+    void handleCoinCollision(Coin * coin);
 };
 
 #endif // MARIO_H

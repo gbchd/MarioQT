@@ -27,25 +27,33 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
+    if(mario && mario->isTransforming()){
+        mario->animate();
+        gameview->repaint();
+        return;
+    }
+
     for(int inertIt = 0; inertIt < inerts.size(); inertIt++){
         Inert * inert = inerts.at(inertIt);
 
-        BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
-        if(billblaster){
-            billblasterHandler(billblaster);
-        }
+        if(qAbs(gameview->getCameraPosition()-inert->getPosition().x()) < 1.25*gameview->getWindowSize().width()){
+            BillBlaster * billblaster = dynamic_cast<BillBlaster*>(inert);
+            if(billblaster){
+                billblasterHandler(billblaster);
+            }
 
-        Brick * brick = dynamic_cast<Brick*>(inert);
-        if(brick){
-            brickHandler(brick);
-        }
+            Brick * brick = dynamic_cast<Brick*>(inert);
+            if(brick){
+                brickHandler(brick);
+            }
 
-        Box * box = dynamic_cast<Box*>(inert);
-        if(box){
-            boxHandler(box);
-        }
+            Box * box = dynamic_cast<Box*>(inert);
+            if(box){
+                boxHandler(box);
+            }
 
-        inert->animate();
+            inert->animate();
+        }
 
         if(inert->isDeletable()){
             removeInert(inert);
@@ -56,13 +64,15 @@ void GameController::advance() {
     for(int entityIt = 0 ; entityIt <entities.size(); entityIt++ ){
         Entity * entity = entities.at(entityIt);
 
-        entity->advance();
+        if(qAbs(gameview->getCameraPosition()-entity->getPosition().x()) < 1.25*gameview->getWindowSize().width()){
+            entity->advance();
 
-        handleCollision(entity);
+            handleCollision(entity);
 
-        entity->animate();
+            entity->animate();
+        }
 
-        if(entity->isDeletable() || entity->getPosition().y() >= gameview->getlevelSize().height()){
+        if(entity->isDeletable() || entity->getPosition().y() >= gameview->getlevelSize().height() || entity->getPosition().x()+entity->getHitbox().width() < 0|| entity->getPosition().x() >= gameview->getlevelSize().width()){
             if(dynamic_cast<Mario *>(entity)){
                 removePlayer();
             }
@@ -164,7 +174,12 @@ void GameController::boxHandler(Box *box){
                 break;
             }
             case FLOWERBOX:{
-                addEntity(box->spawnFlower());
+                if(mario->isBig()){
+                    addEntity(box->spawnFlower());
+                }
+                else{
+                    addEntity(box->spawnMushroom());
+                }
                 break;
             }
             case COINBOX:{
@@ -231,7 +246,12 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
     }
 
     if(e->key() == Qt::Key_Shift){
-        //entities.append(mario->shootFireBall());
+        if(mario->isOnFire()){
+            FireBall * newFireBall = mario->shootFireBall();
+            if(newFireBall){
+                addEntity(newFireBall);
+            }
+        }
     }
 
     if(e->key() == Qt::Key_Escape){

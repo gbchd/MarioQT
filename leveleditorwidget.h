@@ -23,10 +23,13 @@ enum SelectedButton {   NOBUTTON,
                         SECRETBOXFLOWER,
                         SECRETBOXSTAR,
                         SECRETBOXCOIN,
+                        COINITEM,
                         SMALLPIPE,
                         MEDPIPE,
                         BIGPIPE,
                         BULLETBLASTER,
+                        MEDTRAMPOLINE,
+                        BIGTRAMPOLINE,
                         FLAGPOLE,
                         CASTLE,
                         GOOMBA,
@@ -65,10 +68,13 @@ private:
     QPushButton buttonSecretBoxFlower;
     QPushButton buttonSecretBoxStar;
     QPushButton buttonSecretBoxCoin;
+    QPushButton buttonCoinItem;
     QPushButton buttonSmallPipe;
     QPushButton buttonMedPipe;
     QPushButton buttonBigPipe;
     QPushButton buttonBulletBlaster;
+    QPushButton buttonMedTrampoline;
+    QPushButton buttonBigTrampoline;
     QPushButton buttonFlagpole;
     QPushButton buttonCastle;
     QPushButton buttonGoomba;
@@ -118,10 +124,13 @@ private slots:
     void handleButtonSecretBoxFlower();
     void handleButtonSecretBoxStar();
     void handleButtonSecretBoxCoin();
+    void handleButtonCoinItem();
     void handleButtonSmallPipe();
     void handleButtonMedPipe();
     void handleButtonBigPipe();
     void handleButtonBulletBlaster();
+    void handleButtonMedTrampoline();
+    void handleButtonBigTrampoline();
     void handleButtonFlagpole();
     void handleButtonCastle();
     void handleButtonGoomba();

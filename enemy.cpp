@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "koopa.h"
+#include "fireball.h"
 
 Enemy::Enemy()
 {
@@ -23,6 +24,11 @@ void Enemy::die(){
 void Enemy::collisionByDefaultHandler(ObjectModel *o){
     Koopa * koopa = dynamic_cast<Koopa *>(o);
     if(koopa && koopa->isInShell() && koopa->isMoving()){
+        die();
+    }
+
+    FireBall * fb = dynamic_cast<FireBall*>(o);
+    if(fb){
         die();
     }
 }

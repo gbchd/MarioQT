@@ -4,6 +4,8 @@
 
 BulletBill::BulletBill()
 {
+    score = 200;
+
     currentTexture = loadTexture(":/resources/graphics/bullet-bill.png").scaled(BLOCSIZE, BLOCSIZE);
 
     setHitboxWidth(BLOCSIZE);

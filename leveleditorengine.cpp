@@ -31,7 +31,7 @@ void LevelEditorEngine::exportMapToJSon()
         stream << "{\"name\":\""<<QFileInfo(myFile.fileName()).completeBaseName()<<"\","
                     "\"creator\":\"Map Editor\","
                     "\"date\":\""<<QDateTime::currentDateTime().toString("yyyy-MM-dd  HH:mm:ss")<<"\","
-                    "\"size\":{\"width\":320, \"height\":30},"
+                    "\"size\":{\"width\":400, \"height\":30},"
                     "\"player\":{\"x\":"<<fakeMario->getPosition().x()/32<<",\"y\":"<<fakeMario->getPosition().y()/32<<"},"
                     "\"inerts\":{";
         for(int indice=0; indice<inerts.length(); indice++){
@@ -48,6 +48,9 @@ void LevelEditorEngine::exportMapToJSon()
             }
             else if(getTypeFromInert(inerts[indice]).compare("pipe")==0){
                 stream<<"\"pipeType\":"<<dynamic_cast<Pipe *>(inerts[indice])->getTypePipe()<<",";
+            }
+            else if(getTypeFromInert(inerts[indice]).compare("trampoline")==0){
+                stream<<"\"big\":"<<dynamic_cast<Trampoline *>(inerts[indice])->isTrampolineBig()<<",";
             }
             stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
         }
@@ -85,6 +88,9 @@ QString LevelEditorEngine::getTypeFromInert(Inert *inert)
     else if(dynamic_cast<Pipe *>(inert)){
         return "pipe";
     }
+    else if(dynamic_cast<Trampoline *>(inert)){
+        return "trampoline";
+    }
     else{
         return "unknown";
     }
@@ -96,6 +102,9 @@ QString LevelEditorEngine::getTypeFromEntity(Entity * entity)
     }
     if(dynamic_cast<Koopa *>(entity)){
         return "koopa";
+    }
+    if(dynamic_cast<Coin *>(entity)){
+        return "coin";
     }
     else{
         return "unknown";
@@ -212,6 +221,13 @@ void LevelEditorEngine::addObjectOnMousePosition()
             objects.append(newBox);
             break;
         }
+        case COINITEM: {
+            Coin * coin = new Coin(false);
+            coin->moveTo(X, Y);
+            entities.append(coin);
+            objects.append(coin);
+            break;
+        }
         case SMALLPIPE: {
             Pipe * pipe = new Pipe(SMALLPIPEOBJECT);
             pipe->moveTo(X, Y);
@@ -238,6 +254,20 @@ void LevelEditorEngine::addObjectOnMousePosition()
             newBillBlaster->moveTo(X, Y);
             inerts.append(newBillBlaster);
             objects.append(newBillBlaster);
+            break;
+        }
+        case MEDTRAMPOLINE: {
+            Trampoline * newTrampoline = new Trampoline(false);
+            newTrampoline->moveTo(QPointF(X, Y));
+            inerts.append(newTrampoline);
+            objects.append(newTrampoline);
+            break;
+        }
+        case BIGTRAMPOLINE: {
+            Trampoline * newTrampoline = new Trampoline(true);
+            newTrampoline->moveTo(QPointF(X, Y));
+            inerts.append(newTrampoline);
+            objects.append(newTrampoline);
             break;
         }
         case FLAGPOLE: {
@@ -351,7 +381,7 @@ void LevelEditorEngine::addObjectOnMousePosition()
 void LevelEditorEngine::deleteObjectAtPosition(int x, int y)
 {
     for(ObjectModel * object : objects){
-        if(object->getPosition().x() == x && object->getPosition().y() == y){
+        if(object->getPosition().x() == x && (object->getPosition().y() == y || object->getPosition().y()-block_size/2 == y)){
             Mario * mario = dynamic_cast<Mario*>(object);
             if(mario){
                 if(mario != nullptr){
@@ -432,6 +462,11 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
+        case COINITEM: {
+            objectToPaintOnMouse = new Coin(false);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
         case SMALLPIPE: {
             objectToPaintOnMouse = new Pipe(SMALLPIPEOBJECT);
             objectToPaintOnMouse->setOpacity(0.5);
@@ -450,6 +485,16 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         case BULLETBLASTER: {
             objectToPaintOnMouse = new Inert();
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/bill-blaster.png").scaled(block_size, block_size*2)));
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case MEDTRAMPOLINE: {
+            objectToPaintOnMouse = new Trampoline(false);
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case BIGTRAMPOLINE: {
+            objectToPaintOnMouse = new Trampoline(true);
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }

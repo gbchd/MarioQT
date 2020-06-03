@@ -22,19 +22,31 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
 
     switch(typeItem){
     case COINCOLLECTABLE:
+        score = 200;
         currentTexture = loadTexture(":/resources/graphics/items/coin-0.png").scaled(BLOCSIZE*0.75, BLOCSIZE*0.75, Qt::KeepAspectRatio);
         break;
     case STARCOLLECTABLE:
-        currentTexture = loadTexture(":/resources/graphics/items/starman-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        score = 1000;
+        starTexture[0] = loadTexture(":/resources/graphics/items/starman-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        starTexture[1] = loadTexture(":/resources/graphics/items/starman-1.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        starTexture[2] = loadTexture(":/resources/graphics/items/starman-2.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        starTexture[3] = loadTexture(":/resources/graphics/items/starman-3.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        currentTexture = starTexture[0];
         spawnAnimationTimer.start();
         break;
     case MUSHROOMCOLLECTABLE:
+        score = 1000;
         currentTexture = loadTexture(":/resources/graphics/items/mushroom-red.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
         movingDirection = RIGHT;
         spawnAnimationTimer.start();
         break;
     case FLOWERCOLLECTABLE:
-        currentTexture = loadTexture(":/resources/graphics/items/fire-flower-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        score = 1000;
+        flowerTexture[0] = loadTexture(":/resources/graphics/items/fire-flower-0.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[1] = loadTexture(":/resources/graphics/items/fire-flower-1.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[2] = loadTexture(":/resources/graphics/items/fire-flower-2.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        flowerTexture[3] = loadTexture(":/resources/graphics/items/fire-flower-3.png").scaled(BLOCSIZE, BLOCSIZE, Qt::KeepAspectRatio);
+        currentTexture = flowerTexture[0];
         spawnAnimationTimer.start();
         break;
     default:
@@ -42,6 +54,8 @@ CollectableItem::CollectableItem(TypeItem t, QPointF spawnerBlockPos)
     }
 
     zValue = 2;
+    animationTimer.start();
+    currentTextureNumber=0;
 }
 
 void CollectableItem::advance()
@@ -83,8 +97,23 @@ void CollectableItem::animate()
             gravity = 5;
         }
     }
-}
 
+    if(typeItem == FLOWERCOLLECTABLE || typeItem == STARCOLLECTABLE){
+        if(animationTimer.elapsed() > newAnimationDelay){
+            animationTimer.restart();
+            if(currentTextureNumber > 3){
+                currentTextureNumber = 0;
+            }
+            if(typeItem == FLOWERCOLLECTABLE){
+                setCurrentTexture(flowerTexture[currentTextureNumber]);
+            }
+            else if(typeItem == STARCOLLECTABLE){
+                setCurrentTexture(starTexture[currentTextureNumber]);
+            }
+            currentTextureNumber++;
+        }
+    }
+}
 
 void CollectableItem::collisionByDefaultHandler(ObjectModel *o){
     handleCollisionWithObject(o);
