@@ -216,7 +216,7 @@ void GameController::update(CameraVisitor & visitor){
 
 
 void GameController::keyPressEventHandler(QKeyEvent *e){
-    if(mario != nullptr){
+    if(mario != nullptr && !mario->getIsInACinematic()){
         if(e->key() == Qt::Key_Q){
             if(!keyQueue.contains(Qt::Key_Q)){
                 keyQueue.append(Qt::Key_Q);
@@ -244,6 +244,15 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         if(e->key() == Qt::Key_C){
             mario->startTransforming();
         }
+
+        if(e->key() == Qt::Key_Shift){
+            if(mario->isOnFire()){
+                FireBall * newFireBall = mario->shootFireBall();
+                if(newFireBall){
+                    addEntity(newFireBall);
+                }
+            }
+        }
     }
 
     if(e->key() == Qt::Key_T){
@@ -254,22 +263,13 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
-    if(e->key() == Qt::Key_Shift){
-        if(mario->isOnFire()){
-            FireBall * newFireBall = mario->shootFireBall();
-            if(newFireBall){
-                addEntity(newFireBall);
-            }
-        }
-    }
-
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
     }
 }
 
 void GameController::keyReleaseEventHandler(QKeyEvent *e){
-    if(mario != nullptr){
+    if(mario != nullptr && !mario->getIsInACinematic()){
         if(e->key() == Qt::Key_Q){
             keyQueue.removeOne(Qt::Key_Q);
             updateDirection();

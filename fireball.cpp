@@ -88,25 +88,35 @@ void FireBall::die()
 
 void FireBall::collisionByDefaultHandler(ObjectModel *o)
 {
-    die();
+    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+        die();
+    }
 }
 
 void FireBall::collisionOnBottomHandler(ObjectModel *o)
 {
-    velocity.setY(-6.4);
+    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+        velocity.setY(-6.4);
+    }
 }
 
 void FireBall::collisionOnTopHandler(ObjectModel *o)
 {
-    velocity.setY(-6.4);
+    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+        velocity.setY(-6.4);
+    }
 }
 
 void FireBall::collisionOnLeftHandler(ObjectModel *o)
 {
-    die();
+    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+        die();
+    }
 }
 
 void FireBall::collisionOnRightHandler(ObjectModel *o)
 {
-    die();
+    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+        die();
+    }
 }

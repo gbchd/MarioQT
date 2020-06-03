@@ -9,6 +9,8 @@ LevelEditorEngine::LevelEditorEngine()
     fakeMario = nullptr;
     levelEditorView = nullptr;
     levelEditorWidget = nullptr;
+    castle = nullptr;
+    flagpole = nullptr;
     tickrate = 1000/240;
 }
 
@@ -34,6 +36,12 @@ void LevelEditorEngine::exportMapToJSon()
                     "\"size\":{\"width\":400, \"height\":30},"
                     "\"player\":{\"x\":"<<fakeMario->getPosition().x()/32<<",\"y\":"<<fakeMario->getPosition().y()/32<<"},"
                     "\"inerts\":{";
+
+        if(flagpole != nullptr){
+            stream<<"\"block-1\":{\"type\":\"flagpole\",\"x\":"<<flagpole->getPosition().x()/32<<",\"y\":"<<flagpole->getPosition().y()/32<<",\"width\":1,\"height\":1}";
+        }
+        if(inerts.length()>0){ stream<<","; }
+
         for(int indice=0; indice<inerts.length(); indice++){
             if(indice>0){ stream<<","; }
             stream<<"\"block"<<indice<<"\":{\"type\":\""<<getTypeFromInert(inerts[indice])<<"\",";
@@ -91,6 +99,9 @@ QString LevelEditorEngine::getTypeFromInert(Inert *inert)
     else if(dynamic_cast<Trampoline *>(inert)){
         return "trampoline";
     }
+    else if(dynamic_cast<Flagpole *>(inert)){
+        return "flagpole";
+    }
     else{
         return "unknown";
     }
@@ -137,6 +148,21 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
     if(objectToPaintOnMouse != nullptr){
         objectToPaintOnMouse->moveTo(X, Y);
         objectToPaintOnMouse->accept(visitor);
+    }
+
+    if(selectedButton == FLAGPOLE){
+        movingFlagpole->moveTo(X, Y);
+        movingFlagpole->accept(visitor);
+        movingCastle->moveTo(X+5*block_size, Y+7*block_size);
+        movingCastle->accept(visitor);
+    }
+
+    if(castle != nullptr){
+        castle->accept(visitor);
+    }
+
+    if(flagpole != nullptr){
+        flagpole->accept(visitor);
     }
 }
 
@@ -271,19 +297,16 @@ void LevelEditorEngine::addObjectOnMousePosition()
             break;
         }
         case FLAGPOLE: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/flagpole.png").scaled(block_size, block_size*11));
-            newBrick->moveTo(X, Y);
-            inerts.append(newBrick);
-            objects.append(newBrick);
-            break;
-        }
-        case CASTLE: {
-            Inert * newBrick = new Inert();
-            newBrick->setCurrentTexture(newBrick->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4));
-            newBrick->moveTo(X, Y);
-            inerts.append(newBrick);
-            objects.append(newBrick);
+            if(!inerts.contains(flagpole)){
+                flagpole = new Flagpole();
+            }
+            flagpole->moveTo(X, Y);
+
+            if(!inerts.contains(castle)){
+                castle = new Inert();
+                castle->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4)));
+            }
+            castle->moveTo(X+5*block_size, Y+7*block_size);
             break;
         }
         case GOOMBA: {
@@ -380,6 +403,16 @@ void LevelEditorEngine::addObjectOnMousePosition()
 
 void LevelEditorEngine::deleteObjectAtPosition(int x, int y)
 {
+    if(flagpole!=nullptr && flagpole->getPosition().x() == x && flagpole->getPosition().y() == y){
+        delete flagpole;
+        flagpole = nullptr;
+    }
+
+    if(castle!=nullptr && castle->getPosition().x() == x && castle->getPosition().y() == y){
+        delete castle;
+        castle = nullptr;
+    }
+
     for(ObjectModel * object : objects){
         if(object->getPosition().x() == x && (object->getPosition().y() == y || object->getPosition().y()-block_size/2 == y)){
             Mario * mario = dynamic_cast<Mario*>(object);
@@ -499,15 +532,12 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
             break;
         }
         case FLAGPOLE: {
-            objectToPaintOnMouse = new Inert();
-            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/flagpole.png").scaled(block_size, block_size*11)));
-            objectToPaintOnMouse->setOpacity(0.5);
-            break;
-        }
-        case CASTLE: {
-            objectToPaintOnMouse = new Inert();
-            objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4)));
-            objectToPaintOnMouse->setOpacity(0.5);
+            movingFlagpole = new Flagpole();
+            movingFlagpole->setOpacity(0.5);
+
+            movingCastle = new Inert();
+            movingCastle->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4)));
+            movingCastle->setOpacity(0.5);
             break;
         }
         case GOOMBA: {
@@ -607,7 +637,7 @@ int LevelEditorEngine::getColumnFromMousePosition()
 
 void LevelEditorEngine::saveLevel()
 {
-exportMapToJSon();
+    exportMapToJSon();
 }
 
 void LevelEditorEngine::clearMap()
@@ -617,15 +647,27 @@ void LevelEditorEngine::clearMap()
         entities.removeOne(entity);
         delete entity;
     }
+
     for(Inert * inert : inerts){
         objects.removeOne(inert);
         inerts.removeOne(inert);
         delete inert;
     }
+
     if(fakeMario != nullptr){
         objects.removeOne(fakeMario);
         delete fakeMario;
         fakeMario = nullptr;
+    }
+
+    if(castle != nullptr){
+        delete castle;
+        castle = nullptr;
+    }
+
+    if(flagpole != nullptr){
+        delete flagpole;
+        flagpole = nullptr;
     }
 }
 

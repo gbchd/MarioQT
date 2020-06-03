@@ -103,5 +103,6 @@
         <file>resources/graphics/trampoline-2.png</file>
         <file>resources/maps/Colin's World.json</file>
         <file>resources/fonts/mario_font.ttf</file>
+        <file>resources/graphics/characters/mario/fiery-mario-hang-1.png</file>
     </qresource>
 </RCC>

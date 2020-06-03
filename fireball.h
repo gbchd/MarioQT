@@ -2,6 +2,8 @@
 #define FIREBALL_H
 
 #include "entity.h"
+#include "collectableitem.h"
+#include "coin.h"
 
 class FireBall : public Entity
 {

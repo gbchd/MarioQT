@@ -8,6 +8,7 @@
 class CollectableItem;
 class Coin;
 class FireBall;
+class Flagpole;
 
 class Mario : public Entity
 {
@@ -16,6 +17,7 @@ private:
     QList<QPixmap> texture_walk[3]; // small/big/fire walking animation (3 textures)
     QPixmap texture_stand[4]; // small/big/fire stand texture
     QPixmap texture_jump[3]; // small/big/fire jump texture
+    QPixmap texture_hang[3]; // small/big/fire hang texture
     QPixmap texture_fire;
     QPixmap texture_dead; // Mario dies
     QPixmap texture_transitions_animations[20]; // Mario small to big transformation
@@ -33,6 +35,7 @@ private:
     // ==================
 
     // === States ===
+    bool isInACinematic; // If true, we don't listen to the key events to control mario
     bool big;
     int runningSpeed;
     bool onFire;
@@ -86,6 +89,7 @@ private:
     float deathJumpSpeed = -2*deathJumpHeight/30;
     float deathJumpGravity = 2*deathJumpHeight/(deathJumpDuration*deathJumpDuration);
     // ====================
+    void handleFlagpoleCollision(Flagpole * flagpole);
 
 public:
     Mario();
@@ -103,6 +107,7 @@ public:
     void startTransforming();
     bool isTransforming(){ return transforming; }
     Direction getDirection(){return movingDirection;};
+    bool getIsInACinematic(){ return isInACinematic; }
     bool isBig(){ return big; }
     bool isOnFire(){ return onFire; }
 
@@ -115,7 +120,6 @@ public:
     void collisionOnTopHandler(ObjectModel * o) override;
 
     void handleCollectableItemCollision(CollectableItem * collectableItem);
-    void handleCoinCollision(Coin * coin);
 };
 
 #endif // MARIO_H

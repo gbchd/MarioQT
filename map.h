@@ -23,6 +23,8 @@
 #include "scenery.h"
 #include "pipe.h"
 #include "trampoline.h"
+#include "flagpole.h"
+#include "objectmodel.h"
 
 class Map
 {

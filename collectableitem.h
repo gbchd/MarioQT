@@ -38,6 +38,7 @@ public:
     void collisionOnTopHandler(ObjectModel * o) override;
 
     void handleCollisionWithObject(ObjectModel * o);
+    void handleCollisionOnSide(ObjectModel *o);
 };
 
 #endif // COLLECTABLEITEM_H
