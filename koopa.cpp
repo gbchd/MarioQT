@@ -115,7 +115,6 @@ void Koopa::collisionOnRightHandler(ObjectModel *o){
 
 void Koopa::collisionOnTopHandler(ObjectModel *o){
     Entity::collisionOnTopHandler(o);
-
     if(dynamic_cast<Mario*>(o)){
         hurt();
     }
@@ -138,6 +137,7 @@ void Koopa::collisionOnBottomHandler(ObjectModel *o)
 
 void Koopa::hurt(){
     if(!shell){
+        Score::add(score);
         shell = true;
         moving=false;
         speed = 6;

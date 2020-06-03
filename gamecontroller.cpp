@@ -8,6 +8,10 @@ GameController::GameController(){
     mario = nullptr;
     gameview = nullptr;
     tickrate = 1000/60;
+
+    Score::init();
+    Score::reset();
+    currentMap = nullptr;
 }
 
 //DEPRECATED
@@ -206,6 +210,7 @@ void GameController::update(CameraVisitor & visitor){
     }
 }
 
+
 void GameController::keyPressEventHandler(QKeyEvent *e){
     if(mario != nullptr){
         if(e->key() == Qt::Key_Q){
@@ -356,11 +361,16 @@ void GameController::clean(){
         removeInert(inert);
     }
 
+    if(currentMap != nullptr){
+        delete currentMap;
+        currentMap = nullptr;
+    }
+
     qDebug() << "After :" << "Objects :" << objects.size() << " Inerts :" << inerts.size() << "Entities :" << entities.size();
 }
 
 void GameController::generateMap(){
-    //On crée lQes maps dans le controlleur
+    //On crée les maps dans le controlleur
     Map * map = new Map(mapFilepath);
     gameview->setLevelSize(map->getWidth(), map->getHeight());
     qDebug() << map->getCreator() << map->getCreationDate();
@@ -380,6 +390,8 @@ void GameController::generateMap(){
     for(Entity * entity : mapEntities){
         addEntity(entity);
     }
+
+    currentMap = map;
 }
 
 
@@ -387,6 +399,8 @@ void GameController::generateMap(){
 void GameController::start(){
     //We setup the game engine : A timer that calls advance every 10ms
     QObject::connect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
+
+    Score::reset();
 
     qDebug() << "Tickrate" << tickrate;
     engine.setTimerType(Qt::PreciseTimer);
@@ -399,6 +413,7 @@ void GameController::start(){
 
 void GameController::stop(){
     clean();
+    Score::reset();
     engine.stop();
     QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
 }

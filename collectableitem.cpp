@@ -145,6 +145,10 @@ void CollectableItem::handleCollisionWithObject(ObjectModel *o)
 {
     Mario * mario = dynamic_cast<Mario *>(o);
     if(mario != nullptr){
+        Score::add(score);
+        if(typeItem == COINCOLLECTABLE){
+            Score::addCoin();
+        }
         deletable = true;
     }
 

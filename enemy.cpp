@@ -14,6 +14,8 @@ void Enemy::hurt(){
 }
 
 void Enemy::die(){
+    Score::add(score);
+
     collidable = false;
     dead = true;
     moving = false;

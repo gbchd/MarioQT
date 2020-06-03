@@ -9,6 +9,7 @@
 #include "graphicvisitor.h"
 #include "hitboxgraphicvisitor.h"
 #include "objectmodel.h"
+#include "score.h"
 
 class GameController;
 
@@ -25,6 +26,9 @@ private:
     QPalette palette; //Used to paint the background
     bool showHitboxes;
 
+    //Fixme : get the coin texture dynamically in another class
+    QPixmap coinTexture; //Used for the hud
+
     virtual void keyPressEvent(QKeyEvent * e) override;
     virtual void keyReleaseEvent(QKeyEvent * e) override;
     virtual void wheelEvent(QWheelEvent * e) override;
@@ -36,6 +40,7 @@ public:
     void setGameController(GameController * gc){gameController = gc;}
 
     int getCameraPosition(){return cameraPosition;}
+    void drawHUD();
 
     QSize getWindowSize(){return windowSize;}
     void setWindowSize(QSize size){windowSize = size;}

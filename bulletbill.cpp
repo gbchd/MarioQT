@@ -44,6 +44,8 @@ void BulletBill::hurt(){
 }
 
 void BulletBill::die(){
+    Score::add(score);
+
     collidable = false;
     moving = false;
     dead = true;

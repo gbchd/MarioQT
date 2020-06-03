@@ -27,6 +27,7 @@ Map::Map(QString filename){
     QJsonDocument map = QJsonDocument::fromJson(json_bytes);
     QJsonObject jsonObject = map.object();
 
+    name = jsonObject["name"].toString();
     creator = jsonObject["creator"].toString();
     creationDate = QDateTime::fromString(jsonObject["date"].toString(),"yyyy-MM-dd  HH:mm:ss");
     width = jsonObject["size"].toObject()["width"].toInt()*block_size;

@@ -102,5 +102,6 @@
         <file>resources/graphics/trampoline-1.png</file>
         <file>resources/graphics/trampoline-2.png</file>
         <file>resources/maps/Colin's World.json</file>
+        <file>resources/fonts/mario_font.ttf</file>
     </qresource>
 </RCC>

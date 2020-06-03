@@ -24,6 +24,7 @@ private:
 
 public:
     Coin(bool coinSpawnedByBloc);
+
     virtual void advance() override;
     virtual void animate() override;
 

@@ -16,6 +16,7 @@
 #include "coin.h"
 #include "collectableitem.h"
 #include "fireball.h"
+#include "score.h"
 
 class MainWindow;
 
@@ -30,6 +31,9 @@ private:
 
     //The view controlled by this controller
     GameView * gameview;
+
+
+    Map * currentMap;
 
     // Possède des objets de type Inert et Entity
     Mario * mario;
@@ -73,6 +77,7 @@ public:
     void addInert(Inert * i);
     void addEntity(Entity * e);
 
+    QString getMapName(){return currentMap->getName();}
 
     void clean(); // Used to remove all objects
     void removePlayer();

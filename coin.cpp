@@ -43,6 +43,8 @@ void Coin::advance()
         moveTo(position+velocity);
 
         if(counterGameFramesUntilDeath > 40){
+            Score::add(score);
+            Score::addCoin();
             deletable = true;
         }
         else{
@@ -94,6 +96,8 @@ void Coin::handleCollisionWithObject(ObjectModel *o)
 {
     Mario * mario = dynamic_cast<Mario *>(o);
     if(mario != nullptr){
+        Score::add(score);
+        Score::addCoin();
         deletable = true;
     }
 }

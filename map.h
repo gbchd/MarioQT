@@ -30,6 +30,7 @@ public:
     Map();
     Map(QString filename);
 
+    QString getName(){return name;}
     QString getCreator(){return creator;}
     QDateTime getCreationDate(){return creationDate;}
     int getWidth() { return width; }
@@ -58,6 +59,7 @@ private:
 
     // Map attributes
 
+    QString name;
     QString creator;
     QDateTime creationDate;
     int width;

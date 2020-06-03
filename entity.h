@@ -5,6 +5,7 @@
 #include "direction.h"
 #include "inert.h"
 #include <QElapsedTimer>
+#include "score.h"
 
 class Entity : public ObjectModel
 {
@@ -61,7 +62,6 @@ public:
     virtual void advance() = 0;
 
     void setCurrentTexture(QPixmap texture) override;
-
 
     void moveTo(QPointF newPosition) override;
     void moveTo(float x, float y) override;
