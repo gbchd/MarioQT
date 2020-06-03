@@ -88,14 +88,12 @@ void Entity::reactionNoMoreOnGround(){
 void Entity::startPhantom(){
     phantom = true;
     opacity = 0.5;
-    collidableWithOtherEntities = false;
     timerPhantom.start();
 }
 
 void Entity::stopPhantom(){
     phantom = false;
     opacity = 1;
-    collidableWithOtherEntities = true;
     timerPhantom.invalidate();
 }
 

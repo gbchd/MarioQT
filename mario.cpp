@@ -181,20 +181,22 @@ void Mario::releaseJump(){
 }
 
 void Mario::hurt(){
-    if(onFire == true){
-        transformingDown = true;
-        transforming = true;
-        currentTransformingTexture = 19;
-        timerTransformation.start();
-    }
-    else if(big == true){
-        transformingDown = true;
-        transforming = true;
-        currentTransformingTexture = 8;
-        timerTransformation.start();
-    }
-    else{
-       die();
+    if(!phantom){
+        if(onFire == true){
+            transformingDown = true;
+            transforming = true;
+            currentTransformingTexture = 19;
+            timerTransformation.start();
+        }
+        else if(big == true){
+            transformingDown = true;
+            transforming = true;
+            currentTransformingTexture = 8;
+            timerTransformation.start();
+        }
+        else{
+           die();
+        }
     }
 }
 
