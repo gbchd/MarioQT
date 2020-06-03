@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "koopa.h"
 #include "fireball.h"
+#include "trampoline.h"
 
 Enemy::Enemy()
 {
@@ -32,5 +33,15 @@ void Enemy::collisionByDefaultHandler(ObjectModel *o){
     FireBall * fb = dynamic_cast<FireBall*>(o);
     if(fb){
         die();
+    }
+
+    Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
+    if(trampoline){
+        if(trampoline->isTrampolineBig()){
+            bounceWithVariableVelocity(-22);
+        }
+        else{
+            bounceWithVariableVelocity(-18);
+        }
     }
 }

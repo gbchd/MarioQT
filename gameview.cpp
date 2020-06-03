@@ -16,6 +16,14 @@ GameView::GameView()
     setPalette(palette);
 
     coinTexture = QPixmap(":/resources/graphics/items/coin-0.png");
+
+
+    //Init font for hud
+    //Load mario font
+    int id = QFontDatabase::addApplicationFont(":/resources/fonts/mario_font.ttf");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(id).at(0);
+    font = QFont(fontFamily);
+    font.setPixelSize(fontSize);
 }
 
 void GameView::paintEvent(QPaintEvent *event){ 
@@ -39,15 +47,7 @@ void GameView::drawHUD(){
 
     QPainter painter(this);
 
-    //Load mario font
-    int id = QFontDatabase::addApplicationFont(":/resources/fonts/mario_font.ttf");
-    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-
-    //Create font
-    QFont font(family);
-    int fontSize = 32;
     int fontWidth = fontSize/2;
-    font.setPixelSize(fontSize);
 
     //Set painter color and font
     painter.setFont(font);
@@ -83,17 +83,18 @@ void GameView::drawHUD(){
     painter.drawText(coinsZone, coinsText);
 
     //Fixme : this is very bad : need to calculate the position not get it by approximation.
-    painter.drawPixmap(6*unit + fontWidth*2.5, positionY + fontSize + 5, coinTexture.scaled(fontWidth,fontSize));
+    painter.drawPixmap(6*unit + fontSize*1.3, positionY + fontSize + 5, coinTexture.scaled(fontSize/2,fontSize));
 
     // MAP
     QString mapText = gameController->getMapName();
     painter.drawText(mapZone, mapText);
 
     // TIMER
-    //to do
+    QString timerValue = QString("%1").arg(gameController->getTimeBeforeReset());
+    QString timerText = "TIMER\n";
+    timerText.append(timerValue);
+    painter.drawText(timerZone, timerText);
 
-    //Delete this
-    painter.drawRect(timerZone);
 }
 
 

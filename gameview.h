@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QList>
 #include <QPainter>
+#include <QFontDatabase>
 
 #include "graphicvisitor.h"
 #include "hitboxgraphicvisitor.h"
@@ -28,6 +29,8 @@ private:
 
     //Fixme : get the coin texture dynamically in another class
     QPixmap coinTexture; //Used for the hud
+    QFont font;
+    int fontSize = 24;
 
     virtual void keyPressEvent(QKeyEvent * e) override;
     virtual void keyReleaseEvent(QKeyEvent * e) override;
