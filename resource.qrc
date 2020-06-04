@@ -118,5 +118,7 @@
         <file>resources/sounds/pause.wav</file>
         <file>resources/sounds/shrink.wav</file>
         <file>resources/sounds/stomp.wav</file>
+        <file>resources/sounds/fireball.wav</file>
+        <file>resources/sounds/flagpole.wav</file>
     </qresource>
 </RCC>

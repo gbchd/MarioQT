@@ -2,6 +2,7 @@
 #define COIN_H
 
 #include "entity.h"
+#include <QSoundEffect>
 
 class Coin : public Entity
 {
@@ -23,6 +24,8 @@ private:
 
 public:
     Coin(bool coinSpawnedByBloc);
+
+    static QSoundEffect * sound;
 
     virtual void advance() override;
     virtual void animate() override;

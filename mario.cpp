@@ -314,6 +314,7 @@ void Mario::startTransforming()
 FireBall * Mario::shootFireBall()
 {
     if(!fireballShootingTimer.isValid()){
+        playSound(":/resources/sounds/fireball.wav");
         fireballShootingTimer.start();
         FireBall * newFireball = new FireBall(getDirection());
         if(getDirection()==RIGHT){
@@ -537,6 +538,7 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+                playSound(":/resources/sounds/flagpole.wav");
             }
         }
     }
@@ -559,6 +561,7 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+                playSound(":/resources/sounds/flagpole.wav");
             }
         }
     }
@@ -581,6 +584,7 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+                playSound(":/resources/sounds/flagpole.wav");
             }
         }
     }
@@ -612,6 +616,7 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
                 Flagpole * fp = dynamic_cast<Flagpole *>(o);
                 if(fp){
                     handleFlagpoleCollision(fp);
+                    playSound(":/resources/sounds/flagpole.wav");
                 }
             }
         }
@@ -629,7 +634,6 @@ void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
 {
     switch(collectableItem->getItemType()){
         case COINCOLLECTABLE:{
-            // TODO COLLECT COIN
             break;}
         case STARCOLLECTABLE:{
             // TODO GO IN INVINCIBLE MODE

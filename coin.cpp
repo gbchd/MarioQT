@@ -2,8 +2,16 @@
 
 #include "mario.h"
 
+QSoundEffect * Coin::sound;
+
 Coin::Coin(bool coinSpawnedByBloc)
 {
+    if(sound == nullptr){
+        sound = new QSoundEffect();
+        sound->setSource(QUrl::fromLocalFile(":/resources/sounds/coin.wav"));
+        sound->setVolume(0.05);
+    }
+
     score = 200;
 
     textureList[0] = loadTexture(":/resources/graphics/items/coin-0.png").scaled(BLOCSIZE/1, BLOCSIZE/1, Qt::KeepAspectRatio);
@@ -96,6 +104,7 @@ void Coin::handleCollisionWithObject(ObjectModel *o)
 {
     Mario * mario = dynamic_cast<Mario *>(o);
     if(mario != nullptr){
+        sound->play();
         Score::add(score);
         Score::addCoin();
         deletable = true;
