@@ -30,13 +30,13 @@ Mario::Mario()
     texture_stand[3] = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-stand.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
 
     texture_hang[0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-hang-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_hang[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-hang-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_hang[2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-hang-1.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_hang[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-hang-1.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_hang[2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-hang-1.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
 
-    texture_jump[0]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-jump.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_jump[1]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_jump[2]    = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
-    texture_dead	   = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-fall.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_jump[0] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-jump.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_jump[1] = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-big-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_jump[2] = QPixmap(loadTexture(":/resources/graphics/characters/mario/fiery-mario-jump.png")).scaled(BLOCSIZE,2*BLOCSIZE,Qt::IgnoreAspectRatio);
+    texture_dead = QPixmap(loadTexture(":/resources/graphics/characters/mario/mario-small-fall.png")).scaled(BLOCSIZE,BLOCSIZE,Qt::IgnoreAspectRatio);
 
     texture_transitions_animations[0] = texture_stand[0];
     texture_transitions_animations[1] = texture_stand[1];
@@ -71,7 +71,8 @@ Mario::Mario()
     transforming = false;
     big = false;
     onFire = false;
-    isInACinematic = false;
+    isInFlagpoleCinematic = false;
+    marioFlagpoleCinematicState = NOFLAGPOLECINEMATICSTATE;
 
     //Engine Value
     speed = 4;
@@ -88,6 +89,57 @@ Mario::~Mario(){
 }
 
 void Mario::advance(){
+
+    //=========== We handle the animations before ===========
+    if(isInFlagpoleCinematic){
+        switch(marioFlagpoleCinematicState){
+        case HANGINGONFLAGPOLE:
+            if(!timerBeforeJumpingFromPole.isValid()){
+                setPositionX(position.x() + velocity.x());
+                setPositionY(position.y() + velocity.y());
+
+                if(getPosition().y() > flagBottomPos.y()-BLOCSIZE-currentTexture.height()){
+                    setCurrentTexture(currentTexture.transformed(QTransform().scale(-1,1)));
+                    setPositionX(position.x()+BLOCSIZE);
+                    timerBeforeJumpingFromPole.start();
+                }
+            }
+            else{
+                if(timerBeforeJumpingFromPole.elapsed() > durationBeforeJumpingFromPole){
+                    marioFlagpoleCinematicState = JUMPINGFORTHEGROUND;
+                    velocity.setY(-0.35*speed);
+                    velocity.setX(0.35*speed);
+                }
+            }
+            break;
+        case JUMPINGFORTHEGROUND:
+            if(velocity.x() - gravity < 0){ velocity.setX(velocity.x() - gravity); }
+            velocity.setY(velocity.y() + gravity);
+
+            setPositionX(position.x() + velocity.x());
+            setPositionY(position.y() + velocity.y());
+
+            if(position.y() > flagBottomPos.y()-currentTexture.height() ){
+                marioFlagpoleCinematicState = WALKINGTOTHEEXIT;
+                setPositionY(flagBottomPos.y()-currentTexture.height());
+                velocity.setX(0.4*speed);
+            }
+            break;
+        case WALKINGTOTHEEXIT:
+            setPositionX(position.x() + velocity.x());
+            if(position.x() > flagBottomPos.x()+6.5*BLOCSIZE){
+                marioFlagpoleCinematicState = ARRIVEDATCASTLE;
+            }
+            break;
+        case ARRIVEDATCASTLE:
+        default:
+            break;
+        }
+
+        return;
+    }
+    //=======================================================
+
     //Check if we are still touching the ground object
     groundHandler();
 
@@ -121,6 +173,29 @@ void Mario::advance(){
 }
 
 void Mario::animate(){
+    //=========== We handle the animations before ===========
+    if(isInFlagpoleCinematic){
+        switch(marioFlagpoleCinematicState){
+        case HANGINGONFLAGPOLE:
+            break;
+        case JUMPINGFORTHEGROUND:
+            if(onFire){ setCurrentTexture(texture_jump[2]); }
+            else if(big){ setCurrentTexture(texture_jump[1]); }
+            else{ setCurrentTexture(texture_jump[0]); }
+            break;
+        case WALKINGTOTHEEXIT:
+            if(onFire){ doSimpleAnimation(texture_walk[2], timerWalk, durationWalkTexture, currentWalkTexture); }
+            else if(big){ doSimpleAnimation(texture_walk[1], timerWalk, durationWalkTexture, currentWalkTexture); }
+            else { doSimpleAnimation(texture_walk[0], timerWalk, durationWalkTexture, currentWalkTexture); }
+            break;
+        case ARRIVEDATCASTLE:
+        default:
+            break;
+        }
+
+        return;
+    }
+    //=======================================================
 
     if(transforming){
         doTransforming();
@@ -396,7 +471,18 @@ void Mario::setSmall(){
 
 void Mario::handleFlagpoleCollision(Flagpole * flagpole)
 {
-    isInACinematic = true;
+    setPositionX(position.x()+BLOCSIZE/8);
+    isInFlagpoleCinematic = true;
+    marioFlagpoleCinematicState = HANGINGONFLAGPOLE;
+
+    flagBottomPos = QPointF(flagpole->getPosition().x() ,flagpole->getPosition().y()+flagpole->getHitbox().height());
+
+    velocity.setX(0);
+    velocity.setY(3*defaultGravity);
+
+    if(onFire){ setCurrentTexture(texture_hang[2]); }
+    else if(big){ setCurrentTexture(texture_hang[1]); }
+    else{ setCurrentTexture(texture_hang[0]); }
 }
 
 void Mario::collisionByDefaultHandler(ObjectModel *o){
