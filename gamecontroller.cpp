@@ -238,7 +238,7 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
             mario->jump();
         }
 
-        if(e->key() == Qt::Key_Shift){
+        if(e->key() == settings->getKeyRun()){
             mario->setRunning(true);
         }
 
@@ -246,7 +246,7 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
             mario->startTransforming();
         }
 
-        if(e->key() == Qt::Key_Shift){
+        if(e->key() == settings->getKeyShootFireBall()){
             if(mario->isOnFire()){
                 FireBall * newFireBall = mario->shootFireBall();
                 if(newFireBall){
@@ -289,7 +289,7 @@ void GameController::keyReleaseEventHandler(QKeyEvent *e){
             updateDirection();
         }
 
-        if(e->key() == Qt::Key_Shift){
+        if(e->key() == settings->getKeyRun()){
             mario->setRunning(false);
         }
 

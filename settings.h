@@ -32,6 +32,8 @@ private:
     Qt::Key keyJump;
     Qt::Key keyMoveRight;
     Qt::Key keyMoveLeft;
+    Qt::Key keyRun;
+    Qt::Key keyShootFireBall;
 
 
 public:
@@ -46,6 +48,10 @@ public:
     Qt::Key getKeyMoveLeft() const;
     void setKeyMoveLeft(const Qt::Key &value);
 
+    Qt::Key getKeyRun() const;
+    void setKeyRun(const Qt::Key &value);
+    Qt::Key getKeyShootFireBall() const;
+    void setKeyShootFireBall(const Qt::Key &value);
 };
 
 #endif // SETTINGS_H

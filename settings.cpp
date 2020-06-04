@@ -32,11 +32,33 @@ void Settings::setKeyJump(const Qt::Key &value)
     keyJump = value;
 }
 
+Qt::Key Settings::getKeyRun() const
+{
+    return keyRun;
+}
+
+void Settings::setKeyRun(const Qt::Key &value)
+{
+    keyRun = value;
+}
+
+Qt::Key Settings::getKeyShootFireBall() const
+{
+    return keyShootFireBall;
+}
+
+void Settings::setKeyShootFireBall(const Qt::Key &value)
+{
+    keyShootFireBall = value;
+}
+
 Settings::Settings()
 {
     keyJump = Qt::Key_Space;
     keyMoveLeft = Qt::Key_Q;
     keyMoveRight = Qt::Key_D;
+    keyRun = Qt::Key_Shift;
+    keyShootFireBall = Qt::Key_Shift;
 }
 
 void Settings::readConfig()
