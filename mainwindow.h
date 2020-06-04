@@ -17,6 +17,7 @@
 
 #include "pausemenucontroller.h"
 #include "pausemenuwidget.h"
+#include "settings.h"
 
 class MainWindow : public QMainWindow
 {
@@ -35,6 +36,8 @@ private:
 
     PauseMenuController pauseMenuController;
     PauseMenuWidget pauseMenuWidget;
+
+    Settings settings;
 
 public:
     MainWindow();

@@ -219,27 +219,27 @@ void GameController::update(CameraVisitor & visitor){
 
 void GameController::keyPressEventHandler(QKeyEvent *e){
     if(mario != nullptr && !mario->getIsInFlagpoleCinematic()){
-        if(e->key() == Qt::Key_Q){
-            if(!keyQueue.contains(Qt::Key_Q)){
-                keyQueue.append(Qt::Key_Q);
+        if(e->key() == settings->getKeyMoveLeft()){
+            if(!keyQueue.contains(settings->getKeyMoveLeft())){
+                keyQueue.append(settings->getKeyMoveLeft());
             }
             updateDirection();
             if(!mario->isDead()){mario->setMoving(true);}
         }
 
-        if(e->key() == Qt::Key_D){
-            if(!keyQueue.contains(Qt::Key_D)){
-                keyQueue.append(Qt::Key_D);
+        if(e->key() == settings->getKeyMoveRight()){
+            if(!keyQueue.contains(settings->getKeyMoveRight())){
+                keyQueue.append(settings->getKeyMoveRight());
             }
             updateDirection();
             if(!mario->isDead()){mario->setMoving(true);}
         }
 
-        if(e->key() == Qt::Key_Space){
+        if(e->key() == settings->getKeyJump()){
             mario->jump();
         }
 
-        if(e->key() == Qt::Key_Shift){
+        if(e->key() == settings->getKeyRun()){
             mario->setRunning(true);
         }
 
@@ -247,7 +247,7 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
             mario->startTransforming();
         }
 
-        if(e->key() == Qt::Key_Shift){
+        if(e->key() == settings->getKeyShootFireBall()){
             if(mario->isOnFire()){
                 FireBall * newFireBall = mario->shootFireBall();
                 if(newFireBall){
@@ -265,6 +265,13 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
+
+    QString letter = "A";
+    if(e->key() == 65){
+
+      qDebug() << QKeySequence::fromString(letter)[0] << endl;
+    }
+
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
     }
@@ -272,21 +279,22 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
 
 void GameController::keyReleaseEventHandler(QKeyEvent *e){
     if(mario != nullptr && !mario->getIsInFlagpoleCinematic()){
-        if(e->key() == Qt::Key_Q){
-            keyQueue.removeOne(Qt::Key_Q);
+        if(e->key() == settings->getKeyMoveLeft()){
+            keyQueue.removeOne(settings->getKeyMoveLeft());
+
             updateDirection();
         }
 
-        if(e->key() == Qt::Key_D){
-            keyQueue.removeOne(Qt::Key_D);
+        if(e->key() == settings->getKeyMoveRight()){
+            keyQueue.removeOne(settings->getKeyMoveRight());
             updateDirection();
         }
 
-        if(e->key() == Qt::Key_Shift){
+        if(e->key() == settings->getKeyRun()){
             mario->setRunning(false);
         }
 
-        if(e->key() == Qt::Key_Space){
+        if(e->key() == settings->getKeyJump()){
             mario->releaseJump();
         }
     }
@@ -298,12 +306,12 @@ void GameController::updateDirection(){
             mario->setMoving(false);
             return;
         }
-        if(keyQueue.last() == Qt::Key_Q){
+        if(keyQueue.last() == settings->getKeyMoveLeft()){
             if(mario->getDirection() != LEFT){
                mario->setDirection(LEFT);
             }
         }
-        if(keyQueue.last() == Qt::Key_D){
+        if(keyQueue.last() == settings->getKeyMoveRight()){
             if(mario->getDirection() != RIGHT){
                mario->setDirection(RIGHT);
             }
