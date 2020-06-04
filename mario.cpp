@@ -8,6 +8,7 @@
 #include "trampoline.h"
 #include "fireball.h"
 #include "flagpole.h"
+#include "movingplatform.h"
 
 Mario::Mario()
 {
@@ -243,6 +244,8 @@ void Mario::animate(){
 
 void Mario::jump(){
     if(grounded){
+
+        big ? playSound(":/resources/sounds/jump-big.wav") : playSound(":/resources/sounds/jump-small.wav");
         jumping = true;
         gravity = jumpGravity;
         velocity.setY(jumpInitialSpeed);
@@ -263,12 +266,14 @@ void Mario::hurt(){
             transforming = true;
             currentTransformingTexture = 19;
             timerTransformation.start();
+            playSound(":/resources/sounds/shrink.wav");
         }
         else if(big == true){
             transformingDown = true;
             transforming = true;
             currentTransformingTexture = 8;
             timerTransformation.start();
+            playSound(":/resources/sounds/shrink.wav");
         }
         else{
            die();
@@ -277,6 +282,7 @@ void Mario::hurt(){
 }
 
 void Mario::die(){
+    playSound(":/resources/sounds/death.wav");
     collidable = false;
     dead = true;
     moving = false;
@@ -309,6 +315,7 @@ void Mario::startTransforming()
 FireBall * Mario::shootFireBall()
 {
     if(!fireballShootingTimer.isValid()){
+        playSound(":/resources/sounds/fireball.wav");
         fireballShootingTimer.start();
         FireBall * newFireball = new FireBall(getDirection());
         if(getDirection()==RIGHT){
@@ -510,6 +517,20 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
                         bounceWithVariableVelocity(-18);
                     }
                 }
+                else{
+                    FireBall * fb = dynamic_cast<FireBall *>(o);
+                    if(fb && fb->getFireballOfFirebar()){
+                        hurt();
+                    }
+                    else{
+                        MovingPlatform * mp = dynamic_cast<MovingPlatform *>(o);
+                        if(mp){
+                            moveTo(position.x(), mp->getPosition().y() - hitbox.height());
+                            grounded = true;
+                            ground = o;
+                        }
+                    }
+                }
             }
         }
     }
@@ -532,6 +553,13 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+                playSound(":/resources/sounds/flagpole.wav");
+            }
+            else{
+                FireBall * fb = dynamic_cast<FireBall *>(o);
+                if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
             }
         }
     }
@@ -554,6 +582,13 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+                playSound(":/resources/sounds/flagpole.wav");
+            }
+            else{
+                FireBall * fb = dynamic_cast<FireBall *>(o);
+                if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
             }
         }
     }
@@ -576,6 +611,13 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+                playSound(":/resources/sounds/flagpole.wav");
+            }
+            else{
+                FireBall * fb = dynamic_cast<FireBall *>(o);
+                if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
             }
         }
     }
@@ -586,6 +628,7 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         bounce();
+        playSound(":/resources/sounds/stomp.wav");
     }
     else{
         CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
@@ -606,23 +649,45 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
                 Flagpole * fp = dynamic_cast<Flagpole *>(o);
                 if(fp){
                     handleFlagpoleCollision(fp);
+                    playSound(":/resources/sounds/flagpole.wav");
+                }
+                else{
+                    FireBall * fb = dynamic_cast<FireBall *>(o);
+                    if(fb && fb->getFireballOfFirebar()){
+                        hurt();
+                    }
+                    else{
+                        MovingPlatform * mp = dynamic_cast<MovingPlatform *>(o);
+                        if(mp){
+                            moveTo(position.x(), mp->getPosition().y() - hitbox.height());
+                            grounded = true;
+                            ground = o;
+                        }
+                    }
                 }
             }
         }
     }
 }
 
+void Mario::playSound(QString soundPath){
+    QSoundEffect * test = new QSoundEffect();
+    test->setSource(QUrl::fromLocalFile(soundPath));
+    test->setVolume(0.05);
+    test->play();
+}
+
 void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
 {
     switch(collectableItem->getItemType()){
         case COINCOLLECTABLE:{
-            // TODO COLLECT COIN
             break;}
         case STARCOLLECTABLE:{
             // TODO GO IN INVINCIBLE MODE
             break;}
         case MUSHROOMCOLLECTABLE:{
             if(!big && !onFire){
+                playSound(":/resources/sounds/mushroom-eat.wav");
                 transformingDown = false;
                 transforming = true;
                 currentTransformingTexture = 0;
@@ -631,12 +696,14 @@ void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
             break;}
         case FLOWERCOLLECTABLE:{
             if(!big){
+                playSound(":/resources/sounds/mushroom-eat.wav");
                 transformingDown = false;
                 transforming = true;
                 currentTransformingTexture = 0;
                 timerTransformation.start();
             }
             else if(!onFire){
+                playSound(":/resources/sounds/mushroom-eat.wav");
                 transformingDown = false;
                 transforming = true;
                 currentTransformingTexture = 10;

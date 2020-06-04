@@ -15,10 +15,12 @@ void CameraVisitor::setup(int pos, int windowWidth, int levelWidth){
 }
 
 void CameraVisitor::visit(ObjectModel *o){
-    int zValue = o->getZValue();
-    if(zValue < 0){zValue=0;}
-    if(zValue > maxZValue){zValue = maxZValue;}
-    objects[zValue].append(o);
+    if((o->getPosition().x()+o->getHitbox().width())-position > 0 || o->getPosition().x()-position < halfWindowWidth*2){
+        int zValue = o->getZValue();
+        if(zValue < 0){zValue=0;}
+        if(zValue > maxZValue){zValue = maxZValue;}
+        objects[zValue].append(o);
+    }
 }
 
 void CameraVisitor::setPosition(int pos){

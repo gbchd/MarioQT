@@ -1,6 +1,7 @@
 #ifndef BRICK_H
 #define BRICK_H
 
+#include <QSoundEffect>
 #include "inert.h"
 #include "mario.h"
 #include "brickdebris.h"
@@ -32,6 +33,7 @@ public:
 
     void animate() override;
 
+    void playSound(QString soundPath);
     void collisionOnBottomHandler(ObjectModel * o) override;
 };
 

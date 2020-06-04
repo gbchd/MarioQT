@@ -39,8 +39,8 @@ void LevelEditorEngine::exportMapToJSon()
 
         if(flagpole != nullptr){
             stream<<"\"block-1\":{\"type\":\"flagpole\",\"x\":"<<flagpole->getPosition().x()/32<<",\"y\":"<<flagpole->getPosition().y()/32<<",\"width\":1,\"height\":1}";
+            if(inerts.length()>0){ stream<<","; }
         }
-        if(inerts.length()>0){ stream<<","; }
 
         for(int indice=0; indice<inerts.length(); indice++){
             if(indice>0){ stream<<","; }
@@ -59,6 +59,9 @@ void LevelEditorEngine::exportMapToJSon()
             }
             else if(getTypeFromInert(inerts[indice]).compare("trampoline")==0){
                 stream<<"\"big\":"<<dynamic_cast<Trampoline *>(inerts[indice])->isTrampolineBig()<<",";
+            }
+            else if(getTypeFromInert(inerts[indice]).compare("movingplatform")==0){
+                stream<<"\"big\":"<<dynamic_cast<MovingPlatform *>(inerts[indice])->isItABigMovingPlatform()<<",";
             }
             stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
         }
@@ -102,10 +105,17 @@ QString LevelEditorEngine::getTypeFromInert(Inert *inert)
     else if(dynamic_cast<Flagpole *>(inert)){
         return "flagpole";
     }
+    else if(dynamic_cast<MovingPlatform *>(inert)){
+        return "movingplatform";
+    }
+    else if(dynamic_cast<Firebar *>(inert)){
+        return "firebar";
+    }
     else{
         return "unknown";
     }
 }
+
 QString LevelEditorEngine::getTypeFromEntity(Entity * entity)
 {
     if(dynamic_cast<Goomba *>(entity)){
@@ -121,7 +131,6 @@ QString LevelEditorEngine::getTypeFromEntity(Entity * entity)
         return "unknown";
     }
 }
-
 
 void LevelEditorEngine::update(CameraVisitor & visitor){
     int X = getColumnFromMousePosition()*block_size;
@@ -139,6 +148,11 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
 
     for(ObjectModel * object : objects){
         object->accept(visitor);
+
+        Firebar * firebar = dynamic_cast<Firebar *>(object);
+        if(firebar){
+            // TODO DRAW ELLIPSE
+        }
     }
 
     if(fakeMario != nullptr){
@@ -155,6 +169,10 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
         movingFlagpole->accept(visitor);
         movingCastle->moveTo(X+5*block_size, Y+7*block_size);
         movingCastle->accept(visitor);
+    }
+    else if(selectedButton == SMALLMOVINGPLATFORM || selectedButton == LARGEMOVINGPLATFORM){
+        movingMovingPlatform->moveTo(X, Y+10*block_size);
+        movingMovingPlatform->accept(visitor);
     }
 
     if(castle != nullptr){
@@ -245,6 +263,27 @@ void LevelEditorEngine::addObjectOnMousePosition()
             newBox->moveTo(X, Y);
             inerts.append(newBox);
             objects.append(newBox);
+            break;
+        }
+        case SMALLMOVINGPLATFORM: {
+            MovingPlatform * newMP = new MovingPlatform(false);
+            newMP->moveTo(X, Y);
+            inerts.append(newMP);
+            objects.append(newMP);
+            break;
+        }
+        case LARGEMOVINGPLATFORM: {
+            MovingPlatform * newMP = new MovingPlatform(true);
+            newMP->moveTo(X, Y);
+            inerts.append(newMP);
+            objects.append(newMP);
+            break;
+        }
+        case FIREBAR: {
+            Firebar * newFB = new Firebar();
+            newFB->moveTo(X, Y);
+            inerts.append(newFB);
+            objects.append(newFB);
             break;
         }
         case COINITEM: {
@@ -492,6 +531,25 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         case SECRETBOXCOIN: {
             objectToPaintOnMouse = new Inert();
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
+            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case SMALLMOVINGPLATFORM: {
+            objectToPaintOnMouse = new MovingPlatform(false);
+            objectToPaintOnMouse->setOpacity(0.5);
+            movingMovingPlatform = new MovingPlatform(false);
+            movingMovingPlatform->setOpacity(0.5);
+            break;
+        }
+        case LARGEMOVINGPLATFORM: {
+            objectToPaintOnMouse = new MovingPlatform(true);
+            objectToPaintOnMouse->setOpacity(0.5);
+            movingMovingPlatform = new MovingPlatform(true);
+            movingMovingPlatform->setOpacity(0.5);
+            break;
+        }
+        case FIREBAR: {
+            objectToPaintOnMouse = new Firebar();
             objectToPaintOnMouse->setOpacity(0.5);
             break;
         }

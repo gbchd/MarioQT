@@ -24,6 +24,9 @@
 #include "pipe.h"
 #include "trampoline.h"
 #include "flagpole.h"
+#include "movingplatform.h"
+#include "firebar.h"
+#include "fireball.h"
 #include "objectmodel.h"
 
 class Map

@@ -4,6 +4,7 @@
 #include "entity.h"
 #include <QArrayData>
 #include <QColorTransform>
+#include <QSoundEffect>
 
 class CollectableItem;
 class Coin;
@@ -126,6 +127,8 @@ public:
     void collisionOnLeftHandler(ObjectModel * o) override;
     void collisionOnRightHandler(ObjectModel * o) override;
     void collisionOnTopHandler(ObjectModel * o) override;
+
+    void playSound(QString soundPath);
 
     void handleCollectableItemCollision(CollectableItem * collectableItem);
 };

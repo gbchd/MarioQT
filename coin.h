@@ -2,6 +2,7 @@
 #define COIN_H
 
 #include "entity.h"
+#include <QSoundEffect>
 
 class Coin : public Entity
 {
@@ -10,7 +11,6 @@ private:
     int delayBetweenTwoFrames = 100; // in ms
     int frameNumber;
     QElapsedTimer timerAnimation;
-
 
     //=======attributes for coins from blocs=======
     bool coinSpawnedByBloc;
@@ -24,6 +24,8 @@ private:
 
 public:
     Coin(bool coinSpawnedByBloc);
+
+    static QSoundEffect * sound;
 
     virtual void advance() override;
     virtual void animate() override;

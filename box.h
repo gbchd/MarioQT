@@ -5,6 +5,7 @@
 #include "collectableitem.h"
 #include "mario.h"
 #include "coin.h"
+#include <QSoundEffect>
 
 enum BoxContent {EMPTYBOX, MUSHROOMBOX, FLOWERBOX, COINBOX, STARBOX, USEDBOX};
 
@@ -39,6 +40,7 @@ public:
     Coin * spawnCoin();
     CollectableItem * spawnStar();
 
+    void playSound(QString soundPath);
     void animate() override;
 };
 

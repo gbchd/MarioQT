@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QtMath>
+#include <QSoundEffect>
 
 #include "gameview.h"
 #include "objectmodel.h"
@@ -17,7 +18,6 @@
 #include "collectableitem.h"
 #include "fireball.h"
 #include "score.h"
-
 #include "settings.h"
 
 class MainWindow;
@@ -36,7 +36,14 @@ private:
 
     QElapsedTimer levelTimer;
     int levelMaxTime = 400*1000;
+
+    HUD hud;
+
     Map * currentMap;
+
+    //Music
+    QSoundEffect *music;
+    QSoundEffect *pauseSound;
 
     // Possède des objets de type Inert et Entity
     Mario * mario;
@@ -72,6 +79,7 @@ public:
     //Set tickrate by giving the number of fps you want
     void setTickrate(float fps){tickrate = 1000/fps;}
 
+    QPixmap& getHUD(){return hud.getScene();}
     void update(CameraVisitor & visitor);
 
     void keyPressEventHandler(QKeyEvent * e);

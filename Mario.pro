@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
 
 CONFIG += c++11
 
@@ -28,12 +28,14 @@ SOURCES += \
     enemy.cpp \
     entity.cpp \
     fireball.cpp \
+    firebar.cpp \
     flagpole.cpp \
     gamecontroller.cpp \
     gameview.cpp \
     goomba.cpp \
     graphicvisitor.cpp \
     hitboxgraphicvisitor.cpp \
+    hud.cpp \
     inert.cpp \
     leveleditorengine.cpp \
     leveleditorview.cpp \
@@ -46,6 +48,7 @@ SOURCES += \
     mainwindow.cpp \
     map.cpp \
     mario.cpp \
+    movingplatform.cpp \
     objectmodel.cpp \
     optionsmenucontroller.cpp \
     optionsmenuwidget.cpp \
@@ -74,12 +77,14 @@ HEADERS += \
     enemy.h \
     entity.h \
     fireball.h \
+    firebar.h \
     flagpole.h \
     gamecontroller.h \
     gameview.h \
     goomba.h \
     graphicvisitor.h \
     hitboxgraphicvisitor.h \
+    hud.h \
     inert.h \
     leveleditorengine.h \
     leveleditorview.h \
@@ -91,6 +96,7 @@ HEADERS += \
     mainwindow.h \
     map.h \
     mario.h \
+    movingplatform.h \
     objectmodel.h \
     optionsmenucontroller.h \
     optionsmenuwidget.h \

@@ -288,6 +288,55 @@ void Map::addInert(QJsonObject inertObject){
         castle->setCurrentTexture(ObjectModel::loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4));
         inerts.append(castle);
     }
+    else if(type.compare("movingplatform") == 0){
+        MovingPlatform * movingPlatform = new MovingPlatform(inertObject["big"].toInt());
+
+        float x = inertObject["x"].toDouble();
+        float y = inertObject["y"].toDouble();
+
+        movingPlatform->moveTo(x*block_size,y*block_size);
+        movingPlatform->setSpawnPosition(movingPlatform->getPosition());
+
+        inerts.append(movingPlatform);
+    }
+    else if(type.compare("firebar") == 0){
+        Firebar * firebar = new Firebar();
+
+        float x = inertObject["x"].toDouble();
+        float y = inertObject["y"].toDouble();
+
+        firebar->moveTo(x*block_size,y*block_size);
+
+        inerts.append(firebar);
+
+        FireBall * fb1 = new FireBall(Direction::RIGHT);
+        FireBall * fb2 = new FireBall(Direction::RIGHT);
+        FireBall * fb3 = new FireBall(Direction::RIGHT);
+        FireBall * fb4 = new FireBall(Direction::RIGHT);
+        FireBall * fb5 = new FireBall(Direction::RIGHT);
+        FireBall * fb6 = new FireBall(Direction::RIGHT);
+
+        fb1->setFireballOfFirebar(true);
+        fb2->setFireballOfFirebar(true);
+        fb3->setFireballOfFirebar(true);
+        fb4->setFireballOfFirebar(true);
+        fb5->setFireballOfFirebar(true);
+        fb6->setFireballOfFirebar(true);
+
+        firebar->setFireball(0, fb1);
+        firebar->setFireball(1, fb2);
+        firebar->setFireball(2, fb3);
+        firebar->setFireball(3, fb4);
+        firebar->setFireball(4, fb5);
+        firebar->setFireball(5, fb6);
+
+        entities.append(fb1);
+        entities.append(fb2);
+        entities.append(fb3);
+        entities.append(fb4);
+        entities.append(fb5);
+        entities.append(fb6);
+    }
     else if(type.compare("anotherBlock") == 0){
         //add another block
     }

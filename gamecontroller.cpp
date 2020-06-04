@@ -12,6 +12,15 @@ GameController::GameController(){
     Score::init();
     Score::reset();
     currentMap = nullptr;
+
+    //Setup game music
+    music = new QSoundEffect();
+    pauseSound = new QSoundEffect();
+    pauseSound->setSource(QUrl::fromLocalFile(":/resources/sounds/pause.wav"));
+    music->setSource(QUrl::fromLocalFile(":/resources/sounds/overworld.wav"));
+    music->setLoopCount(QSoundEffect::Infinite);
+    pauseSound->setVolume(0.05);
+    music->setVolume(0.05);
 }
 
 //DEPRECATED
@@ -31,14 +40,18 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
-    if(levelTimer.elapsed() > levelMaxTime){
-        reset();
+    if(mario && mario->isDead()){
+        music->stop();
     }
     if(mario && mario->isTransforming()){
         mario->animate();
         for(Inert * i : inerts){ i->animate(); }
         gameview->repaint();
         return;
+    }
+
+    if(levelTimer.elapsed() > levelMaxTime){
+        reset();
     }
 
     for(int inertIt = 0; inertIt < inerts.size(); inertIt++){
@@ -92,6 +105,7 @@ void GameController::advance() {
         }
     }
 
+    hud.setTimer(getTimeBeforeReset());
     gameview->repaint();
 }
 
@@ -270,6 +284,8 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
 
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
+        music->stop();
+        pauseSound->play();
     }
 }
 
@@ -382,7 +398,10 @@ void GameController::clean(){
 void GameController::generateMap(){
     //On crée les maps dans le controlleur
     Map * map = new Map(mapFilepath);
+
     gameview->setLevelSize(map->getWidth(), map->getHeight());
+    hud.setMapName(map->getName());
+
     qDebug() << map->getCreator() << map->getCreationDate();
 
     Mario * mario = new Mario();
@@ -412,6 +431,8 @@ void GameController::start(){
 
     Score::reset();
 
+    hud.init();
+
     qDebug() << "Tickrate" << tickrate;
     engine.setTimerType(Qt::PreciseTimer);
     engine.setInterval(tickrate); // possible de le passer en dynamique
@@ -420,6 +441,8 @@ void GameController::start(){
     engine.start();
 
     levelTimer.start();
+
+    music->play();
 }
 
 
@@ -429,10 +452,14 @@ void GameController::stop(){
     engine.stop();
     QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
     levelTimer.invalidate();
+
+    music->stop();
 }
 
 void GameController::reset(){ 
     generateMap();
 
     levelTimer.restart();
+    music->stop();
+    music->play();
 }
