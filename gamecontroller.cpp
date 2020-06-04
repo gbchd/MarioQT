@@ -451,7 +451,6 @@ void GameController::start(){
 
 void GameController::stop(){
     clean();
-    Score::reset();
     engine.stop();
     QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
     levelTimer.invalidate();
@@ -461,7 +460,8 @@ void GameController::stop(){
 
 void GameController::reset(){ 
     generateMap();
-
+    Score::reset();
+    hud.init();
     levelTimer.restart();
     music->stop();
     music->play();
