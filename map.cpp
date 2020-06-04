@@ -278,6 +278,8 @@ void Map::addInert(QJsonObject inertObject){
 
         inerts.append(flagpole);
 
+        flagpole->moveFlagOnPole();
+        inerts.append(flagpole->getFlag());
 
         Inert * castle = new Inert();
         castle->moveTo((x+5)*block_size, (y+7)*block_size);

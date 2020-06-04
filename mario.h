@@ -34,8 +34,16 @@ private:
     int currentTransformingTexture;
     // ==================
 
+    // === Attributes for animations ===
+    bool isInFlagpoleCinematic; // If true, we don't listen to the key events to control mario
+    enum FlagpoleCinematicState{NOFLAGPOLECINEMATICSTATE, HANGINGONFLAGPOLE, JUMPINGFORTHEGROUND, WALKINGTOTHEEXIT, ARRIVEDATCASTLE};
+    FlagpoleCinematicState marioFlagpoleCinematicState;
+    QPointF flagBottomPos;
+    int durationBeforeJumpingFromPole = 400; // in ms;
+    QElapsedTimer timerBeforeJumpingFromPole;
+    // =================================
+
     // === States ===
-    bool isInACinematic; // If true, we don't listen to the key events to control mario
     bool big;
     int runningSpeed;
     bool onFire;
@@ -107,7 +115,7 @@ public:
     void startTransforming();
     bool isTransforming(){ return transforming; }
     Direction getDirection(){return movingDirection;};
-    bool getIsInACinematic(){ return isInACinematic; }
+    bool getIsInFlagpoleCinematic(){ return isInFlagpoleCinematic; }
     bool isBig(){ return big; }
     bool isOnFire(){ return onFire; }
 

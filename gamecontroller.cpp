@@ -33,6 +33,7 @@ GameController::GameController(GameView * gv)
 void GameController::advance() {
     if(mario && mario->isTransforming()){
         mario->animate();
+        for(Inert * i : inerts){ i->animate(); }
         gameview->repaint();
         return;
     }
@@ -212,7 +213,7 @@ void GameController::update(CameraVisitor & visitor){
 
 
 void GameController::keyPressEventHandler(QKeyEvent *e){
-    if(mario != nullptr && !mario->getIsInACinematic()){
+    if(mario != nullptr && !mario->getIsInFlagpoleCinematic()){
         if(e->key() == Qt::Key_Q){
             if(!keyQueue.contains(Qt::Key_Q)){
                 keyQueue.append(Qt::Key_Q);
@@ -265,7 +266,7 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
 }
 
 void GameController::keyReleaseEventHandler(QKeyEvent *e){
-    if(mario != nullptr && !mario->getIsInACinematic()){
+    if(mario != nullptr && !mario->getIsInFlagpoleCinematic()){
         if(e->key() == Qt::Key_Q){
             keyQueue.removeOne(Qt::Key_Q);
             updateDirection();
