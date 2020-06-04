@@ -28,6 +28,7 @@ SOURCES += \
     enemy.cpp \
     entity.cpp \
     fireball.cpp \
+    firebar.cpp \
     flagpole.cpp \
     gamecontroller.cpp \
     gameview.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
     mainwindow.cpp \
     map.cpp \
     mario.cpp \
+    movingplatform.cpp \
     objectmodel.cpp \
     pausemenucontroller.cpp \
     pausemenuwidget.cpp \
@@ -73,6 +75,7 @@ HEADERS += \
     enemy.h \
     entity.h \
     fireball.h \
+    firebar.h \
     flagpole.h \
     gamecontroller.h \
     gameview.h \
@@ -91,6 +94,7 @@ HEADERS += \
     mainwindow.h \
     map.h \
     mario.h \
+    movingplatform.h \
     objectmodel.h \
     pausemenucontroller.h \
     pausemenuwidget.h \

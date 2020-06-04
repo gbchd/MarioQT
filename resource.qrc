@@ -120,5 +120,14 @@
         <file>resources/sounds/stomp.wav</file>
         <file>resources/sounds/fireball.wav</file>
         <file>resources/sounds/flagpole.wav</file>
+        <file>resources/graphics/firebar.png</file>
+        <file>resources/graphics/mobs/bowser/bowser-1.png</file>
+        <file>resources/graphics/mobs/bowser/bowser-walk-1.png</file>
+        <file>resources/graphics/mobs/bowser/bowser-walk-2.png</file>
+        <file>resources/graphics/mobs/bowser/bowser-walk-3.png</file>
+        <file>resources/graphics/mobs/hammer-brother/hammer-brother-throw-1.png</file>
+        <file>resources/graphics/mobs/hammer-brother/hammer-brother-throw-2.png</file>
+        <file>resources/graphics/mobs/hammer-brother/hammer-brother.png</file>
+        <file>resources/graphics/mobs/hammer-brother/hammer.png</file>
     </qresource>
 </RCC>

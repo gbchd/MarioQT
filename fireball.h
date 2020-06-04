@@ -16,6 +16,8 @@ private:
     int deathFrameCounter;
     QPixmap deathTextures[3];
 
+    bool fireballOfFirebar;
+
     float bounceHeight = BLOCSIZE;
     float bounceDuration = 10; // in number of frames
     float bounceSpeed = -2*bounceHeight/bounceDuration;
@@ -27,6 +29,9 @@ public:
     virtual void advance() override;
     virtual void animate() override;
     virtual void die() override;
+
+    void setFireballOfFirebar(bool b) { fireballOfFirebar = b; }
+    bool getFireballOfFirebar() { return fireballOfFirebar; }
 
     virtual void collisionByDefaultHandler(ObjectModel *o) override;
     void collisionOnBottomHandler(ObjectModel *o) override;

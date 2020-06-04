@@ -16,6 +16,8 @@
 #include "pipe.h"
 #include "trampoline.h"
 #include "flagpole.h"
+#include "movingplatform.h"
+#include "firebar.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 
@@ -53,6 +55,7 @@ private:
     Inert * movingCastle; // The transparent castle to show where it will be.
     Flagpole * flagpole; // Since there can be only one flagpole, we keep a pointer to it outside inerts.
     Flagpole * movingFlagpole; // The transparent flagpole to show where it will be.
+    MovingPlatform * movingMovingPlatform; // The transparent movingPlatform to show how it will move
 
 public:
     LevelEditorEngine();

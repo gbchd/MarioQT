@@ -23,6 +23,9 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonSecretBoxFlower, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxFlower()));
     connect(&buttonSecretBoxStar, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxStar()));
     connect(&buttonSecretBoxCoin, SIGNAL (clicked()), this, SLOT (handleButtonSecretBoxCoin()));
+    connect(&buttonSmallMovingPlatform, SIGNAL (clicked()), this, SLOT (handleButtonSmallMovingPlatform()));
+    connect(&buttonLargeMovingPlatform, SIGNAL (clicked()), this, SLOT (handleButtonLargeMovingPlatform()));
+    connect(&buttonFireBar, SIGNAL (clicked()), this, SLOT (handleButtonFireBar()));
     connect(&buttonCoinItem, SIGNAL (clicked()), this, SLOT (handleButtonCoinItem()));
     connect(&buttonSmallPipe, SIGNAL (clicked()), this, SLOT (handleButtonSmallPipe()));
     connect(&buttonMedPipe, SIGNAL (clicked()), this, SLOT (handleButtonMedPipe()));
@@ -139,6 +142,18 @@ LevelEditorWidget::LevelEditorWidget()
     buttonSecretBoxCoin.setIconSize(QSize(buttonSize, buttonSize));
     buttonSecretBoxCoin.resize(buttonSize,buttonSize);
 
+    buttonSmallMovingPlatform.setIcon(QPixmap(":/resources/graphics/moving-platform-1.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonSmallMovingPlatform.setIconSize(QSize(buttonSize, buttonSize));
+    buttonSmallMovingPlatform.resize(buttonSize,buttonSize);
+
+    buttonLargeMovingPlatform.setIcon(QPixmap(":/resources/graphics/moving-platform-3.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonLargeMovingPlatform.setIconSize(QSize(buttonSize, buttonSize));
+    buttonLargeMovingPlatform.resize(buttonSize,buttonSize);
+
+    buttonFireBar.setIcon(QPixmap(":/resources/graphics/firebar.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonFireBar.setIconSize(QSize(buttonSize, buttonSize));
+    buttonFireBar.resize(buttonSize,buttonSize);
+
     buttonCoinItem.setIcon(QPixmap(":/resources/graphics/items/coin-0.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonCoinItem.setIconSize(QSize(buttonSize, buttonSize));
     buttonCoinItem.resize(buttonSize,buttonSize);
@@ -233,6 +248,9 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxFlower);
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxStar);
     objectButtonsHorizontalLayout.addWidget(&buttonSecretBoxCoin);
+    objectButtonsHorizontalLayout.addWidget(&buttonSmallMovingPlatform);
+    objectButtonsHorizontalLayout.addWidget(&buttonLargeMovingPlatform);
+    objectButtonsHorizontalLayout.addWidget(&buttonFireBar);
     objectButtonsHorizontalLayout.addWidget(&buttonCoinItem);
     objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
     objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
@@ -298,6 +316,12 @@ void LevelEditorWidget::handleButtonSecretBoxFlower() { levelEditorEngine->setSe
 void LevelEditorWidget::handleButtonSecretBoxStar() { levelEditorEngine->setSelectedButton(SECRETBOXSTAR); }
 
 void LevelEditorWidget::handleButtonSecretBoxCoin() { levelEditorEngine->setSelectedButton(SECRETBOXCOIN); }
+
+void LevelEditorWidget::handleButtonSmallMovingPlatform() { levelEditorEngine->setSelectedButton(SMALLMOVINGPLATFORM); }
+
+void LevelEditorWidget::handleButtonLargeMovingPlatform() { levelEditorEngine->setSelectedButton(LARGEMOVINGPLATFORM); }
+
+void LevelEditorWidget::handleButtonFireBar() { levelEditorEngine->setSelectedButton(FIREBAR); }
 
 void LevelEditorWidget::handleButtonCoinItem() { levelEditorEngine->setSelectedButton(COINITEM); }
 
