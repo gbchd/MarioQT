@@ -92,6 +92,7 @@ void GameController::advance() {
         }
     }
 
+    hud.setTimer(getTimeBeforeReset());
     gameview->repaint();
 }
 
@@ -377,7 +378,10 @@ void GameController::clean(){
 void GameController::generateMap(){
     //On crée les maps dans le controlleur
     Map * map = new Map(mapFilepath);
+
     gameview->setLevelSize(map->getWidth(), map->getHeight());
+    hud.setMapName(map->getName());
+
     qDebug() << map->getCreator() << map->getCreationDate();
 
     Mario * mario = new Mario();
@@ -406,6 +410,8 @@ void GameController::start(){
     QObject::connect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
 
     Score::reset();
+
+    hud.init();
 
     qDebug() << "Tickrate" << tickrate;
     engine.setTimerType(Qt::PreciseTimer);

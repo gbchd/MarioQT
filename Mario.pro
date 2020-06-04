@@ -34,6 +34,7 @@ SOURCES += \
     goomba.cpp \
     graphicvisitor.cpp \
     hitboxgraphicvisitor.cpp \
+    hud.cpp \
     inert.cpp \
     leveleditorengine.cpp \
     leveleditorview.cpp \
@@ -77,6 +78,7 @@ HEADERS += \
     goomba.h \
     graphicvisitor.h \
     hitboxgraphicvisitor.h \
+    hud.h \
     inert.h \
     leveleditorengine.h \
     leveleditorview.h \

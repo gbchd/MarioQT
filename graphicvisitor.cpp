@@ -27,4 +27,5 @@ void GraphicVisitor::paint(){
             painter.drawPixmap(o->getPosition().x() - position, o->getPosition().y(), o->getCurrentTexture());
         }
     }
+    painter.end();
 }
