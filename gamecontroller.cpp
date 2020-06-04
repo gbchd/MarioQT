@@ -278,11 +278,8 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
-
-    QString letter = "A";
-    if(e->key() == 65){
-
-      qDebug() << QKeySequence::fromString(letter)[0] << endl;
+    if(e->key() == settings->getKeyA()){
+        settings->readConfig();
     }
 
     if(e->key() == Qt::Key_Escape){

@@ -44,6 +44,7 @@ public:
 
     void launchGameOnMainWindow(QString filePath);
     void launchLevelEditorOnMainWindow();
+    void launchOptionsMenuOnMainWindow();
 };
 
 #endif // MAINMENUCONTROLLER_H

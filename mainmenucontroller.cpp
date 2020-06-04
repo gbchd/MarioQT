@@ -70,3 +70,8 @@ void MainMenuController::launchLevelEditorOnMainWindow()
 {
     mainWindow->launchLevelEditor();
 }
+
+void MainMenuController::launchOptionsMenuOnMainWindow()
+{
+    mainWindow->displayOptionsMenu();
+}

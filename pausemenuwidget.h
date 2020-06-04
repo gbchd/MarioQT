@@ -16,7 +16,6 @@ private:
 
     QPushButton continueButton;
     QPushButton menuButton;
-    QPushButton optionsButton;
     QPushButton quitButton;
 
     void applyStyleSheet();
@@ -28,7 +27,6 @@ public:
 private slots:
     void handleContinueButton();
     void handleMenuButton();
-    void handleOptionsButton();
     void handleQuitButton();
 
 };
