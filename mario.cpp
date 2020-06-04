@@ -8,6 +8,7 @@
 #include "trampoline.h"
 #include "fireball.h"
 #include "flagpole.h"
+#include "movingplatform.h"
 
 Mario::Mario()
 {
@@ -515,6 +516,20 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
                         bounceWithVariableVelocity(-18);
                     }
                 }
+                else{
+                    FireBall * fb = dynamic_cast<FireBall *>(o);
+                    if(fb && fb->getFireballOfFirebar()){
+                        hurt();
+                    }
+                    else{
+                        MovingPlatform * mp = dynamic_cast<MovingPlatform *>(o);
+                        if(mp){
+                            moveTo(position.x(), mp->getPosition().y() - hitbox.height());
+                            grounded = true;
+                            ground = o;
+                        }
+                    }
+                }
             }
         }
     }
@@ -538,6 +553,12 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
             if(fp){
                 handleFlagpoleCollision(fp);
             }
+            else{
+                FireBall * fb = dynamic_cast<FireBall *>(o);
+                if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
+            }
         }
     }
 }
@@ -560,6 +581,12 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
             if(fp){
                 handleFlagpoleCollision(fp);
             }
+            else{
+                FireBall * fb = dynamic_cast<FireBall *>(o);
+                if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
+            }
         }
     }
 }
@@ -581,6 +608,12 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             Flagpole * fp = dynamic_cast<Flagpole *>(o);
             if(fp){
                 handleFlagpoleCollision(fp);
+            }
+            else{
+                FireBall * fb = dynamic_cast<FireBall *>(o);
+                if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
             }
         }
     }
@@ -612,6 +645,20 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
                 Flagpole * fp = dynamic_cast<Flagpole *>(o);
                 if(fp){
                     handleFlagpoleCollision(fp);
+                }
+                else{
+                    FireBall * fb = dynamic_cast<FireBall *>(o);
+                    if(fb && fb->getFireballOfFirebar()){
+                        hurt();
+                    }
+                    else{
+                        MovingPlatform * mp = dynamic_cast<MovingPlatform *>(o);
+                        if(mp){
+                            moveTo(position.x(), mp->getPosition().y() - hitbox.height());
+                            grounded = true;
+                            ground = o;
+                        }
+                    }
                 }
             }
         }

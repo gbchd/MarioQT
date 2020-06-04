@@ -2,6 +2,8 @@
 
 FireBall::FireBall(Direction direction)
 {
+    fireballOfFirebar = false;
+
     textures[0] = loadTexture(":/resources/graphics/items/fireball-0.png").scaled(BLOCSIZE/2, BLOCSIZE/2);
     textures[1] = loadTexture(":/resources/graphics/items/fireball-1.png").scaled(BLOCSIZE/2, BLOCSIZE/2);
     textures[2] = loadTexture(":/resources/graphics/items/fireball-2.png").scaled(BLOCSIZE/2, BLOCSIZE/2);
@@ -43,7 +45,7 @@ FireBall::FireBall(Direction direction)
 
 void FireBall::advance()
 {
-    if(!dead){
+    if(!fireballOfFirebar && !dead){
         velocity.setY(velocity.y() + gravity);
 
         updateVelocity();
@@ -88,35 +90,35 @@ void FireBall::die()
 
 void FireBall::collisionByDefaultHandler(ObjectModel *o)
 {
-    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+    if(!fireballOfFirebar && !dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
         die();
     }
 }
 
 void FireBall::collisionOnBottomHandler(ObjectModel *o)
 {
-    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+    if(!fireballOfFirebar && !dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
         velocity.setY(-6.4);
     }
 }
 
 void FireBall::collisionOnTopHandler(ObjectModel *o)
 {
-    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+    if(!fireballOfFirebar && !dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
         velocity.setY(-6.4);
     }
 }
 
 void FireBall::collisionOnLeftHandler(ObjectModel *o)
 {
-    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+    if(!fireballOfFirebar && !dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
         die();
     }
 }
 
 void FireBall::collisionOnRightHandler(ObjectModel *o)
 {
-    if(!dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
+    if(!fireballOfFirebar && !dynamic_cast<CollectableItem *>(o) && !dynamic_cast<Coin *>(o)){
         die();
     }
 }
