@@ -39,8 +39,8 @@ void LevelEditorEngine::exportMapToJSon()
 
         if(flagpole != nullptr){
             stream<<"\"block-1\":{\"type\":\"flagpole\",\"x\":"<<flagpole->getPosition().x()/32<<",\"y\":"<<flagpole->getPosition().y()/32<<",\"width\":1,\"height\":1}";
+            if(inerts.length()>0){ stream<<","; }
         }
-        if(inerts.length()>0){ stream<<","; }
 
         for(int indice=0; indice<inerts.length(); indice++){
             if(indice>0){ stream<<","; }

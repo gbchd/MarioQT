@@ -11,7 +11,6 @@ private:
     int frameNumber;
     QElapsedTimer timerAnimation;
 
-
     //=======attributes for coins from blocs=======
     bool coinSpawnedByBloc;
     int counterGameFramesUntilDeath;

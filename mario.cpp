@@ -243,6 +243,8 @@ void Mario::animate(){
 
 void Mario::jump(){
     if(grounded){
+
+        big ? playSound(":/resources/sounds/jump-big.wav") : playSound(":/resources/sounds/jump-small.wav");
         jumping = true;
         gravity = jumpGravity;
         velocity.setY(jumpInitialSpeed);
@@ -263,12 +265,14 @@ void Mario::hurt(){
             transforming = true;
             currentTransformingTexture = 19;
             timerTransformation.start();
+            playSound(":/resources/sounds/shrink.wav");
         }
         else if(big == true){
             transformingDown = true;
             transforming = true;
             currentTransformingTexture = 8;
             timerTransformation.start();
+            playSound(":/resources/sounds/shrink.wav");
         }
         else{
            die();
@@ -277,6 +281,7 @@ void Mario::hurt(){
 }
 
 void Mario::die(){
+    playSound(":/resources/sounds/death.wav");
     collidable = false;
     dead = true;
     moving = false;
@@ -586,6 +591,7 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     Enemy * enemy = dynamic_cast<Enemy *>(o);
     if(enemy != nullptr){
         bounce();
+        playSound(":/resources/sounds/stomp.wav");
     }
     else{
         CollectableItem * collectableItem = dynamic_cast<CollectableItem *>(o);
@@ -612,6 +618,13 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
     }
 }
 
+void Mario::playSound(QString soundPath){
+    QSoundEffect * test = new QSoundEffect();
+    test->setSource(QUrl::fromLocalFile(soundPath));
+    test->setVolume(0.05);
+    test->play();
+}
+
 void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
 {
     switch(collectableItem->getItemType()){
@@ -623,6 +636,7 @@ void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
             break;}
         case MUSHROOMCOLLECTABLE:{
             if(!big && !onFire){
+                playSound(":/resources/sounds/mushroom-eat.wav");
                 transformingDown = false;
                 transforming = true;
                 currentTransformingTexture = 0;
@@ -631,12 +645,14 @@ void Mario::handleCollectableItemCollision(CollectableItem * collectableItem)
             break;}
         case FLOWERCOLLECTABLE:{
             if(!big){
+                playSound(":/resources/sounds/mushroom-eat.wav");
                 transformingDown = false;
                 transforming = true;
                 currentTransformingTexture = 0;
                 timerTransformation.start();
             }
             else if(!onFire){
+                playSound(":/resources/sounds/mushroom-eat.wav");
                 transformingDown = false;
                 transforming = true;
                 currentTransformingTexture = 10;

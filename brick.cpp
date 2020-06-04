@@ -64,6 +64,7 @@ void Brick::animate()
 }
 
 QList<BrickDebris*> Brick::doBreak(){
+    playSound(":/resources/sounds/block-break.wav");
     QList<BrickDebris*> brickDebris;
 
     BrickDebris * bd1 = new BrickDebris(LEFT);
@@ -93,8 +94,16 @@ QList<BrickDebris*> Brick::doBreak(){
 }
 
 Coin * Brick::spawnCoin(){
+    playSound(":/resources/sounds/coin.wav");
     setBrickState(BRICKWILLGIVECOINONNEXTHIT);
     Coin * coin = new Coin(true);
     coin->moveTo(position.x()+(BLOCSIZE-coin->getCurrentTexture().width())/2, position.y()-BLOCSIZE);
     return coin;
+}
+
+void Brick::playSound(QString soundPath){
+    QSoundEffect * test = new QSoundEffect();
+    test->setSource(QUrl::fromLocalFile(soundPath));
+    test->setVolume(0.05);
+    test->play();
 }

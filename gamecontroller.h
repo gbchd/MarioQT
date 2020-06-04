@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QtMath>
+#include <QSoundEffect>
 
 #include "gameview.h"
 #include "objectmodel.h"
@@ -17,6 +18,7 @@
 #include "collectableitem.h"
 #include "fireball.h"
 #include "score.h"
+
 
 class MainWindow;
 
@@ -35,6 +37,10 @@ private:
     QElapsedTimer levelTimer;
     int levelMaxTime = 400*1000;
     Map * currentMap;
+
+    //Music
+    QSoundEffect *music;
+    QSoundEffect *pauseSound;
 
     // Possède des objets de type Inert et Entity
     Mario * mario;

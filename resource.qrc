@@ -104,5 +104,19 @@
         <file>resources/maps/Colin's World.json</file>
         <file>resources/fonts/mario_font.ttf</file>
         <file>resources/graphics/characters/mario/fiery-mario-hang-1.png</file>
+        <file>resources/sounds/block-break.wav</file>
+        <file>resources/sounds/block-hit.wav</file>
+        <file>resources/sounds/coin.wav</file>
+        <file>resources/sounds/death.wav</file>
+        <file>resources/sounds/gameover.wav</file>
+        <file>resources/sounds/jump-big.wav</file>
+        <file>resources/sounds/jump-small.wav</file>
+        <file>resources/sounds/mushroom-appear.wav</file>
+        <file>resources/sounds/mushroom-eat.wav</file>
+        <file>resources/sounds/oneup.wav</file>
+        <file>resources/sounds/overworld.wav</file>
+        <file>resources/sounds/pause.wav</file>
+        <file>resources/sounds/shrink.wav</file>
+        <file>resources/sounds/stomp.wav</file>
     </qresource>
 </RCC>
