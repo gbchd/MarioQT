@@ -500,6 +500,17 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
             if(fp){
                 handleFlagpoleCollision(fp);
             }
+            else{
+                Trampoline * trampoline = dynamic_cast<Trampoline*>(o);
+                if(trampoline){
+                    if(trampoline->isTrampolineBig()){
+                        bounceWithVariableVelocity(-22);
+                    }
+                    else{
+                        bounceWithVariableVelocity(-18);
+                    }
+                }
+            }
         }
     }
 }

@@ -31,6 +31,9 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
+    if(levelTimer.elapsed() > levelMaxTime){
+        reset();
+    }
     if(mario && mario->isTransforming()){
         mario->animate();
         for(Inert * i : inerts){ i->animate(); }
@@ -58,6 +61,7 @@ void GameController::advance() {
             }
 
             inert->animate();
+
         }
 
         if(inert->isDeletable()){
@@ -409,6 +413,8 @@ void GameController::start(){
 
     generateMap();
     engine.start();
+
+    levelTimer.start();
 }
 
 
@@ -417,8 +423,11 @@ void GameController::stop(){
     Score::reset();
     engine.stop();
     QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
+    levelTimer.invalidate();
 }
 
 void GameController::reset(){ 
     generateMap();
+
+    levelTimer.restart();
 }

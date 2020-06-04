@@ -90,8 +90,11 @@ void Koopa::hurtfulFrameHandler(){
     }
     else{
         counterNonHurtfulFrame = 0;
+
     }
 }
+
+
 
 void Koopa::collisionOnLeftHandler(ObjectModel *o){
     //Entity::collisionOnLeftHandler(o);

@@ -32,7 +32,8 @@ private:
     //The view controlled by this controller
     GameView * gameview;
 
-
+    QElapsedTimer levelTimer;
+    int levelMaxTime = 400*1000;
     Map * currentMap;
 
     // Possède des objets de type Inert et Entity
@@ -72,6 +73,8 @@ public:
 
     void keyPressEventHandler(QKeyEvent * e);
     void keyReleaseEventHandler(QKeyEvent * e);
+
+    int getTimeBeforeReset(){return (levelMaxTime - levelTimer.elapsed())/1000;}
 
     void setPlayer(Mario * m);
     void addInert(Inert * i);
