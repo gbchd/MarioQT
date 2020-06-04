@@ -18,6 +18,8 @@
 #include "fireball.h"
 #include "score.h"
 
+#include "settings.h"
+
 class MainWindow;
 
 class GameController : public QObject
@@ -60,6 +62,7 @@ private:
     void boxHandler(Box * box);
 
     MainWindow * mainWindow;
+    Settings * settings;
 
 public:
     GameController();
@@ -88,6 +91,7 @@ public:
     void removeEntity(Entity * e);
 
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; };
+    void setSettingsPointer(Settings * settings){this->settings = settings;};
 
 public slots:
     // This slot is called by the timer to advance the game to the next frame

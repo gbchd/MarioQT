@@ -52,6 +52,7 @@ SOURCES += \
     pipe.cpp \
     scenery.cpp \
     score.cpp \
+    settings.cpp \
     statsmodel.cpp \
     trampoline.cpp \
     visitor.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     pipe.h \
     scenery.h \
     score.h \
+    settings.h \
     statsmodel.h \
     trampoline.h \
     visitor.h \
