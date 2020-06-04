@@ -27,6 +27,8 @@
 #include "movingplatform.h"
 #include "firebar.h"
 #include "fireball.h"
+#include "podoboo.h"
+#include "piranhaplant.h"
 #include "objectmodel.h"
 
 class Map

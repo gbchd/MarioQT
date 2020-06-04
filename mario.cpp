@@ -9,6 +9,8 @@
 #include "fireball.h"
 #include "flagpole.h"
 #include "movingplatform.h"
+#include "podoboo.h"
+#include "piranhaplant.h"
 
 Mario::Mario()
 {
@@ -542,6 +544,9 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
                             }
 
                         }
+                        else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                            hurt();
+                        }
                     }
                 }
             }
@@ -573,6 +578,9 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
                 if(fb && fb->getFireballOfFirebar()){
                     hurt();
                 }
+                else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                    hurt();
+                }
             }
         }
     }
@@ -602,6 +610,9 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
                 if(fb && fb->getFireballOfFirebar()){
                     hurt();
                 }
+                else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                    hurt();
+                }
             }
         }
     }
@@ -629,6 +640,9 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             else{
                 FireBall * fb = dynamic_cast<FireBall *>(o);
                 if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
+                else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
                     hurt();
                 }
             }

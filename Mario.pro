@@ -55,6 +55,8 @@ SOURCES += \
     pausemenucontroller.cpp \
     pausemenuwidget.cpp \
     pipe.cpp \
+    piranhaplant.cpp \
+    podoboo.cpp \
     scenery.cpp \
     score.cpp \
     settings.cpp \
@@ -103,6 +105,8 @@ HEADERS += \
     pausemenucontroller.h \
     pausemenuwidget.h \
     pipe.h \
+    piranhaplant.h \
+    podoboo.h \
     scenery.h \
     score.h \
     settings.h \

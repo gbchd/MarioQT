@@ -129,5 +129,6 @@
         <file>resources/graphics/mobs/hammer-brother/hammer-brother-throw-2.png</file>
         <file>resources/graphics/mobs/hammer-brother/hammer-brother.png</file>
         <file>resources/graphics/mobs/hammer-brother/hammer.png</file>
+        <file>resources/graphics/podoboo.png</file>
     </qresource>
 </RCC>

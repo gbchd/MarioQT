@@ -37,6 +37,8 @@ LevelEditorWidget::LevelEditorWidget()
     connect(&buttonGoomba, SIGNAL (clicked()), this, SLOT (handleButtonGoomba()));
     connect(&buttonTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtle()));
     connect(&buttonFlyingTurtle, SIGNAL (clicked()), this, SLOT (handleButtonTurtleFlying()));
+    connect(&buttonPodoboo, SIGNAL (clicked()), this, SLOT (handleButtonPodoboo()));
+    connect(&buttonPiranhaPlant, SIGNAL (clicked()), this, SLOT (handleButtonPiranhaPlant()));
     connect(&buttonMario, SIGNAL (clicked()), this, SLOT (handleButtonMario()));
     connect(&buttonSmallHill, SIGNAL (clicked()), this, SLOT (handleButtonSmallHill()));
     connect(&buttonBigHill, SIGNAL (clicked()), this, SLOT (handleButtonBigHill()));
@@ -198,6 +200,14 @@ LevelEditorWidget::LevelEditorWidget()
     buttonFlyingTurtle.setIconSize(QSize(buttonSize, buttonSize));
     buttonFlyingTurtle.resize(buttonSize,buttonSize);
 
+    buttonPodoboo.setIcon(QPixmap(":/resources/graphics/podoboo.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonPodoboo.setIconSize(QSize(buttonSize, buttonSize));
+    buttonPodoboo.resize(buttonSize,buttonSize);
+
+    buttonPiranhaPlant.setIcon(QPixmap(":/resources/graphics/mobs/piranha/piranha-0.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
+    buttonPiranhaPlant.setIconSize(QSize(buttonSize, buttonSize));
+    buttonPiranhaPlant.resize(buttonSize,buttonSize);
+
     buttonMario.setIcon(QPixmap(":/resources/graphics/characters/mario/mario-small-stand.png").scaled(buttonSize, buttonSize, Qt::KeepAspectRatio));
     buttonMario.setIconSize(QSize(buttonSize, buttonSize));
     buttonMario.resize(buttonSize,buttonSize);
@@ -255,6 +265,8 @@ LevelEditorWidget::LevelEditorWidget()
     objectButtonsHorizontalLayout.addWidget(&buttonGoomba);
     objectButtonsHorizontalLayout.addWidget(&buttonTurtle);
     objectButtonsHorizontalLayout.addWidget(&buttonFlyingTurtle);
+    objectButtonsHorizontalLayout.addWidget(&buttonPodoboo);
+    objectButtonsHorizontalLayout.addWidget(&buttonPiranhaPlant);
     objectButtonsHorizontalLayout.addWidget(&buttonSmallPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonMedPipe);
     objectButtonsHorizontalLayout.addWidget(&buttonBigPipe);
@@ -344,6 +356,10 @@ void LevelEditorWidget::handleButtonGoomba() { levelEditorEngine->setSelectedBut
 void LevelEditorWidget::handleButtonTurtle() { levelEditorEngine->setSelectedButton(TURTLE); }
 
 void LevelEditorWidget::handleButtonTurtleFlying() { levelEditorEngine->setSelectedButton(FLYINGTURTLE); }
+
+void LevelEditorWidget::handleButtonPodoboo() { levelEditorEngine->setSelectedButton(PODOBOO); }
+
+void LevelEditorWidget::handleButtonPiranhaPlant() { levelEditorEngine->setSelectedButton(PIRANHAPLANT); }
 
 void LevelEditorWidget::handleButtonMario() { levelEditorEngine->setSelectedButton(MARIO); }
 
