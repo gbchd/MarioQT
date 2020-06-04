@@ -34,6 +34,7 @@ SOURCES += \
     goomba.cpp \
     graphicvisitor.cpp \
     hitboxgraphicvisitor.cpp \
+    hud.cpp \
     inert.cpp \
     leveleditorengine.cpp \
     leveleditorview.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
     pipe.cpp \
     scenery.cpp \
     score.cpp \
+    settings.cpp \
     statsmodel.cpp \
     trampoline.cpp \
     visitor.cpp \
@@ -77,6 +79,7 @@ HEADERS += \
     goomba.h \
     graphicvisitor.h \
     hitboxgraphicvisitor.h \
+    hud.h \
     inert.h \
     leveleditorengine.h \
     leveleditorview.h \
@@ -94,6 +97,7 @@ HEADERS += \
     pipe.h \
     scenery.h \
     score.h \
+    settings.h \
     statsmodel.h \
     trampoline.h \
     visitor.h \

@@ -12,7 +12,7 @@ HitboxGraphicVisitor::HitboxGraphicVisitor(GameView * gv):painter(gv)
 }
 
 void HitboxGraphicVisitor::paint(){
-  for(int zValue = 0; zValue < objects.length(); zValue++){
+    for(int zValue = 0; zValue < objects.length(); zValue++){
         for(ObjectModel * o : objects[zValue]){
             Entity * entity = dynamic_cast<Entity *>(o);
             if(entity){
@@ -33,4 +33,5 @@ void HitboxGraphicVisitor::paint(){
             painter.fillRect(pos,QColor(0,255,0));
         }
     }
+    painter.end();
 }

@@ -12,6 +12,7 @@ MainWindow::MainWindow() : QMainWindow()
 
     // We initialize the game's widget and controller
     gamecontroller.setGameView(&gameview);
+    gamecontroller.setSettingsPointer(&settings);
     gamecontroller.setMainWindowPointer(this);
     gameview.setGameController(&gamecontroller);
 

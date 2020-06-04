@@ -18,7 +18,7 @@
 #include "collectableitem.h"
 #include "fireball.h"
 #include "score.h"
-
+#include "settings.h"
 
 class MainWindow;
 
@@ -36,6 +36,9 @@ private:
 
     QElapsedTimer levelTimer;
     int levelMaxTime = 400*1000;
+
+    HUD hud;
+
     Map * currentMap;
 
     //Music
@@ -66,6 +69,7 @@ private:
     void boxHandler(Box * box);
 
     MainWindow * mainWindow;
+    Settings * settings;
 
 public:
     GameController();
@@ -75,6 +79,7 @@ public:
     //Set tickrate by giving the number of fps you want
     void setTickrate(float fps){tickrate = 1000/fps;}
 
+    QPixmap& getHUD(){return hud.getScene();}
     void update(CameraVisitor & visitor);
 
     void keyPressEventHandler(QKeyEvent * e);
@@ -94,6 +99,7 @@ public:
     void removeEntity(Entity * e);
 
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; };
+    void setSettingsPointer(Settings * settings){this->settings = settings;};
 
 public slots:
     // This slot is called by the timer to advance the game to the next frame
