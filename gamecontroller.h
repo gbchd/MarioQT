@@ -51,7 +51,7 @@ private:
     int BLOCSIZE = 32; //taille d'un bloc devrait le passer en constante globale
 
     // Key queue for smooth transitions for pro players
-    QList<Qt::Key> keyQueue;
+    QList<int> keyQueue;
     void updateDirection();
 
     QString mapFilepath;

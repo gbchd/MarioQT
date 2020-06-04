@@ -47,6 +47,8 @@ SOURCES += \
     map.cpp \
     mario.cpp \
     objectmodel.cpp \
+    optionsmenucontroller.cpp \
+    optionsmenuwidget.cpp \
     pausemenucontroller.cpp \
     pausemenuwidget.cpp \
     pipe.cpp \
@@ -90,6 +92,8 @@ HEADERS += \
     map.h \
     mario.h \
     objectmodel.h \
+    optionsmenucontroller.h \
+    optionsmenuwidget.h \
     pausemenucontroller.h \
     pausemenuwidget.h \
     pipe.h \

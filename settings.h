@@ -9,49 +9,36 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPainter>
+#include <QKeySequence>
 
-#include "inert.h"
-#include "entity.h"
-#include "mario.h"
-#include "goomba.h"
-#include "koopa.h"
-#include "wall.h"
-#include "block.h"
-#include "box.h"
-#include "brick.h"
-#include "billblaster.h"
-#include "scenery.h"
-#include "pipe.h"
-#include "trampoline.h"
-#include "flagpole.h"
-#include "objectmodel.h"
 
 class Settings
 {
 private:
-    Qt::Key keyJump;
-    Qt::Key keyMoveRight;
-    Qt::Key keyMoveLeft;
-    Qt::Key keyRun;
-    Qt::Key keyShootFireBall;
+    int keyJump;
+    int keyMoveRight;
+    int keyMoveLeft;
+    int keyRun;
+    int keyShootFireBall;
+    int keyA;
 
 
 public:
     Settings();
     void readConfig();
 
-    //Getters and setters
-    Qt::Key getKeyJump() const;
-    void setKeyJump(const Qt::Key &value);
-    Qt::Key getKeyMoveRight() const;
-    void setKeyMoveRight(const Qt::Key &value);
-    Qt::Key getKeyMoveLeft() const;
-    void setKeyMoveLeft(const Qt::Key &value);
-
-    Qt::Key getKeyRun() const;
-    void setKeyRun(const Qt::Key &value);
-    Qt::Key getKeyShootFireBall() const;
-    void setKeyShootFireBall(const Qt::Key &value);
+    int getKeyJump() const;
+    void setKeyJump(int value);
+    int getKeyMoveRight() const;
+    void setKeyMoveRight(int value);
+    int getKeyMoveLeft() const;
+    void setKeyMoveLeft(int value);
+    int getKeyRun() const;
+    void setKeyRun(int value);
+    int getKeyShootFireBall() const;
+    void setKeyShootFireBall(int value);
+    int getKeyA() const;
+    void setKeyA(int value);
 };
 
 #endif // SETTINGS_H
