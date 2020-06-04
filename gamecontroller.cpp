@@ -229,7 +229,6 @@ void GameController::update(CameraVisitor & visitor){
     }
 }
 
-
 void GameController::keyPressEventHandler(QKeyEvent *e){
     if(mario != nullptr && !mario->getIsInFlagpoleCinematic()){
         if(e->key() == settings->getKeyMoveLeft()){
