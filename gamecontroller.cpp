@@ -278,11 +278,8 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
-
-    QString letter = "A";
-    if(e->key() == 65){
-
-      qDebug() << QKeySequence::fromString(letter)[0] << endl;
+    if(e->key() == settings->getKeyA()){
+        settings->readConfig();
     }
 
     if(e->key() == Qt::Key_Escape){
@@ -451,7 +448,6 @@ void GameController::start(){
 
 void GameController::stop(){
     clean();
-    Score::reset();
     engine.stop();
     QObject::disconnect(&engine, SIGNAL(timeout()), this, SLOT(advance()));
     levelTimer.invalidate();
@@ -461,7 +457,8 @@ void GameController::stop(){
 
 void GameController::reset(){ 
     generateMap();
-
+    Score::reset();
+    hud.init();
     levelTimer.restart();
     music->stop();
     music->play();

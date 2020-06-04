@@ -1,5 +1,7 @@
 {
   "jump":"SPACE",
   "move-left":"Q",
-  "move-right":"D"
+  "move-right":"D",
+  "shoot-fire-ball": "SHIFT",
+  "run": "SHIFT"
 }

@@ -46,25 +46,18 @@ void MainMenuWidget::applyStyleSheet()
                               "font-size: 20px;"
                               "font-weight : bold;");
 
-     playButton.setStyleSheet("background-color: #BE2801;"
-                               "color: white;"
-                               "font-size: 20px;"
-                               "font-weight : bold;");
+    QString styleButton = "QPushButton {background-color: #BE2801;"
+                          "color: white;"
+                          "font-size: 20px;"
+                          "font-weight : bold;}"
+                          ""
+                          "QPushButton:hover {background-color: white;"
+                          "color: #BE2801;"
+                          "font-size: 20px;"
+                          "font-weight : bold;}";
 
-     optionsButton.setStyleSheet("background-color: #BE2801;"
-                               "color: white;"
-                               "font-size: 20px;"
-                               "font-weight : bold;");
 
-     levelEditorButton.setStyleSheet("background-color: #BE2801;"
-                               "color: white;"
-                               "font-size: 20px;"
-                               "font-weight : bold;");
-
-     loadLevelButton.setStyleSheet("background-color: #BE2801;"
-                               "color: white;"
-                               "font-size: 20px;"
-                               "font-weight : bold;");
+    setStyleSheet(styleButton);
 }
 
 void MainMenuWidget::addItemToWidgetList(QString text, QString address)
@@ -85,7 +78,7 @@ void MainMenuWidget::handlePlayButton()
 
 void MainMenuWidget::handleOptionsButton()
 {
-
+    mainMenuController->launchOptionsMenuOnMainWindow();
 }
 
 void MainMenuWidget::handleLoadLevelButton()

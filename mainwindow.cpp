@@ -30,11 +30,17 @@ MainWindow::MainWindow() : QMainWindow()
     pauseMenuController.setMainWindowPointer(this);
     pauseMenuWidget.setPauseMenuController(&pauseMenuController);
 
+    // We initialize the optionsMenu's widget and controller
+    optionsMenuController.setOptionsMenuWidget(&optionsMenuWidget);
+    optionsMenuController.setMainWindowPointer(this);
+    optionsMenuWidget.setOptionsMenuController(&optionsMenuController);
+
     // We fill the stackedWidget with the menu, the game and the levelEditor
     stackedWidget.addWidget(&mainMenuWidget);
     stackedWidget.addWidget(&gameview);
     stackedWidget.addWidget(&levelEditorWidget);
     stackedWidget.addWidget(&pauseMenuWidget);
+    stackedWidget.addWidget(&optionsMenuWidget);
 
     //Display the menu to the application start
     goBackToMainMenu();
@@ -71,6 +77,11 @@ void MainWindow::launchLevelEditor()
     levelEditorEngine.start();
     resize(1280, 850);
     centerOnScreen();
+}
+
+void MainWindow::displayOptionsMenu()
+{
+    stackedWidget.setCurrentIndex(4);
 }
 
 void MainWindow::centerOnScreen()

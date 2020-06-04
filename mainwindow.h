@@ -17,7 +17,11 @@
 
 #include "pausemenucontroller.h"
 #include "pausemenuwidget.h"
+
 #include "settings.h"
+
+#include "optionsmenucontroller.h"
+#include "optionsmenuwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -37,6 +41,9 @@ private:
     PauseMenuController pauseMenuController;
     PauseMenuWidget pauseMenuWidget;
 
+    OptionsMenuController optionsMenuController;
+    OptionsMenuWidget optionsMenuWidget;
+
     Settings settings;
 
 public:
@@ -49,6 +56,7 @@ public:
     void displayPauseMenu();
     void goBackToMainMenu();
     void launchLevelEditor();
+    void displayOptionsMenu();
 
     void centerOnScreen();
 };
