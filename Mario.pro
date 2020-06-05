@@ -126,3 +126,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource.qrc
+
+DISTFILES += \
+    readme_imgs/ingame.png \
+    readme_imgs/leveleditor.png \
+    readme_imgs/menu.png \
+    readme_imgs/option.png

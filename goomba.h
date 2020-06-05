@@ -19,7 +19,7 @@ public:
     Goomba(Direction spawnDirection = RIGHT);
 
     // pure virtual methods that must be implemented
-    std::string name(){ return "Goomba";};
+    inline const std::string & name() const { return "Goomba";};
     void advance() override;
     void animate() override;
     void hurt() override;
