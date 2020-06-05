@@ -133,5 +133,6 @@
         <file>resources/graphics/blocs/lava-1.png</file>
         <file>resources/maps/Madness in clouds.json</file>
         <file>resources/maps/G's World.json</file>
+        <file>resources/maps/colin's world.json</file>
     </qresource>
 </RCC>
