@@ -90,3 +90,23 @@ void OptionsMenuController::importConfigFromJSON(QString JSONPath)
     optionsMenuWidget->setTextKeyMoveLeftButton(settings->getMoveLeft());
     optionsMenuWidget->setTextKeyShootFireBallButton(settings->getShootFireBall());
 }
+
+void OptionsMenuController::exportConfigInJSON()
+{
+    QString filePath = QFileDialog::getSaveFileName(optionsMenuWidget, "Sélectionner fichier JSON", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), "Fichiers JSON (*.json)");
+    QFile myFile(filePath);
+
+    if (myFile.open(QFile::ReadWrite)){
+
+        QTextStream stream(&myFile);
+
+        stream << "{\"jump\":\""<<"yo"<<"\","
+                    "\"run\":\"Map Editor\","
+                    "\"move-left\":\""<<QDateTime::currentDateTime().toString("yyyy-MM-dd  HH:mm:ss")<<"\","
+                    "\"move-right\":{\"width\":400, \"height\":30},"
+                    "\"shoot-fire-ball\":{\"x\":"<<"hello"<<"},";
+
+        myFile.resize(myFile.pos());
+        myFile.close();
+    }
+}

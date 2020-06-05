@@ -152,6 +152,31 @@ void OptionsMenuWidget::changeStyleSheetOfTheSelectedButton(QString keyButton)
     setStyleSheet(styleButton);
 }
 
+QString OptionsMenuWidget::getTextKeyJumpButton()
+{
+    return keyJumpButton.text();
+}
+
+QString OptionsMenuWidget::getTextKeyRunButton()
+{
+    return keyRunButton.text();
+}
+
+QString OptionsMenuWidget::getTextKeyMoveRightButton()
+{
+    return keyMoveRightButton.text();
+}
+
+QString OptionsMenuWidget::getTextKeyMoveLeftButton()
+{
+    return keyMoveLeftButton.text();
+}
+
+QString OptionsMenuWidget::getTextKeyShootFireBall()
+{
+    return keyShootFireBallButton.text();
+}
+
 void OptionsMenuWidget::handleMenuButton()
 {
     optionsMenuController->launchMainMenu();
