@@ -14,7 +14,7 @@ Podoboo::Podoboo()
 
     zValue = 2;
 
-    collidable = false;
+    phantomCollidable = true;
 }
 
 Podoboo::Podoboo(QPointF initialPosition) : Podoboo()
