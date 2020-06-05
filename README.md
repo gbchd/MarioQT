@@ -22,3 +22,18 @@ Le jeu respectant le modèle MVC se voit séparé en trois parties distincte :
 - La vue composé de la classe GameView qui est un QWidget et qui va donc afficher les objets à l'écran à l'aide de Visitor (voir le design pattern).
 
 - Le controlleur avec la classe GameController qui contient la boucle principal de notre jeux. GameController possède une liste d'objets et qui va à chaque itération de sa boucle principal (la fonction advance()) va calculer la nouvelle position des objets, vérifier qu'il n'entre pas en collision avec les autres objets, résoudre les collisions si besoin et animer l'objet. On va ensuite appeler la vue pour lui indiquer qu'il faut qu'elle repeigne sa scene.
+
+## Screenshots du jeu
+
+Voici quelques images du jeu :
+- Le jeu :
+![Screenshot](readme_imgs/ingame.png)
+
+- L'éditeur de niveaux
+![Screenshot](readme_imgs/leveleditor.png)
+
+- Le menu principal
+![Screenshot](readme_imgs/menu.png)
+
+- Le menu d'options
+![Screenshot](readme_imgs/option.png)
