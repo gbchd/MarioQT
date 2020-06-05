@@ -12,12 +12,18 @@ OptionsMenuWidget::OptionsMenuWidget()
 {
     QVBoxLayout * mainLayout = new QVBoxLayout(this);
 
+    QHBoxLayout * hlayoutdefault = new QHBoxLayout();
     QHBoxLayout * hlayoutJump = new QHBoxLayout();
     QHBoxLayout * hlayoutRun = new QHBoxLayout();
     QHBoxLayout * hlayoutMoveRight = new QHBoxLayout();
     QHBoxLayout * hlayoutMoveLeft = new QHBoxLayout();
     QHBoxLayout * hlayoutShootFireBall = new QHBoxLayout();
     QHBoxLayout * hlayoutControlButton = new QHBoxLayout();
+
+    defaultButton.setText("Default");
+    hlayoutdefault->setAlignment(Qt::AlignLeft);
+    hlayoutdefault->addWidget(&defaultButton);
+    mainLayout->addLayout(hlayoutdefault);
 
     QLabel * jumpLabel = new QLabel("Jump : ");
     keyJumpButton.setText("SPACE");
@@ -55,10 +61,10 @@ OptionsMenuWidget::OptionsMenuWidget()
     mainLayout->addLayout(hlayoutShootFireBall);
 
     menuButton.setText("GO BACK TO MENU");
-    saveButton.setText("SAVE");
+    importButton.setText("IMPORT");
     exportButton.setText("EXPORT");
     hlayoutControlButton->addWidget(&menuButton);
-    hlayoutControlButton->addWidget(&saveButton);
+    hlayoutControlButton->addWidget(&importButton);
     hlayoutControlButton->addWidget(&exportButton);
     mainLayout->addLayout(hlayoutControlButton);
 
@@ -66,13 +72,14 @@ OptionsMenuWidget::OptionsMenuWidget()
 
     //Connect the buttons to their slots
     connect(&menuButton, SIGNAL (clicked()), this, SLOT (handleMenuButton()));
-    connect(&saveButton, SIGNAL (clicked()), this, SLOT (handleSaveButton()));
+    connect(&importButton, SIGNAL (clicked()), this, SLOT (handleImportButton()));
     connect(&exportButton, SIGNAL (clicked()), this, SLOT (handleExportButton()));
     connect(&keyJumpButton, SIGNAL (clicked()), this, SLOT (handleJumpButton()));
     connect(&keyRunButton, SIGNAL (clicked()), this, SLOT (handleRunButton()));
     connect(&keyMoveLeftButton, SIGNAL (clicked()), this, SLOT (handleMoveLeftButton()));
     connect(&keyMoveRightButton, SIGNAL (clicked()), this, SLOT (handleMoveRightButton()));
     connect(&keyShootFireBallButton, SIGNAL (clicked()), this, SLOT (handleShootFireBallButton()));
+    connect(&defaultButton, SIGNAL (clicked()), this, SLOT (handleDefaultButton()));
 }
 
 void OptionsMenuWidget::applyStyleSheet()
@@ -150,9 +157,9 @@ void OptionsMenuWidget::handleMenuButton()
     optionsMenuController->launchMainMenu();
 }
 
-void OptionsMenuWidget::handleSaveButton()
+void OptionsMenuWidget::handleImportButton()
 {
-    qDebug() << "SAVE";
+    qDebug() << "Import";
 }
 
 void OptionsMenuWidget::handleExportButton()
@@ -182,5 +189,10 @@ void OptionsMenuWidget::handleRunButton()
 
 void OptionsMenuWidget::handleShootFireBallButton()
 {
-   optionsMenuController->setSelectedButton(SHOOTFIREBALL, "keyShootFireBallButton");
+    optionsMenuController->setSelectedButton(SHOOTFIREBALL, "keyShootFireBallButton");
+}
+
+void OptionsMenuWidget::handleDefaultButton()
+{
+    optionsMenuController->setToDefaultKeyConfig();
 }

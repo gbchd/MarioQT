@@ -21,14 +21,16 @@ class OptionsMenuWidget : public QWidget
 private:
     OptionsMenuController * optionsMenuController;
 
+    QPushButton defaultButton;
     QPushButton menuButton;
-    QPushButton saveButton;
+    QPushButton importButton;
     QPushButton exportButton;
     QPushButton keyMoveRightButton;
     QPushButton keyMoveLeftButton;
     QPushButton keyRunButton;
     QPushButton keyJumpButton;
     QPushButton keyShootFireBallButton;
+
 
     virtual void keyPressEvent(QKeyEvent * e) override;
 public:
@@ -44,13 +46,14 @@ public:
 
 private slots:
     void handleMenuButton();
-    void handleSaveButton();
+    void handleImportButton();
     void handleExportButton();
     void handleMoveRightButton();
     void handleMoveLeftButton();
     void handleJumpButton();
     void handleRunButton();
     void handleShootFireBallButton();
+    void handleDefaultButton();
 };
 
 #endif // OPTIONSMENUWIDGET_H

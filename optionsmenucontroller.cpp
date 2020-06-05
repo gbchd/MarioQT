@@ -59,4 +59,26 @@ void OptionsMenuController::setSelectedButton(LastClickedOptionButton lcob, QStr
     lastClickedOptionButton = lcob;
 }
 
+void OptionsMenuController::setToDefaultKeyConfig()
+{
+    optionsMenuWidget->setTextKeyJumpButton("SPACE");
+    settings->setKeyJump(Qt::Key_Space);
+
+    optionsMenuWidget->setTextKeyRunButton("SHIFT");
+    settings->setKeyRun(Qt::Key_Shift);
+
+    optionsMenuWidget->setTextKeyMoveLeftButton("Q");
+    settings->setKeyMoveLeft(Qt::Key_Q);
+
+    optionsMenuWidget->setTextKeyMoveRightButton("D");
+    settings->setKeyMoveRight(Qt::Key_D);
+
+    optionsMenuWidget->setTextKeyShootFireBallButton("SHIFT");
+    settings->setKeyShootFireBall(Qt::Key_Shift);
+
+    optionsMenuWidget->applyStyleSheet();
+    //Deselect the last button clicked
+    lastClickedOptionButton = NOBUTTONCLICKED;
+}
+
 

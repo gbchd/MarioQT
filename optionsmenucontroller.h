@@ -23,6 +23,7 @@ public:
     void keyPressEventHandler(QKeyEvent * e);
     void setSettingsPointer(Settings * settings){this->settings = settings;};
     void setSelectedButton(LastClickedOptionButton lcob, QString buttonEvent);
+    void setToDefaultKeyConfig();
 
 
 };
