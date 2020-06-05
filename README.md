@@ -11,17 +11,17 @@ Le projet étant un projet QT, il est donc cross-platform. Nous recommandons l'i
 
 ## Composition du logiciel
 
-Le logiciel est composée de plusieurs parties, la partie principale étant le jeu en lui-même. Nous retrouvons également une gestion/éditeur de niveau au format JSON, une fenetre de configuration des touches exportables égalment au format JSON, tout cela accessible depuis le menu principal.
+Le logiciel est composé de plusieurs parties, la partie principale étant le jeu en lui-même. Nous retrouvons également une éditeur de niveau graphique qui permet d'exporter les niveaux créés au format JSON, une fenetre de configuration des touches exportables également au format JSON, tout cela accessible depuis le menu principal.
 
 ## Fonctionnement du jeu
 
-Le jeu respectant le modèle MVC se voit séparé en trois parties distincte :
+Le jeu respectant le modèle MVC se voit séparé en trois parties distinctes :
 
-- Le modèle composé à la base d'ObjectModel qui représente tout les objets de notre jeux. Les objets sont alors répartis en deux catégories, les inerts (les objets ne bougeant pas) et les entités (les objets avec la fonction advance()).
+- Le modèle composé de sous classes d'ObjectModel qui représente tout les objets de notre jeux. Les objets sont alors répartis en deux catégories : les inerts (les objets ne bougeant pas) et les entitées (les objets avec la fonction advance()).
 
-- La vue composé de la classe GameView qui est un QWidget et qui va donc afficher les objets à l'écran à l'aide de Visitor (voir le design pattern).
+- La vue est composée de la classe GameView qui est un QWidget et qui va donc afficher les objets à l'écran à l'aide de Visitor (voir le design pattern).
 
-- Le controlleur avec la classe GameController qui contient la boucle principal de notre jeux. GameController possède une liste d'objets et qui va à chaque itération de sa boucle principal (la fonction advance()) va calculer la nouvelle position des objets, vérifier qu'il n'entre pas en collision avec les autres objets, résoudre les collisions si besoin et animer l'objet. On va ensuite appeler la vue pour lui indiquer qu'il faut qu'elle repeigne sa scene.
+- Le controlleur avec la classe GameController qui contient la boucle principal de notre jeux. GameController possède une liste d'objets et qui, à chaque itération de sa boucle principal (la fonction advance()), va calculer la nouvelle position des objets, vérifier qu'ils n'entrent pas en collision avec les autres objets, résoudre les collisions si besoin et enfin animer l'objet. On va ensuite appeler la vue pour lui indiquer qu'il faut qu'elle repeigne sa scene.
 
 ## Screenshots du jeu
 
