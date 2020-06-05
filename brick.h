@@ -34,6 +34,8 @@ public:
     void animate() override;
 
     void playSound(QString soundPath);
+    void collisionOnLeftHandler(ObjectModel* o) override;
+    void collisionOnRightHandler(ObjectModel* o) override;
     void collisionOnBottomHandler(ObjectModel * o) override;
 };
 
