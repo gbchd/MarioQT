@@ -27,13 +27,17 @@ Le jeu respectant le modèle MVC se voit séparé en trois parties distincte :
 
 Voici quelques images du jeu :
 - Le jeu :
+
 ![Screenshot](readme_imgs/ingame.png)
 
-- L'éditeur de niveaux
+- L'éditeur de niveaux :
+
 ![Screenshot](readme_imgs/leveleditor.png)
 
-- Le menu principal
+- Le menu principal :
+
 ![Screenshot](readme_imgs/menu.png)
 
-- Le menu d'options
+- Le menu d'options :
+
 ![Screenshot](readme_imgs/option.png)
