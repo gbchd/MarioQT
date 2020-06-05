@@ -8,6 +8,8 @@ class Podoboo : public Entity
 private:
     QPixmap orignalTexture;
 
+    QPointF spawnPosition;
+
     float bounceHeight = 10*BLOCSIZE;
     float bounceDuration = 80; // number of in-game frames
     int bounceFrameCounter;

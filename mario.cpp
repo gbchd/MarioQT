@@ -11,6 +11,7 @@
 #include "movingplatform.h"
 #include "podoboo.h"
 #include "piranhaplant.h"
+#include "lava.h"
 
 Mario::Mario()
 {
@@ -553,6 +554,9 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
                         else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
                             hurt();
                         }
+                        else if(dynamic_cast<Lava *>(o)){
+                            die();
+                        }
                     }
                 }
             }
@@ -587,6 +591,9 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
                 else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
                     hurt();
                 }
+                else if(dynamic_cast<Lava *>(o)){
+                    die();
+                }
             }
         }
     }
@@ -619,6 +626,9 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
                 else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
                     hurt();
                 }
+                else if(dynamic_cast<Lava *>(o)){
+                    die();
+                }
             }
         }
     }
@@ -650,6 +660,9 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
                 }
                 else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
                     hurt();
+                }
+                else if(dynamic_cast<Lava *>(o)){
+                    die();
                 }
             }
         }
@@ -695,6 +708,12 @@ void Mario::collisionOnBottomHandler(ObjectModel *o){
                             moveTo(position.x(), mp->getPosition().y() - hitbox.height());
                             grounded = true;
                             ground = o;
+                        }
+                        else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                            hurt();
+                        }
+                        else if(dynamic_cast<Lava *>(o)){
+                            die();
                         }
                     }
                 }

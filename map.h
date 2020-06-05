@@ -29,6 +29,7 @@
 #include "fireball.h"
 #include "podoboo.h"
 #include "piranhaplant.h"
+#include "lava.h"
 #include "objectmodel.h"
 
 class Map

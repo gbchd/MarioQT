@@ -20,6 +20,7 @@
 #include "firebar.h"
 #include "podoboo.h"
 #include "piranhaplant.h"
+#include "lava.h"
 #include "leveleditorview.h"
 #include "leveleditorwidget.h"
 

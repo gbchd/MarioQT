@@ -11,11 +11,16 @@ Podoboo::Podoboo()
     setHitboxHeight(BLOCSIZE);
     setHitboxEntityWidth(0.875*BLOCSIZE);
     setHitboxEntityHeight(BLOCSIZE);
+
+    zValue = 2;
+
+    collidable = false;
 }
 
 Podoboo::Podoboo(QPointF initialPosition) : Podoboo()
 {
-    moveTo(initialPosition+ QPointF(0,bounceHeight));
+    spawnPosition = initialPosition + QPointF(0,bounceHeight);
+    moveTo(initialPosition + QPointF(0,bounceHeight));
     bounceFrameCounter = 0;
     velocity.setY(bounceSpeed);
 }
@@ -25,6 +30,7 @@ void Podoboo::advance()
     if(bounceFrameCounter > 2*bounceDuration){
         bounceFrameCounter = 0;
         velocity.setY(bounceSpeed);
+        moveTo(spawnPosition);
         currentTexture = currentTexture.transformed(QTransform().scale(1,-1));
     }
 
