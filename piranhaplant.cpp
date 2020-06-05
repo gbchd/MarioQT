@@ -90,34 +90,34 @@ void PiranhaPlant::animate()
 void PiranhaPlant::collisionByDefaultHandler(ObjectModel *o)
 {
     if(dynamic_cast<FireBall *>(o)){
-        die();
+        deletable = true;
     }
 }
 
 void PiranhaPlant::collisionOnBottomHandler(ObjectModel *o)
 {
     if(dynamic_cast<FireBall *>(o)){
-        die();
+        deletable = true;
     }
 }
 
 void PiranhaPlant::collisionOnLeftHandler(ObjectModel *o)
 {
     if(dynamic_cast<FireBall *>(o)){
-        die();
+        deletable = true;
     }
 }
 
 void PiranhaPlant::collisionOnRightHandler(ObjectModel *o)
 {
     if(dynamic_cast<FireBall *>(o)){
-        die();
+        deletable = true;
     }
 }
 
 void PiranhaPlant::collisionOnTopHandler(ObjectModel *o)
 {
     if(dynamic_cast<FireBall *>(o)){
-        die();
+        deletable = true;
     }
 }

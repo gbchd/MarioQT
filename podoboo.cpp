@@ -1,46 +1,46 @@
 #include "podoboo.h"
 
+#include <QDebug>
+
 Podoboo::Podoboo()
 {
-    setCurrentTexture(loadTexture(":/resources/graphics/podoboo.png").scaled(0.875*BLOCSIZE,BLOCSIZE,Qt::KeepAspectRatio));
+    orignalTexture = loadTexture(":/resources/graphics/podoboo.png").scaled(0.875*BLOCSIZE,BLOCSIZE,Qt::KeepAspectRatio);
+    setCurrentTexture(orignalTexture.transformed(QTransform().scale(1,-1)));
+
     setHitboxWidth(0.875*BLOCSIZE);
     setHitboxHeight(BLOCSIZE);
     setHitboxEntityWidth(0.875*BLOCSIZE);
     setHitboxEntityHeight(BLOCSIZE);
-
-    amplitude = 10*BLOCSIZE;
-    travelDuration = 2000;
-    travelDistance = amplitude / travelDuration;
-    goingDown = false;
 }
 
 Podoboo::Podoboo(QPointF initialPosition) : Podoboo()
 {
-    spawnPosition = initialPosition;
-    moveTo(initialPosition);
+    moveTo(initialPosition+ QPointF(0,bounceHeight));
+    bounceFrameCounter = 0;
+    velocity.setY(bounceSpeed);
 }
 
 void Podoboo::advance()
 {
-    if(!travelTimer.isValid()){
-        travelTimer.start();
-    }
-
-    if(travelTimer.elapsed() > travelDuration){
-        goingDown = !goingDown;
-        travelTimer.restart();
+    if(bounceFrameCounter > 2*bounceDuration){
+        bounceFrameCounter = 0;
+        velocity.setY(bounceSpeed);
         currentTexture = currentTexture.transformed(QTransform().scale(1,-1));
     }
 
-    if(goingDown){
-        moveTo(spawnPosition.x(), spawnPosition.y() + travelDistance * travelTimer.elapsed());
-    }
-    else{
-        moveTo(spawnPosition.x(), spawnPosition.y() + amplitude - travelDistance * travelTimer.elapsed());
-    }
+    velocity.setY(velocity.y() + bounceGravity);
+
+    moveTo(position+velocity);
+
+    bounceFrameCounter++;
 }
 
 void Podoboo::animate()
 {
-
+    if(velocity.y() > 0){
+        setCurrentTexture(orignalTexture.transformed(QTransform().scale(1,-1)));
+    }
+    else{
+        setCurrentTexture(orignalTexture);
+    }
 }
