@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QStandardPaths>
+#include <QFileDialog>
 
 class OptionsMenuController;
 

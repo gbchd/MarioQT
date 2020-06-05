@@ -277,10 +277,6 @@ void GameController::keyPressEventHandler(QKeyEvent *e){
         reset();
     }
 
-    if(e->key() == settings->getKeyA()){
-        settings->readConfig();
-    }
-
     if(e->key() == Qt::Key_Escape){
         mainWindow->displayPauseMenu();
         music->stop();

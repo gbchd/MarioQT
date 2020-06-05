@@ -81,4 +81,12 @@ void OptionsMenuController::setToDefaultKeyConfig()
     lastClickedOptionButton = NOBUTTONCLICKED;
 }
 
-
+void OptionsMenuController::importConfigFromJSON(QString JSONPath)
+{
+    settings->readConfig(JSONPath);
+    optionsMenuWidget->setTextKeyJumpButton(settings->getJump());
+    optionsMenuWidget->setTextKeyRunButton(settings->getRun());
+    optionsMenuWidget->setTextKeyMoveRightButton(settings->getMoveRight());
+    optionsMenuWidget->setTextKeyMoveLeftButton(settings->getMoveLeft());
+    optionsMenuWidget->setTextKeyShootFireBallButton(settings->getShootFireBall());
+}
