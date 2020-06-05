@@ -159,12 +159,12 @@ void OptionsMenuWidget::handleMenuButton()
 
 void OptionsMenuWidget::handleImportButton()
 {
-    qDebug() << "Import";
+    optionsMenuController->importConfigFromJSON(QFileDialog::getOpenFileName(this, tr("Select a JSON file."), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), tr("JSON files (*.json)")));
 }
 
 void OptionsMenuWidget::handleExportButton()
 {
-    qDebug() << "export";
+    optionsMenuController->exportConfigInJSON();
 }
 
 void OptionsMenuWidget::handleMoveRightButton()

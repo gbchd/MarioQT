@@ -60,6 +60,31 @@ void Settings::setKeyA(int value)
     keyA = value;
 }
 
+QString Settings::getJump() const
+{
+    return jump;
+}
+
+QString Settings::getRun() const
+{
+    return run;
+}
+
+QString Settings::getMoveRight() const
+{
+    return moveRight;
+}
+
+QString Settings::getMoveLeft() const
+{
+    return moveLeft;
+}
+
+QString Settings::getShootFireBall() const
+{
+    return shootFireBall;
+}
+
 Settings::Settings()
 {
     keyJump = Qt::Key_Space;
@@ -70,9 +95,8 @@ Settings::Settings()
     keyA = Qt::Key_A;
 }
 
-void Settings::readConfig()
+void Settings::readConfig(QString filename)
 {
-    QString filename = "C:/Users/kanti/Desktop/MarioProjet/MarioQT/config/config.json";
     QFile file_obj(filename);
     if(!file_obj.exists()){
         qDebug()<<"File does not exist"<<filename;
@@ -92,12 +116,39 @@ void Settings::readConfig()
     QJsonDocument map = QJsonDocument::fromJson(json_bytes);
     QJsonObject jsonObject = map.object();
 
+    jump = jsonObject["jump"].toString();
+    run = jsonObject["run"].toString();
+    moveRight = jsonObject["move-right"].toString();
+    moveLeft = jsonObject["move-left"].toString();
+    shootFireBall = jsonObject["shoot-fire-ball"].toString();
 
-    QString jump = jsonObject["jump"].toString();
+    changeConfig(jump, run, moveRight, moveLeft, shootFireBall);
+}
 
-    keyMoveLeft = QKeySequence::fromString("B")[0];
+void Settings::changeConfig(QString jump, QString run, QString moveRight, QString moveLeft, QString shootFireBall)
+{
+    QKeySequence ksJump = QKeySequence::fromString(jump);
+    keyJump = ksJump[0];
 
+    QKeySequence ksMoveRight = QKeySequence::fromString(moveRight);
+    keyMoveRight = ksMoveRight[0];
 
-    qDebug() << "HERE";
+    QKeySequence ksMoveLeft = QKeySequence::fromString(moveLeft);
+    keyMoveLeft = ksMoveLeft[0];
 
+    if (0 == run.compare("Shift", Qt::CaseInsensitive)) {
+        keyRun = Qt::Key_Shift;
+    }
+    else {
+         QKeySequence ksRun = QKeySequence::fromString(run);
+         keyRun = ksRun[0];
+    }
+
+    if (0 == shootFireBall.compare("Shift", Qt::CaseInsensitive)) {
+        keyShootFireBall = Qt::Key_Shift;
+    }
+    else {
+        QKeySequence ksShootFireBall = QKeySequence::fromString(shootFireBall);
+        keyShootFireBall = ksShootFireBall[0];
+    }
 }

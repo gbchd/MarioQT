@@ -24,7 +24,8 @@ public:
     void setSettingsPointer(Settings * settings){this->settings = settings;};
     void setSelectedButton(LastClickedOptionButton lcob, QString buttonEvent);
     void setToDefaultKeyConfig();
-
+    void importConfigFromJSON(QString JSONPath);
+    void exportConfigInJSON();
 
 };
 

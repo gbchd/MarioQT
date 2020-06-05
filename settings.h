@@ -22,10 +22,17 @@ private:
     int keyShootFireBall;
     int keyA;
 
+    QString jump;
+    QString run;
+    QString moveRight;
+    QString moveLeft;
+    QString shootFireBall;
+
 
 public:
     Settings();
-    void readConfig();
+    void readConfig(QString filename);
+    void changeConfig(QString jump, QString run, QString moveRight, QString moveLeft, QString shootFireBall);
 
     int getKeyJump() const;
     void setKeyJump(int value);
@@ -39,6 +46,12 @@ public:
     void setKeyShootFireBall(int value);
     int getKeyA() const;
     void setKeyA(int value);
+
+    QString getJump() const;
+    QString getRun() const;
+    QString getMoveRight() const;
+    QString getMoveLeft() const;
+    QString getShootFireBall() const;
 };
 
 #endif // SETTINGS_H
