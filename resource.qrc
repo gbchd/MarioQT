@@ -78,7 +78,6 @@
         <file>resources/graphics/moving-platform-2.png</file>
         <file>resources/graphics/moving-platform-3.png</file>
         <file>resources/graphics/cloud-platform.png</file>
-        <file>resources/maps/World 1-1.json</file>
         <file>resources/graphics/characters/mario/fiery-mario-climb-1.png</file>
         <file>resources/graphics/characters/mario/fiery-mario-climb-2.png</file>
         <file>resources/graphics/characters/mario/fiery-mario-duck.png</file>
@@ -101,7 +100,6 @@
         <file>resources/graphics/trampoline-0.png</file>
         <file>resources/graphics/trampoline-1.png</file>
         <file>resources/graphics/trampoline-2.png</file>
-        <file>resources/maps/Colin's World.json</file>
         <file>resources/fonts/mario_font.ttf</file>
         <file>resources/graphics/characters/mario/fiery-mario-hang-1.png</file>
         <file>resources/sounds/block-break.wav</file>
@@ -133,5 +131,6 @@
         <file>resources/graphics/podoboo.png</file>
         <file>resources/graphics/blocs/lava-0.png</file>
         <file>resources/graphics/blocs/lava-1.png</file>
+        <file>resources/maps/G's World.json</file>
     </qresource>
 </RCC>
