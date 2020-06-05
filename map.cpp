@@ -387,6 +387,7 @@ void Map::addEntity(QJsonObject entityObject){
         int x = entityObject["x"].toDouble();
         int y = entityObject["y"].toDouble();
         piranhaPlant->moveTo(x, y);
+        piranhaPlant->setSpawnPosition(QPointF(x, y));
         entities.append(piranhaPlant);
     }
     else{
