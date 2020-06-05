@@ -45,6 +45,11 @@ public:
     void setTextKeyMoveLeftButton(QString text);
     void setTextKeyShootFireBallButton(QString text);
     void changeStyleSheetOfTheSelectedButton(QString keyButton);
+    QString getTextKeyJumpButton();
+    QString getTextKeyRunButton();
+    QString getTextKeyMoveRightButton();
+    QString getTextKeyMoveLeftButton();
+    QString getTextKeyShootFireBall();
 
 private slots:
     void handleMenuButton();

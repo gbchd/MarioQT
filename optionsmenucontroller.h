@@ -4,6 +4,8 @@
 #include "optionsmenuwidget.h"
 #include "settings.h"
 #include "QKeySequence"
+#include <QFileDialog>
+#include <QStandardPaths>
 
 class MainMenuController;
 class MainWindow;
