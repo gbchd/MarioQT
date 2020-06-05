@@ -37,6 +37,8 @@ enum SelectedButton {   NOBUTTON,
                         GOOMBA,
                         TURTLE,
                         FLYINGTURTLE,
+                        PODOBOO,
+                        PIRANHAPLANT,
                         MARIO,
                         SMALLHILL,
                         BIGHILL,
@@ -84,6 +86,8 @@ private:
     QPushButton buttonGoomba;
     QPushButton buttonTurtle;
     QPushButton buttonFlyingTurtle;
+    QPushButton buttonPodoboo;
+    QPushButton buttonPiranhaPlant;
     QPushButton buttonMario;
     QPushButton buttonSmallHill;
     QPushButton buttonBigHill;
@@ -142,6 +146,8 @@ private slots:
     void handleButtonGoomba();
     void handleButtonTurtle();
     void handleButtonTurtleFlying();
+    void handleButtonPodoboo();
+    void handleButtonPiranhaPlant();
     void handleButtonMario();
     void handleButtonSmallHill();
     void handleButtonBigHill();

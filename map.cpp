@@ -60,8 +60,8 @@ void Map::addInert(QJsonObject inertObject){
     if(type.compare("wall") == 0){
         Wall * wall = new Wall();
 
-        int x = inertObject["x"].toInt();
-        int y = inertObject["y"].toInt();
+        int x = inertObject["x"].toDouble();
+        int y = inertObject["y"].toDouble();
 
         wall->moveTo(x*block_size,y*block_size);
 
@@ -71,8 +71,8 @@ void Map::addInert(QJsonObject inertObject){
         //     (en fonction du w et du h)
         //====================================
 
-        int w = inertObject["width"].toInt();
-        int h = inertObject["height"].toInt();
+        int w = inertObject["width"].toDouble();
+        int h = inertObject["height"].toDouble();
 
         wall->setHitboxWidth(w*block_size);
         wall->setHitboxHeight(h*block_size);
@@ -85,13 +85,13 @@ void Map::addInert(QJsonObject inertObject){
     else if(type.compare("block") == 0){
         Block * block = new Block();
 
-        int x = inertObject["x"].toInt();
-        int y = inertObject["y"].toInt();
+        int x = inertObject["x"].toDouble();
+        int y = inertObject["y"].toDouble();
 
         block->moveTo(x*block_size,y*block_size);
 
-        int w = inertObject["width"].toInt();
-        int h = inertObject["height"].toInt();
+        int w = inertObject["width"].toDouble();
+        int h = inertObject["height"].toDouble();
 
         block->setHitboxWidth(w*block_size);
         block->setHitboxHeight(h*block_size);
@@ -104,13 +104,13 @@ void Map::addInert(QJsonObject inertObject){
     else if(type.compare("box") == 0){
         Box * box = new Box();
 
-        int x = inertObject["x"].toInt();
-        int y = inertObject["y"].toInt();
+        int x = inertObject["x"].toDouble();
+        int y = inertObject["y"].toDouble();
 
         box->moveTo(x*block_size,y*block_size);
 
-        int w = inertObject["width"].toInt();
-        int h = inertObject["height"].toInt();
+        int w = inertObject["width"].toDouble();
+        int h = inertObject["height"].toDouble();
 
         box->setHitboxWidth(w*block_size);
         box->setHitboxHeight(h*block_size);
@@ -164,8 +164,8 @@ void Map::addInert(QJsonObject inertObject){
             break;
         }
 
-        int x = inertObject["x"].toInt();
-        int y = inertObject["y"].toInt();
+        int x = inertObject["x"].toDouble();
+        int y = inertObject["y"].toDouble();
 
         pipe->moveTo(x*block_size,y*block_size);
 
@@ -215,13 +215,13 @@ void Map::addInert(QJsonObject inertObject){
     else if(type.compare("brick") == 0){
         Brick * brick = new Brick();
 
-        int x = inertObject["x"].toInt();
-        int y = inertObject["y"].toInt();
+        int x = inertObject["x"].toDouble();
+        int y = inertObject["y"].toDouble();
 
         brick->moveTo(x*block_size,y*block_size);
 
-        int w = inertObject["width"].toInt();
-        int h = inertObject["height"].toInt();
+        int w = inertObject["width"].toDouble();
+        int h = inertObject["height"].toDouble();
 
         brick->setHitboxWidth(w*block_size);
         brick->setHitboxHeight(h*block_size);
@@ -355,37 +355,43 @@ void Map::addInert(QJsonObject inertObject){
 void Map::addEntity(QJsonObject entityObject){
     QString type = entityObject["type"].toString();
     if(type.compare("goomba") == 0){
-        qDebug() << type.compare("goomba");
-
         Goomba * goomba = new Goomba();
-        int x = entityObject["x"].toInt();
-        int y = entityObject["y"].toInt();
-        goomba->moveTo(x*block_size, y*block_size-goomba->getCurrentTexture().height());
+        int x = entityObject["x"].toDouble();
+        int y = entityObject["y"].toDouble();
+        goomba->moveTo(x, y);
 
         entities.append(goomba);
     }
     else if(type.compare("koopa") == 0){
-
         Koopa * koopa = new Koopa();
-        int x = entityObject["x"].toInt();
-        int y = entityObject["y"].toInt();
-        koopa->moveTo(x*block_size, y*block_size-koopa->getCurrentTexture().height());
+        int x = entityObject["x"].toDouble();
+        int y = entityObject["y"].toDouble();
+        koopa->moveTo(x, y);
 
         entities.append(koopa);
-
     }
     else if(type.compare("coin") == 0){
-
         Coin * coin = new Coin(false);
         int x = entityObject["x"].toInt();
         int y = entityObject["y"].toInt();
-        coin->moveTo(x*block_size, y*block_size-coin->getCurrentTexture().height());
+        coin->moveTo(x, y);
 
         entities.append(coin);
-
+    }
+    else if(type.compare("podoboo") == 0){
+        Podoboo * podoboo = new Podoboo(QPointF(entityObject["x"].toDouble(), entityObject["y"].toDouble()));
+        entities.append(podoboo);
+    }
+    else if(type.compare("piranhaplant") == 0){
+        PiranhaPlant * piranhaPlant = new PiranhaPlant();
+        int x = entityObject["x"].toDouble();
+        int y = entityObject["y"].toDouble();
+        piranhaPlant->moveTo(x, y);
+        piranhaPlant->setSpawnPosition(QPointF(x, y));
+        entities.append(piranhaPlant);
     }
     else{
-        //erreur
+        // Not recognized
     }
 }
 

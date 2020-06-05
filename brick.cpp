@@ -1,4 +1,6 @@
 #include "brick.h"
+#include "koopa.h"
+
 
 Brick::Brick()
 {
@@ -17,6 +19,34 @@ void Brick::startBlockBounceAnimation()
     }
     else{
         timerBounceAnimation.restart();
+    }
+}
+
+void Brick::collisionOnLeftHandler(ObjectModel *o){
+    Koopa* koopa = dynamic_cast<Koopa*>(o);
+    if(koopa && koopa->isInShell() && koopa->isMoving()){
+        if(brickState == NOBRICKSTATE){
+            brickState = BREAKBRICK;
+        }
+        else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
+            brickState = GIVECOIN;
+            if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
+            startBlockBounceAnimation();
+        }
+    }
+}
+
+void Brick::collisionOnRightHandler(ObjectModel *o){
+    Koopa* koopa = dynamic_cast<Koopa*>(o);
+    if(koopa && koopa->isInShell() && koopa->isMoving()){
+        if(brickState == NOBRICKSTATE){
+            brickState = BREAKBRICK;
+        }
+        else if(brickState==BRICKWILLGIVECOINONNEXTHIT){
+            brickState = GIVECOIN;
+            if(!timerSinceCoinBlockHit.isValid()){ timerSinceCoinBlockHit.start(); }
+            startBlockBounceAnimation();
+        }
     }
 }
 

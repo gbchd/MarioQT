@@ -63,12 +63,12 @@ void LevelEditorEngine::exportMapToJSon()
             else if(getTypeFromInert(inerts[indice]).compare("movingplatform")==0){
                 stream<<"\"big\":"<<dynamic_cast<MovingPlatform *>(inerts[indice])->isItABigMovingPlatform()<<",";
             }
-            stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32<<",\"y\":"<<inerts[indice]->getPosition().y()/32<<",\"width\":1,\"height\":1}";
+            stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32.0<<",\"y\":"<<inerts[indice]->getPosition().y()/32.0<<",\"width\":1,\"height\":1}";
         }
         stream<<"},\"entities\":{";
         for(int indice=0; indice<entities.length(); indice++){
             if(indice>0){ stream<<","; }
-            stream<<"\"entity"<<indice<<"\":{\"type\":\""<<getTypeFromEntity(entities[indice])<<"\",\"x\":"<<entities[indice]->getPosition().x()/32<<",\"y\":"<<entities[indice]->getPosition().y()/32<<"}";
+            stream<<"\"entity"<<indice<<"\":{\"type\":\""<<getTypeFromEntity(entities[indice])<<"\",\"x\":"<<entities[indice]->getPosition().x()<<",\"y\":"<<entities[indice]->getPosition().y()<<"}";
         }
         stream<<"}}";
         myFile.resize(myFile.pos());
@@ -127,6 +127,12 @@ QString LevelEditorEngine::getTypeFromEntity(Entity * entity)
     if(dynamic_cast<Coin *>(entity)){
         return "coin";
     }
+    if(dynamic_cast<Podoboo *>(entity)){
+        return "podoboo";
+    }
+    if(dynamic_cast<PiranhaPlant *>(entity)){
+        return "piranhaplant";
+    }
     else{
         return "unknown";
     }
@@ -173,6 +179,13 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
     else if(selectedButton == SMALLMOVINGPLATFORM || selectedButton == LARGEMOVINGPLATFORM){
         movingMovingPlatform->moveTo(X, Y+10*block_size);
         movingMovingPlatform->accept(visitor);
+    }
+    else if(selectedButton == PODOBOO){
+        movingPodoboo->moveTo(X, Y+10*block_size);
+        movingPodoboo->accept(visitor);
+    }
+    else if(selectedButton == PIRANHAPLANT){
+        objectToPaintOnMouse->moveTo(X + (2*block_size - 1.3*16/24*block_size)/2, Y + block_size - 1.3*block_size);
     }
 
     if(castle != nullptr){
@@ -366,6 +379,20 @@ void LevelEditorEngine::addObjectOnMousePosition()
             //TODO
             break;
         }
+        case PODOBOO: {
+            Podoboo * podoboo = new Podoboo();
+            podoboo->moveTo(X, Y);
+            entities.append(podoboo);
+            objects.append(podoboo);
+            break;
+        }
+        case PIRANHAPLANT: {
+            PiranhaPlant *pp = new PiranhaPlant();
+            pp->moveTo(X + (2*block_size - 1.3*16/24*block_size)/2, Y + block_size - 1.3*block_size);
+            entities.append(pp);
+            objects.append(pp);
+            break;
+        }
         case MARIO: {
             fakeMario = new Mario();
             fakeMario->moveTo(X, Y);
@@ -453,7 +480,8 @@ void LevelEditorEngine::deleteObjectAtPosition(int x, int y)
     }
 
     for(ObjectModel * object : objects){
-        if(object->getPosition().x() == x && (object->getPosition().y() == y || object->getPosition().y()-block_size/2 == y)){
+        if((object->getPosition().x() == x && (object->getPosition().y() == y || object->getPosition().y()-block_size/2 == y))
+                || (x + (2*block_size - 1.3*16/24*block_size)/2 - object->getPosition().x()) < 0.001 && (x + (2*block_size - 1.3*16/24*block_size)/2 - object->getPosition().x()) > -0.001 && (y + block_size - 1.3*block_size - object->getPosition().y()) <0.001 && (y + block_size - 1.3*block_size - object->getPosition().y()) > -0.001){
             Mario * mario = dynamic_cast<Mario*>(object);
             if(mario){
                 if(mario != nullptr){
@@ -512,17 +540,14 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         case BRICK:
         case COINBRICK: {
             objectToPaintOnMouse = new Brick();
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case BLOCK: {
             objectToPaintOnMouse = new Block();
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case WALL: {
             objectToPaintOnMouse = new Wall();
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case SECRETBOXMUSHROOM:
@@ -531,67 +556,55 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         case SECRETBOXCOIN: {
             objectToPaintOnMouse = new Inert();
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/blocs/secret-box.png").scaled(block_size, block_size)));
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case SMALLMOVINGPLATFORM: {
             objectToPaintOnMouse = new MovingPlatform(false);
-            objectToPaintOnMouse->setOpacity(0.5);
             movingMovingPlatform = new MovingPlatform(false);
             movingMovingPlatform->setOpacity(0.5);
             break;
         }
         case LARGEMOVINGPLATFORM: {
             objectToPaintOnMouse = new MovingPlatform(true);
-            objectToPaintOnMouse->setOpacity(0.5);
             movingMovingPlatform = new MovingPlatform(true);
             movingMovingPlatform->setOpacity(0.5);
             break;
         }
         case FIREBAR: {
             objectToPaintOnMouse = new Firebar();
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case COINITEM: {
             objectToPaintOnMouse = new Coin(false);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case SMALLPIPE: {
             objectToPaintOnMouse = new Pipe(SMALLPIPEOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case MEDPIPE: {
             objectToPaintOnMouse = new Pipe(MEDPIPEOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case BIGPIPE: {
             objectToPaintOnMouse = new Pipe(BIGPIPEOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case BULLETBLASTER: {
             objectToPaintOnMouse = new Inert();
             objectToPaintOnMouse->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/bill-blaster.png").scaled(block_size, block_size*2)));
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case MEDTRAMPOLINE: {
             objectToPaintOnMouse = new Trampoline(false);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case BIGTRAMPOLINE: {
             objectToPaintOnMouse = new Trampoline(true);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case FLAGPOLE: {
             movingFlagpole = new Flagpole();
-            movingFlagpole->setOpacity(0.5);
 
             movingCastle = new Inert();
             movingCastle->setCurrentTexture(QPixmap(objectToPaintOnMouse->loadTexture(":/resources/graphics/castle.png").scaled(block_size*4, block_size*4)));
@@ -600,69 +613,76 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         }
         case GOOMBA: {
             objectToPaintOnMouse = new Goomba();
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case TURTLE: {
             objectToPaintOnMouse = new Koopa();
-            objectToPaintOnMouse->setOpacity(0.5);
+            break;
+        }
+        case FLYINGTURTLE: {
+            //TODO
+            break;
+        }
+        case PODOBOO: {
+            objectToPaintOnMouse = new Podoboo();
+            movingPodoboo = new Podoboo();
+            movingPodoboo->setOpacity(0.5);
+            break;
+        }
+        case PIRANHAPLANT: {
+            objectToPaintOnMouse = new PiranhaPlant();
             break;
         }
         case MARIO: {
             objectToPaintOnMouse = new Mario();
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case SMALLHILL: {
             objectToPaintOnMouse = new Scenery(SMALLHILLOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             BIGHILL: {
             objectToPaintOnMouse = new Scenery(BIGHILLOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             SMALLBUSH: {
             objectToPaintOnMouse = new Scenery(SMALLBUSHOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             MEDBUSH: {
             objectToPaintOnMouse = new Scenery(MEDBUSHOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             BIGBUSH: {
             objectToPaintOnMouse = new Scenery(BIGBUSHOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             SMALLCLOUD: {
             objectToPaintOnMouse = new Scenery(SMALLCLOUDOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             MEDCLOUD: {
             objectToPaintOnMouse = new Scenery(MEDCLOUDOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         case
             BIGCLOUD: {
             objectToPaintOnMouse = new Scenery(BIGCLOUDOBJECT);
-            objectToPaintOnMouse->setOpacity(0.5);
             break;
         }
         default: {
             break;
         }
+    }
+
+    if(objectToPaintOnMouse){
+        objectToPaintOnMouse->setOpacity(0.5);
     }
 }
 

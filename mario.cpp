@@ -9,6 +9,8 @@
 #include "fireball.h"
 #include "flagpole.h"
 #include "movingplatform.h"
+#include "podoboo.h"
+#include "piranhaplant.h"
 
 Mario::Mario()
 {
@@ -141,6 +143,14 @@ void Mario::advance(){
         return;
     }
     //=======================================================
+
+
+    //This is used to handle the weird collision when the platform is going down
+    //fixme: It is very moche pliz fix this i don't have time
+    MovingPlatform* mp = dynamic_cast<MovingPlatform*>(ground);
+    if(mp && mp->isGoingDown() && !jumping){
+        moveTo(position.x(), mp->getPosition().y() - hitbox.height());
+    }
 
     //Check if we are still touching the ground object
     groundHandler();
@@ -531,9 +541,17 @@ void Mario::collisionByDefaultHandler(ObjectModel *o){
                     else{
                         MovingPlatform * mp = dynamic_cast<MovingPlatform *>(o);
                         if(mp){
-                            moveTo(position.x(), mp->getPosition().y() - hitbox.height());
-                            grounded = true;
-                            ground = o;
+                            if(mp->isGoingDown()){
+                                moveTo(position.x(), mp->getPosition().y() + mp->getHitbox().height());
+                            }else{
+                                moveTo(position.x(), mp->getPosition().y() - hitbox.height());
+                                grounded = true;
+                                ground = o;
+                            }
+
+                        }
+                        else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                            hurt();
                         }
                     }
                 }
@@ -566,6 +584,9 @@ void Mario::collisionOnLeftHandler(ObjectModel *o){
                 if(fb && fb->getFireballOfFirebar()){
                     hurt();
                 }
+                else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                    hurt();
+                }
             }
         }
     }
@@ -595,6 +616,9 @@ void Mario::collisionOnRightHandler(ObjectModel *o){
                 if(fb && fb->getFireballOfFirebar()){
                     hurt();
                 }
+                else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
+                    hurt();
+                }
             }
         }
     }
@@ -622,6 +646,9 @@ void Mario::collisionOnTopHandler(ObjectModel *o){
             else{
                 FireBall * fb = dynamic_cast<FireBall *>(o);
                 if(fb && fb->getFireballOfFirebar()){
+                    hurt();
+                }
+                else if(dynamic_cast<Podoboo *>(o) || dynamic_cast<PiranhaPlant *>(o)){
                     hurt();
                 }
             }

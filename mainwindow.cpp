@@ -33,6 +33,7 @@ MainWindow::MainWindow() : QMainWindow()
     // We initialize the optionsMenu's widget and controller
     optionsMenuController.setOptionsMenuWidget(&optionsMenuWidget);
     optionsMenuController.setMainWindowPointer(this);
+    optionsMenuController.setSettingsPointer(&settings);
     optionsMenuWidget.setOptionsMenuController(&optionsMenuController);
 
     // We fill the stackedWidget with the menu, the game and the levelEditor

@@ -11,13 +11,12 @@ MovingPlatform::MovingPlatform(bool b)
     if(bigMovingPlatform){
         setCurrentTexture(loadTexture(":/resources/graphics/moving-platform-3.png").scaled(4*BLOCSIZE, 1*BLOCSIZE, Qt::KeepAspectRatio));
         setHitboxWidth(4*BLOCSIZE);
-        setHitboxHeight(2*BLOCSIZE/3);
     }
     else{
         setCurrentTexture(loadTexture(":/resources/graphics/moving-platform-1.png").scaled(2*BLOCSIZE, 1*BLOCSIZE, Qt::KeepAspectRatio));
         setHitboxWidth(2*BLOCSIZE);
-        setHitboxHeight(2*BLOCSIZE/3);
     }
+    setHitboxHeight(2*BLOCSIZE/3);
 }
 
 void MovingPlatform::animate()
