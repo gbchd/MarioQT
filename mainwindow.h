@@ -54,9 +54,11 @@ public:
     void changeCentralWidget(QWidget *newWidget) { setCentralWidget(newWidget); }
 
     void displayPauseMenu();
+    void goBackToGame();
     void goBackToMainMenu();
     void launchLevelEditor();
     void displayOptionsMenu();
+    void retryGame();
 
     void centerOnScreen();
 };

@@ -11,6 +11,8 @@ class Coin;
 class FireBall;
 class Flagpole;
 
+enum FlagpoleCinematicState{NOFLAGPOLECINEMATICSTATE, HANGINGONFLAGPOLE, JUMPINGFORTHEGROUND, WALKINGTOTHEEXIT, ARRIVEDATCASTLE};
+
 class Mario : public Entity
 {
 private:
@@ -37,7 +39,6 @@ private:
 
     // === Attributes for animations ===
     bool isInFlagpoleCinematic; // If true, we don't listen to the key events to control mario
-    enum FlagpoleCinematicState{NOFLAGPOLECINEMATICSTATE, HANGINGONFLAGPOLE, JUMPINGFORTHEGROUND, WALKINGTOTHEEXIT, ARRIVEDATCASTLE};
     FlagpoleCinematicState marioFlagpoleCinematicState;
     QPointF flagBottomPos;
     int durationBeforeJumpingFromPole = 400; // in ms;
@@ -131,6 +132,7 @@ public:
     void playSound(QString soundPath);
 
     void handleCollectableItemCollision(CollectableItem * collectableItem);
+    FlagpoleCinematicState getMarioFlagpoleCinematicState() const;
 };
 
 #endif // MARIO_H

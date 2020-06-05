@@ -17,8 +17,10 @@ public:
     PauseMenuController();
     void setPauseMenuWidget(PauseMenuWidget * pmw){ pauseMenuWidget = pmw; }
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; }
+    void continueGame();
     void launchMainMenu();
     void quitApplication();
+    void retryGame();
 };
 
 #endif // PAUSEMENUCONTROLLER_H

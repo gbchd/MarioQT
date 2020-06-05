@@ -84,6 +84,16 @@ void MainWindow::displayOptionsMenu()
     stackedWidget.setCurrentIndex(4);
 }
 
+void MainWindow::goBackToGame(){
+    stackedWidget.setCurrentIndex(1);
+    gamecontroller.playMusic();
+}
+
+void MainWindow::retryGame(){
+    stackedWidget.setCurrentIndex(1);
+    gamecontroller.reset();
+}
+
 void MainWindow::centerOnScreen()
 {
     QDesktopWidget wid;

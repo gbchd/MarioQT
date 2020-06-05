@@ -40,6 +40,10 @@ GameController::GameController(GameView * gv)
 }
 
 void GameController::advance() {
+
+    if(mario && mario->getMarioFlagpoleCinematicState() == HANGINGONFLAGPOLE){
+        music->stop();
+    }
     if(mario && mario->isDead()){
         music->stop();
     }

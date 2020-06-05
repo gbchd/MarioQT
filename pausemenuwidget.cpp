@@ -8,6 +8,7 @@ PauseMenuWidget::PauseMenuWidget()
 
     QVBoxLayout * layout = new QVBoxLayout(this);
     continueButton.setText("CONTINUE");
+    retryButton.setText("RETRY");
     menuButton.setText("GO BACK TO MENU");
     quitButton.setText("QUIT");
 
@@ -18,6 +19,7 @@ PauseMenuWidget::PauseMenuWidget()
 
     //Add element in layout
     layout->addWidget(&continueButton);
+    layout->addWidget(&retryButton);
     layout->addWidget(&menuButton);
     layout->addWidget(&quitButton);
 
@@ -25,6 +27,7 @@ PauseMenuWidget::PauseMenuWidget()
     connect(&continueButton, SIGNAL (clicked()), this, SLOT (handleContinueButton()));
     connect(&menuButton, SIGNAL (clicked()), this, SLOT (handleMenuButton()));
     connect(&quitButton, SIGNAL (clicked()), this, SLOT (handleQuitButton()));
+    connect(&retryButton, SIGNAL (clicked()), this, SLOT (handleRetryButton()));
 }
 
 void PauseMenuWidget::applyStyleSheet()
@@ -44,7 +47,7 @@ void PauseMenuWidget::applyStyleSheet()
 
 void PauseMenuWidget::handleContinueButton()
 {
-
+    pauseMenuController->continueGame();
 }
 
 void PauseMenuWidget::handleMenuButton()
@@ -55,4 +58,9 @@ void PauseMenuWidget::handleMenuButton()
 void PauseMenuWidget::handleQuitButton()
 {
     pauseMenuController->quitApplication();
+}
+
+void PauseMenuWidget::handleRetryButton()
+{
+    pauseMenuController->retryGame();
 }

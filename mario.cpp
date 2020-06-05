@@ -130,6 +130,7 @@ void Mario::advance(){
             setPositionX(position.x() + velocity.x());
             if(position.x() > flagBottomPos.x()+6.5*BLOCSIZE){
                 marioFlagpoleCinematicState = ARRIVEDATCASTLE;
+                playSound(":/resources/sounds/stage_clear.wav");
             }
             break;
         case ARRIVEDATCASTLE:
@@ -329,6 +330,11 @@ FireBall * Mario::shootFireBall()
     else{
         return nullptr;
     }
+}
+
+FlagpoleCinematicState Mario::getMarioFlagpoleCinematicState() const
+{
+    return marioFlagpoleCinematicState;
 }
 
 void Mario::doTransforming(){
