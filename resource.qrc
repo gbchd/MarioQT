@@ -133,5 +133,6 @@
         <file>resources/graphics/podoboo.png</file>
         <file>resources/graphics/blocs/lava-0.png</file>
         <file>resources/graphics/blocs/lava-1.png</file>
+        <file>resources/maps/Madness in clouds.json</file>
     </qresource>
 </RCC>
