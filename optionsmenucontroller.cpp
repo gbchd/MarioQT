@@ -89,6 +89,10 @@ void OptionsMenuController::importConfigFromJSON(QString JSONPath)
     optionsMenuWidget->setTextKeyMoveRightButton(settings->getMoveRight());
     optionsMenuWidget->setTextKeyMoveLeftButton(settings->getMoveLeft());
     optionsMenuWidget->setTextKeyShootFireBallButton(settings->getShootFireBall());
+
+    optionsMenuWidget->applyStyleSheet();
+    //Deselect the last button clicked
+    lastClickedOptionButton = NOBUTTONCLICKED;
 }
 
 void OptionsMenuController::exportConfigInJSON()
@@ -100,11 +104,11 @@ void OptionsMenuController::exportConfigInJSON()
 
         QTextStream stream(&myFile);
 
-        stream << "{\"jump\":\""<<"yo"<<"\","
-                    "\"run\":\"Map Editor\","
-                    "\"move-left\":\""<<QDateTime::currentDateTime().toString("yyyy-MM-dd  HH:mm:ss")<<"\","
-                    "\"move-right\":{\"width\":400, \"height\":30},"
-                    "\"shoot-fire-ball\":{\"x\":"<<"hello"<<"},";
+        stream << "{\"jump\":\""<<optionsMenuWidget->getTextKeyJumpButton()<<"\","
+                    "\"run\":\""<<optionsMenuWidget->getTextKeyRunButton()<<"\","
+                    "\"move-left\":\""<<optionsMenuWidget->getTextKeyMoveLeftButton()<<"\","
+                    "\"move-right\":\""<<optionsMenuWidget->getTextKeyMoveRightButton()<<"\","
+                    "\"shoot-fire-ball\":\""<<optionsMenuWidget->getTextKeyShootFireBall()<<"\"}";
 
         myFile.resize(myFile.pos());
         myFile.close();
