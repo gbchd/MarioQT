@@ -337,6 +337,13 @@ void Map::addInert(QJsonObject inertObject){
         entities.append(fb5);
         entities.append(fb6);
     }
+    else if(type.compare("lava") == 0){
+        Lava * lava = new Lava(inertObject["typeWave"].toInt());
+        float x = inertObject["x"].toDouble();
+        float y = inertObject["y"].toDouble();
+        lava->moveTo(x*block_size,y*block_size);
+        inerts.append(lava);
+    }
     else if(type.compare("anotherBlock") == 0){
         //add another block
     }

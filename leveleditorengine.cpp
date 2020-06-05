@@ -63,6 +63,9 @@ void LevelEditorEngine::exportMapToJSon()
             else if(getTypeFromInert(inerts[indice]).compare("movingplatform")==0){
                 stream<<"\"big\":"<<dynamic_cast<MovingPlatform *>(inerts[indice])->isItABigMovingPlatform()<<",";
             }
+            else if(getTypeFromInert(inerts[indice]).compare("lava")==0){
+                stream<<"\"typeWave\":"<<dynamic_cast<Lava *>(inerts[indice])->isLavaTypeWave()<<",";
+            }
             stream<<"\"x\":"<<inerts[indice]->getPosition().x()/32.0<<",\"y\":"<<inerts[indice]->getPosition().y()/32.0<<",\"width\":1,\"height\":1}";
         }
         stream<<"},\"entities\":{";
@@ -110,6 +113,9 @@ QString LevelEditorEngine::getTypeFromInert(Inert *inert)
     }
     else if(dynamic_cast<Firebar *>(inert)){
         return "firebar";
+    }
+    else if(dynamic_cast<Lava *>(inert)){
+        return "lava";
     }
     else{
         return "unknown";
@@ -186,6 +192,9 @@ void LevelEditorEngine::update(CameraVisitor & visitor){
     }
     else if(selectedButton == PIRANHAPLANT){
         objectToPaintOnMouse->moveTo(X + (2*block_size - 1.3*16/24*block_size)/2, Y + block_size - 1.3*block_size);
+    }
+    else if(selectedButton == LAVASCENERY){
+        objectToPaintOnMouse->moveTo(X, Y + (block_size - 0.34375*block_size));
     }
 
     if(castle != nullptr){
@@ -393,6 +402,20 @@ void LevelEditorEngine::addObjectOnMousePosition()
             objects.append(pp);
             break;
         }
+        case LAVABLOCK: {
+            Lava * lava = new Lava(false);
+            lava->moveTo(X, Y);
+            inerts.append(lava);
+            objects.append(lava);
+            break;
+        }
+        case LAVASCENERY: {
+            Lava * lava = new Lava(true);
+            lava->moveTo(X, Y + (block_size - 0.34375*block_size));
+            inerts.append(lava);
+            objects.append(lava);
+            break;
+        }
         case MARIO: {
             fakeMario = new Mario();
             fakeMario->moveTo(X, Y);
@@ -481,6 +504,7 @@ void LevelEditorEngine::deleteObjectAtPosition(int x, int y)
 
     for(ObjectModel * object : objects){
         if((object->getPosition().x() == x && (object->getPosition().y() == y || object->getPosition().y()-block_size/2 == y))
+                || (object->getPosition().x()==x && object->getPosition().y()-0.34375*block_size-10==y)
                 || (x + (2*block_size - 1.3*16/24*block_size)/2 - object->getPosition().x()) < 0.001 && (x + (2*block_size - 1.3*16/24*block_size)/2 - object->getPosition().x()) > -0.001 && (y + block_size - 1.3*block_size - object->getPosition().y()) <0.001 && (y + block_size - 1.3*block_size - object->getPosition().y()) > -0.001){
             Mario * mario = dynamic_cast<Mario*>(object);
             if(mario){
@@ -631,6 +655,14 @@ void LevelEditorEngine::setSelectedButton(SelectedButton sb){
         }
         case PIRANHAPLANT: {
             objectToPaintOnMouse = new PiranhaPlant();
+            break;
+        }
+        case LAVABLOCK: {
+            objectToPaintOnMouse = new Lava(false);
+            break;
+        }
+        case LAVASCENERY: {
+            objectToPaintOnMouse = new Lava(true);
             break;
         }
         case MARIO: {

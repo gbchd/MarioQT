@@ -255,33 +255,6 @@ void Entity::solveCollision(ObjectModel *o){
         moveTo(position.x() - intersection.width(), position.y());
     }
 
-
-    /*
-     * CODE QUE JE GARDE AU CAS OU J'AI TOUT CASSE SANS M'EN RENDRE COMPTE
-    QRectF intersection = thisHitbox.intersected(oHitbox);
-    if(intersection.width() < intersection.height()){
-        //Collision on x axis
-        if(hitbox.x() < oHitbox.x()){
-            //Collision à droite
-            moveTo(position.x() - intersection.width(), position.y());
-        }
-        else{
-            //Collision à gauche
-            moveTo(position.x() + intersection.width(), position.y());
-        }
-    }
-    else{
-        //Collision on y axis
-        if(hitbox.y() < oHitbox.y()){
-            //Collision en bas
-            moveTo(position.x(), position.y() - intersection.height());
-        }
-        else{
-            //Collision en haut
-            moveTo(position.x(), position.y() + intersection.height());
-        }
-    }
-    */
 }
 
 void Entity::collisionHandler(ObjectModel *o){
@@ -296,7 +269,7 @@ void Entity::collisionHandler(ObjectModel *o){
 
     // On corrige la position de l'entité
 
-    if(e && (!isSolid() || !e->isSolid()) ){}
+    if((e && (!isSolid() || !e->isSolid()) || phantomCollidable || o->isPhantomCollidable()) ){}
     else{
         solveCollision(o);
     }

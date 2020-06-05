@@ -129,6 +129,9 @@
         <file>resources/graphics/mobs/hammer-brother/hammer-brother-throw-2.png</file>
         <file>resources/graphics/mobs/hammer-brother/hammer-brother.png</file>
         <file>resources/graphics/mobs/hammer-brother/hammer.png</file>
+        <file>resources/sounds/stage_clear.wav</file>
         <file>resources/graphics/podoboo.png</file>
+        <file>resources/graphics/blocs/lava-0.png</file>
+        <file>resources/graphics/blocs/lava-1.png</file>
     </qresource>
 </RCC>

@@ -37,6 +37,7 @@ SOURCES += \
     hitboxgraphicvisitor.cpp \
     hud.cpp \
     inert.cpp \
+    lava.cpp \
     leveleditorengine.cpp \
     leveleditorview.cpp \
     leveleditorwidget.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
     hitboxgraphicvisitor.h \
     hud.h \
     inert.h \
+    lava.h \
     leveleditorengine.h \
     leveleditorview.h \
     leveleditorwidget.h \

@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QtMath>
 #include <QSoundEffect>
+#include <QBrush>
 
 #include "gameview.h"
 #include "objectmodel.h"
@@ -100,6 +101,7 @@ public:
 
     void setMainWindowPointer(MainWindow * mw){ mainWindow = mw; };
     void setSettingsPointer(Settings * settings){this->settings = settings;};
+    void playMusic(){music->play();};
 
 public slots:
     // This slot is called by the timer to advance the game to the next frame

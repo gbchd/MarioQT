@@ -14,6 +14,7 @@ class ObjectModel
 protected:
     bool walkable;
     bool collidable;        // Cannot have an interaction with this object
+    bool phantomCollidable = false; //We do not solve the collision but we do the interaction
     bool deletable = false;
 
     int score;
@@ -40,6 +41,7 @@ public:
 
     bool isWalkable(){ return walkable; }
     bool isCollidable(){ return collidable; }
+    bool isPhantomCollidable(){ return phantomCollidable; }
     bool isDeletable(){return deletable;}
     void setDeletable(bool b) { deletable = b; }
 

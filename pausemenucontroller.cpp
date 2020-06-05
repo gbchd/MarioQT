@@ -17,3 +17,11 @@ void PauseMenuController::quitApplication()
 {
     QCoreApplication::quit();
 }
+
+void PauseMenuController::continueGame(){
+    mainWindow->goBackToGame();
+}
+
+void PauseMenuController::retryGame(){
+    mainWindow->retryGame();
+}
